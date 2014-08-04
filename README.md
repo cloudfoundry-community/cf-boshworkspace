@@ -12,7 +12,7 @@ export SUBNET_ID=<default_vpc_subnet_id>
 export DIRECTOR_UUID=$(bosh status | grep UUID | awk '{print $2}')
 ```
 
-Now lets replace the placehorders in `micro_bosh.yml`
+Now lets replace the placehorders in `cf-aws-vpc.yml`
 
 ```bash
 for VAR in CF_ELASTIC_IP SUBNET_ID DIRECTOR_UUID
