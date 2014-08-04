@@ -1,0 +1,28 @@
+meta:
+  nfs_server: 
+    address: (( merge || jobs.nfs_z1.networks.cf1.static_ips.[0] ))
+
+properties:
+  template_only:
+    aws:
+      <<: (( merge ))
+      access_key_id: ~
+      secret_access_key: ~
+  cc:
+    resource_pool:
+      fog_connection: ~
+    packages:
+      fog_connection: ~
+    droplets:
+      fog_connection: ~
+    buildpacks:
+      fog_connection: ~
+
+networks: (( merge ))
+
+jobs:
+  - name: nfs_z1
+    instances: 1
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(3) ))

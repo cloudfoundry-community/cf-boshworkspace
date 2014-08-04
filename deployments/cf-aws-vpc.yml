@@ -1,0 +1,33 @@
+---
+name: cf-aws-vpc
+director_uuid: DIRECTOR_UUID
+
+releases:
+  - name: cf
+    version: 175
+    git: https://github.com/cloudfoundry/cf-release.git
+
+stemcells:
+  - name: bosh-aws-xen-ubuntu-lucid-go_agent
+    version: 2669
+
+templates:
+  - cf/cf-deployment.yml
+  - cf/cf-jobs.yml
+  - cf/cf-properties.yml
+  - cf/cf-infrastructure-aws.yml
+  - cf-properties.yml
+  - cf-single-az.yml
+  - cf-no-ssl.yml
+  - cf-use-haproxy.yml
+  - cf-use-postgresql.yml
+  - cf-use-nfs.yml
+  - cf-secrets.yml
+  - cf-aws-networking.yml
+
+meta:
+  secret: c1oudc0w # Used for all passwords
+  floating_static_ips: 
+    - CF_ELASTIC_IP
+  subnet_ids:
+    cf1: SUBNET_ID

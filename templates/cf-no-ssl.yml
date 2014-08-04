@@ -1,0 +1,7 @@
+properties:
+  ssl:
+    skip_cert_verify: true
+  uaa:
+    no_ssl: true
+  login:
+    protocol: http

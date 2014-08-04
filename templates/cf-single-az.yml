@@ -1,0 +1,56 @@
+properties:
+  template_only:
+    aws:
+      <<: (( merge ))
+      availability_zone: (( merge || "us-east-1a" ))
+      availability_zone2: ~
+  nats:
+    address: (( jobs.nats_z1.networks.cf1.static_ips.[0] ))
+
+networks: (( merge ))
+
+jobs:
+  - name: logs_z2
+    instances: 0
+
+  - name: nats_z1
+    instances: 1
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(1) ))
+
+  - name: nats_z2
+    instances: 0
+
+  - name: router_z2
+    instances: 0
+
+  - name: loggregator_z2
+    instances: 0
+
+  - name: loggregator_trafficcontroller_z2
+    instances: 0
+
+  - name: etcd_z2
+    instances: 0
+
+  - name: runner_z2
+    instances: 0
+
+  - name: uaa_z2
+    instances: 0
+
+  - name: api_z2
+    instances: 0
+
+  - name: api_worker_z2
+    instances: 0
+
+  - name: hm9000_z2
+    instances: 0
+
+  - name: login_z2
+    instances: 0
+
+  - name: login_z2
+    instances: 0

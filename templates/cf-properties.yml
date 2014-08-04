@@ -1,0 +1,11 @@
+meta:
+  domain: (( merge || properties.domain ))
+
+properties:
+  domain: (( meta.domain ))
+
+  dea_next:
+    disk_mb: 81960
+    memory_mb: 100000
+
+  
