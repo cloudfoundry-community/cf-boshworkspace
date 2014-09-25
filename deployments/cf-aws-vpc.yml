@@ -4,18 +4,19 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 175
+    version: 183
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
-  - name: bosh-aws-xen-ubuntu-lucid-go_agent
-    version: 2669
+  - name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2719
 
 templates:
   - cf/cf-deployment.yml
   - cf/cf-jobs.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
+  - cf/cf-minimal-dev.yml
   - cf-properties.yml
   - cf-single-az.yml
   - cf-no-ssl.yml
