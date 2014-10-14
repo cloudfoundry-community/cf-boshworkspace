@@ -19,15 +19,15 @@ networks:
   - name: cf1
     type: manual
     subnets:
-      - range: 10.50.5.0/24
+      - range: IPMASK.5.0/24
         name: default_unused
         reserved:
-          - 10.50.5.2 - 10.50.5.5
+          - IPMASK.5.2 - IPMASK.5.5
         static:
-          - 10.50.5.10 - 10.50.5.50
-        gateway: 10.50.5.1
+          - IPMASK.5.10 - IPMASK.5.50
+        gateway: IPMASK.5.1
         dns:
-          - 10.50.5.2
+          - IPMASK.5.2
         cloud_properties:
           security_groups:
             - cf
@@ -36,15 +36,15 @@ networks:
   - name: cf2
     type: manual
     subnets:
-      - range: 10.10.6.0/20
+      - range: IPMASK.6.0/20
         name: default_unused
         reserved:
-          - 10.10.6.2 - 10.10.6.5
+          - IPMASK.6.2 - IPMASK.6.5
         static:
-          - 10.10.6.10 - 10.10.6.50
-        gateway: 10.10.6.1
+          - IPMASK.6.10 - IPMASK.6.50
+        gateway: IPMASK.6.1
         dns:
-          - 10.10.0.2
+          - IPMASK.0.2
         cloud_properties:
           security_groups:
             - cf
