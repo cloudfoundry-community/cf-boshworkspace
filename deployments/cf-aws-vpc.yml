@@ -32,3 +32,5 @@ meta:
     - CF_ELASTIC_IP
   subnet_ids:
     cf1: SUBNET_ID
+  availability_zones:
+    cf1: REGION

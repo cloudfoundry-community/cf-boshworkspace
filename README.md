@@ -7,6 +7,7 @@ __Create deployment file__
 Just as with the microbosh deployment file we need to fill in some information in our Cloud Foundry deployment file.
 
 ```
+export REGION=<region>
 export CF_ELASTIC_IP=<second_elastic_ip>
 export SUBNET_ID=<default_vpc_subnet_id>
 export DIRECTOR_UUID=$(bosh status | grep UUID | awk '{print $2}')
@@ -15,7 +16,7 @@ export DIRECTOR_UUID=$(bosh status | grep UUID | awk '{print $2}')
 Now lets replace the placehorders in `cf-aws-vpc.yml`
 
 ```bash
-for VAR in CF_ELASTIC_IP SUBNET_ID DIRECTOR_UUID
+for VAR in CF_ELASTIC_IP SUBNET_ID DIRECTOR_UUID REGION
 do
   eval REP=\$$VAR
   perl -pi -e "s/$VAR/$REP/g" deployments/cf-aws-vpc.yml
