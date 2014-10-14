@@ -2,6 +2,9 @@ meta:
   subnet_ids:
     cf1: (( merge ))
     cf2: (( merge || nil ))
+  availability_zones:
+    cf1: (( merge ))
+    cf2: (( merge || nil ))
 
 properties:
   template_only:
@@ -9,38 +12,39 @@ properties:
       subnet_ids:
         cf1: (( meta.subnet_ids.cf1 ))
         cf2: (( meta.subnet_ids.cf2 ))
-
+      availability_zone: (( meta.availability_zones.cf1 ))
+      availability_zone2: (( meta.availability_zones.cf2 ))
 
 networks:
   - name: cf1
     type: manual
     subnets:
-      - range: 172.31.32.0/20
+      - range: 10.50.5.0/24
         name: default_unused
         reserved:
-          - 172.31.32.2 - 172.31.32.9
+          - 10.50.5.2 - 10.50.5.5
         static:
-          - 172.31.32.10 - 172.31.32.255
-        gateway: 172.31.32.1
+          - 10.50.5.10 - 10.50.5.50
+        gateway: 10.50.5.1
         dns:
-          - 172.31.0.2
+          - 10.50.5.2
         cloud_properties:
           security_groups:
             - cf
+            - bosh
           subnet: (( properties.template_only.aws.subnet_ids.cf1 ))
-
   - name: cf2
     type: manual
     subnets:
-      - range: 172.31.0.0/20
+      - range: 10.10.6.0/20
         name: default_unused
         reserved:
-          - 172.31.0.2 - 172.31.0.9
+          - 10.10.6.2 - 10.10.6.5
         static:
-          - 172.31.0.10 - 172.31.0.255
-        gateway: 172.31.0.1
+          - 10.10.6.10 - 10.10.6.50
+        gateway: 10.10.6.1
         dns:
-          - 172.31.0.2
+          - 10.10.0.2
         cloud_properties:
           security_groups:
             - cf
