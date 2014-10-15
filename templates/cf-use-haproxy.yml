@@ -8,6 +8,22 @@ properties:
 
 networks:
   - <<: (( merge ))
+  - name: cf_lb1
+    type: manual
+    subnets:
+      - range: IPMASK.3.0/24
+        name: default_unused
+        reserved:
+          - IPMASK.3.2 - IPMASK.3.5
+        static:
+          - IPMASK.3.10 - IPMASK.3.50
+        gateway: IPMASK.3.1
+        dns:
+          - IPMASK.3.2
+        cloud_properties:
+          security_groups:
+            - cf
+          subnet: LB_SUBNET
   - name: floating
     type: vip
     cloud_properties: {}
@@ -18,7 +34,7 @@ jobs:
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: cf1
+      - name: cf_lb1
         static_ips: (( static_ips(0) ))
         default: [dns, gateway]
 
