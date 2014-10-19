@@ -3,6 +3,7 @@ meta:
   release:
     name: cf
 
+  floating_static_ips: (( merge ))
   networks:
     z1:
       apps: cf1
@@ -37,7 +38,9 @@ meta:
     release: (( meta.release.name ))
   - name: cloud_controller_clock
     release: (( meta.release.name ))
-  - name: metron_agent
+  # - name: metron_agent
+  #   release: (( meta.release.name ))
+  - name: haproxy
     release: (( meta.release.name ))
 
   dea_templates:
@@ -45,8 +48,8 @@ meta:
     release: (( meta.release.name ))
   - name: dea_logging_agent
     release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
+  # - name: metron_agent
+  #   release: (( meta.release.name ))
 
   hm9000_templates:
   - name: hm9000
@@ -55,6 +58,11 @@ meta:
     release: (( meta.release.name ))
 
 
+networks:
+  - <<: (( merge ))
+  - name: floating
+    type: vip
+    cloud_properties: {}
 
 jobs:
   - name: data
@@ -72,11 +80,20 @@ jobs:
     templates: (( merge || meta.api_templates ))
     resource_pool: medium_z1
     networks:
+      - name: floating
+        static_ips: (( meta.floating_static_ips ))
       - name: cf1
+        default: [dns, gateway]
     properties:
       networks: (( meta.networks.z1 ))
       metron_agent:
         zone: z1
+      router:
+        port: 81 # haproxy needs 80
+        servers:
+          z1:
+            - (( "0.api.cf1." meta.deployment_name ".microbosh" ))
+          z2: []
 
   - name: runner_z1
     instances: 1
