@@ -3,3 +3,4 @@
 .releases*
 .stubs*
 *.log
+my*

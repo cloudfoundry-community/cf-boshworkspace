@@ -4,12 +4,12 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 189
+    version: 190
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2732
+    version: 2748
 
 templates:
   - cf/cf-deployment.yml
@@ -24,11 +24,11 @@ templates:
   - cf-use-postgresql.yml
   - cf-use-nfs.yml
   - cf-secrets.yml
-  - cf-aws-networking.yml
+  - cf-aws-ec2-networking.yml
 
 meta:
   secret: c1oudc0w # Used for all passwords
-  floating_static_ips: 
+  floating_static_ips:
     - CF_ELASTIC_IP
   subnet_ids:
     cf1: SUBNET_ID

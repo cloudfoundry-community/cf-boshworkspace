@@ -1,0 +1,115 @@
+meta:
+  deployment_name: (( merge ))
+  nfs_server:
+    address: ~
+
+jobs:
+  - name: nfs_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: postgres_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: logs_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: logs_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: nats_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: nats_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: ha_proxy_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+    properties:
+      router:
+        servers:
+          z1:
+            - (( "0.router-z1.cf1." meta.deployment_name ".microbosh" ))
+          z2: []
+
+
+  - name: router_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: router_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: loggregator_z1
+    networks:
+      - name: cf1
+
+  - name: loggregator_z2
+    networks:
+      - name: cf2
+
+  - name: loggregator_trafficcontroller_z1
+    networks:
+      - name: cf1
+
+  - name: loggregator_trafficcontroller_z2
+    networks:
+      - name: cf2
+
+  - name: etcd_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: etcd_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+networks:
+  - name: cf1
+    type: dynamic
+    cloud_properties:
+      security_groups:
+        - cf
+
+  - name: cf2
+    type: dynamic
+    cloud_properties:
+      security_groups:
+        - cf
+
+properties:
+  nats:
+    address: (( "0.nats-z1.cf1." meta.deployment_name ".microbosh" ))
+    machines:
+      - (( "0.nats-z1.cf1." meta.deployment_name ".microbosh" ))
+
+  etcd:
+    machines:
+      - (( "0.etcd-z1.cf1." meta.deployment_name ".microbosh" ))
+
+  ccdb:
+    address: (( "0.postgres-z1.cf1." meta.deployment_name ".microbosh" ))
+
+  uaadb:
+    address: (( "0.postgres-z1.cf1." meta.deployment_name ".microbosh" ))
+
+  databases:
+    address: (( "0.postgres-z1.cf1." meta.deployment_name ".microbosh" ))

@@ -1,0 +1,113 @@
+update:
+  canaries: 0
+
+# Basically disables the jobs from second availability zone (z2) not necessary in a dev setup
+jobs:
+  - name: loggregator_z1
+    instances: 0
+
+  - name: loggregator_z2
+    instances: 0
+
+  - name: loggregator_trafficcontroller_z1
+    instances: 0
+
+  - name: loggregator_trafficcontroller_z2
+    instances: 0
+
+  - name: logs_z1
+    instances: 0
+
+  - name: logs_z2
+    instances: 0
+
+  - name: router_z2
+    instances: 0
+
+  - name: runner_z1
+    instances: 0
+
+  - name: runner_z2
+    instances: 0
+
+  - name: nats_z1
+    instances: 0
+
+  - name: nats_z2
+    instances: 0
+
+  - name: stats_z1
+    instances: 0
+
+  - name: uaa_z1
+    instances: 0
+
+  - name: uaa_z2
+    instances: 0
+
+  - name: login_z1
+    instances: 0
+
+  - name: login_z2
+    instances: 0
+
+  - name: clock_global
+    instances: 0
+
+  - name: api_z1
+    instances: 0
+
+  - name: api_z2
+    instances: 0
+
+  - name: api_worker_z1
+    instances: 0
+
+  - name: api_worker_z2
+    instances: 0
+
+  - name: etcd_z1
+    instances: 0
+
+  - name: etcd_z2
+    instances: 0
+
+  - name: hm9000_z1
+    instances: 0
+
+  - name: hm9000_z2
+    instances: 0
+
+  - name: runner_z1
+    instances: 0
+
+  - name: runner_z2
+    instances: 0
+
+  - name: router_z1
+    instances: 0
+
+  - name: router_z2
+    instances: 0
+
+  - name: ha_proxy_z1
+    instances: 0
+
+  - name: ha_proxy_z2
+    instances: 0
+
+  - name: nfs_z1
+    instances: 0
+
+  - name: postgres_z1
+    instances: 0
+
+  - name: acceptance_tests
+    instances: 0
+
+  - name: smoke_tests
+    instances: 0
+
+properties:
+  ssl:
+    skip_cert_verify: true
