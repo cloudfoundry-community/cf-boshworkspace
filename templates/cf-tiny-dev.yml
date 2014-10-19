@@ -1,18 +1,89 @@
 meta:
+  deployment_name: (( merge ))
   release:
     name: cf
-  postgres_templates:
+
+  networks:
+    z1:
+      apps: cf1
+    z2:
+      apps: cf1
+
+  nfs_server:
+    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+    allow_from_entries:
+      - (( "*.*.cf1." meta.deployment_name ".microbosh" ))
+
+  data_templates:
   - name: debian_nfs_server
     release: (( meta.release.name ))
   - name: postgres
     release: (( meta.release.name ))
+  - name: etcd
+    release: (( meta.release.name ))
+  - name: etcd_metrics_server
+    release: (( meta.release.name ))
+  - name: nats
+    release: (( meta.release.name ))
+  - name: nats_stream_forwarder
+    release: (( meta.release.name ))
+
+  api_templates:
+  - name: gorouter
+    release: (( meta.release.name ))
+  - name: cloud_controller_ng
+    release: (( meta.release.name ))
+  - name: cloud_controller_worker
+    release: (( meta.release.name ))
+  - name: cloud_controller_clock
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+
+  dea_templates:
+  - name: dea_next
+    release: (( meta.release.name ))
+  - name: dea_logging_agent
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+
+  hm9000_templates:
+  - name: hm9000
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+
 
 
 jobs:
-  # postgres & debian_nfs_server templates
-  - name: postgres_z1
+  - name: data
     instances: 1
     persistent_disk: 102400
+    templates: (( merge || meta.data_templates ))
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+
+  - name: api
+    instances: 1
+    templates: (( merge || meta.api_templates ))
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+
+  - name: runner_z1
+    instances: 1
+    templates: (( merge || meta.dea_templates ))
+
+  - name: ha_proxy_z1
+    instances: 0
 
   - name: loggregator_z1
     instances: 0
@@ -30,12 +101,6 @@ jobs:
     instances: 0
 
   - name: logs_z2
-    instances: 0
-
-  - name: router_z2
-    instances: 0
-
-  - name: runner_z1
     instances: 0
 
   - name: runner_z2
@@ -101,13 +166,10 @@ jobs:
   - name: router_z2
     instances: 0
 
-  - name: ha_proxy_z1
-    instances: 0
-
-  - name: ha_proxy_z2
-    instances: 0
-
   - name: nfs_z1
+    instances: 0
+
+  - name: postgres_z1
     instances: 0
 
   - name: acceptance_tests

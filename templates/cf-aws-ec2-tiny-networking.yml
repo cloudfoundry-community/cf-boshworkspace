@@ -1,0 +1,176 @@
+meta:
+  deployment_name: (( merge ))
+
+jobs:
+  - <<: (( merge ))
+  - name: nfs_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: postgres_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: logs_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: logs_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: nats_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: nats_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: ha_proxy_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+    properties:
+      router:
+        servers:
+          z1:
+            - (( "0.api-z1.cf1." meta.deployment_name ".microbosh" ))
+          z2: []
+
+
+  - name: router_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: router_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+  - name: loggregator_z1
+    networks:
+      - name: cf1
+
+  - name: loggregator_z2
+    networks:
+      - name: cf2
+
+  - name: loggregator_trafficcontroller_z1
+    networks:
+      - name: cf1
+
+  - name: loggregator_trafficcontroller_z2
+    networks:
+      - name: cf2
+
+  - name: etcd_z1
+    networks:
+      - name: cf1
+        static_ips: ~
+
+  - name: etcd_z2
+    networks:
+      - name: cf2
+        static_ips: ~
+
+networks:
+  - name: cf1
+    type: dynamic
+    cloud_properties:
+      security_groups:
+        - cf
+
+  - name: cf2
+    type: dynamic
+    cloud_properties:
+      security_groups:
+        - cf
+
+resource_pools:
+  - name: small_z1
+    cloud_properties:
+      instance_type: m3.medium
+
+  - name: small_z2
+    cloud_properties:
+      instance_type: m3.medium
+
+  - name: medium_z1
+    cloud_properties:
+      instance_type: m3.large
+
+  - name: medium_z2
+    cloud_properties:
+      instance_type: m3.large
+
+  - name: large_z1
+    cloud_properties:
+      instance_type: m3.xlarge
+
+  - name: large_z2
+    cloud_properties:
+      instance_type: m3.xlarge
+
+  - name: runner_z1
+    cloud_properties:
+      instance_type: m3.large
+
+  - name: runner_z2
+    cloud_properties:
+      instance_type: m3.large
+
+  - name: router_z1
+    cloud_properties:
+      instance_type: m3.medium
+
+  - name: router_z2
+    cloud_properties:
+      instance_type: m3.medium
+
+  - name: small_errand
+    cloud_properties:
+      instance_type: m3.medium
+
+
+properties:
+  nats:
+    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+    machines:
+      - (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+
+  etcd:
+    machines:
+      - (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+
+  ccdb:
+    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+
+  uaadb:
+    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+
+  databases:
+    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
+
+  # use nfs
+  template_only:
+    aws:
+      <<: (( merge ))
+      access_key_id: ~
+      secret_access_key: ~
+  cc:
+    resource_pool:
+      fog_connection: ~
+    packages:
+      fog_connection: ~
+    droplets:
+      fog_connection: ~
+    buildpacks:
+      fog_connection: ~

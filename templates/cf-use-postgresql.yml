@@ -46,6 +46,7 @@ properties:
         citext: true
 
 jobs:
+  - <<: (( merge ))
   - name: postgres_z1
     instances: 1
     networks:

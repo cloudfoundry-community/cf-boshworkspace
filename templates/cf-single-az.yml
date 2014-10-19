@@ -10,6 +10,7 @@ properties:
 networks: (( merge ))
 
 jobs:
+  - <<: (( merge ))
   - name: logs_z2
     instances: 0
 
