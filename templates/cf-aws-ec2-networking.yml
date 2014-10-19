@@ -1,7 +1,8 @@
 meta:
   deployment_name: (( merge ))
+
   nfs_server:
-    address: ~
+    address: (( "0.postgres-z1.cf1." meta.deployment_name ".microbosh" ))
 
 jobs:
   - name: nfs_z1
