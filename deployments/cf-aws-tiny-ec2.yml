@@ -16,15 +16,16 @@ templates:
 - cf/cf-jobs.yml
 - cf/cf-properties.yml
 - cf/cf-infrastructure-aws.yml
-- cf-tiny-dev.yml
 - cf-properties.yml
-- cf-single-az.yml
-- cf-no-ssl.yml
-- cf-use-haproxy.yml
+- parallel.yml
+# - cf-single-az.yml   # alternate to cf-tiny-dev
+# - cf-no-ssl.yml
+# - cf-use-haproxy.yml # covered by cf-tiny-dev
+# - cf-use-nfs.yml     # covered by cf-tiny-dev
 - cf-use-postgresql.yml
-- cf-use-nfs.yml
 - cf-secrets.yml
-- cf-aws-ec2-networking.yml
+- cf-tiny-dev.yml
+- cf-aws-ec2-tiny-networking.yml
 
 meta:
   domain: CF_ELASTIC_IP.xip.io
