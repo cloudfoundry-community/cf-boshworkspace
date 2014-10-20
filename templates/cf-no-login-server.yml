@@ -1,0 +1,4 @@
+properties:
+  <<: (( merge ))
+  login:
+    enabled: false
