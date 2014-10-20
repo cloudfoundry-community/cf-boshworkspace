@@ -5,3 +5,5 @@ properties:
     no_ssl: true
   login:
     protocol: http
+  logger_endpoint:
+    port: 80
