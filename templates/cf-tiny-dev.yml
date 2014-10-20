@@ -55,11 +55,11 @@ meta:
   # - name: metron_agent
   #   release: (( meta.release.name ))
 
-  hm9000_templates:
+  health_templates:
   - name: hm9000
     release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
+  # - name: metron_agent
+  #   release: (( meta.release.name ))
 
 
 networks:
@@ -100,6 +100,15 @@ jobs:
           z2: []
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
+
+  - name: health
+    instances: 1
+    templates: (( merge || meta.health_templates ))
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
 
   - name: runner_z1
     instances: 1
