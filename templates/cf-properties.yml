@@ -3,6 +3,7 @@ meta:
 
 properties:
   domain: (( meta.domain ))
+  system_domain_organization: system
 
   dea_next:
     disk_mb: 81960
