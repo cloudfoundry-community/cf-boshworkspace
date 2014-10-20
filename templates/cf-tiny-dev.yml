@@ -40,6 +40,8 @@ meta:
     release: (( meta.release.name ))
   - name: cloud_controller_clock
     release: (( meta.release.name ))
+  - name: uaa
+    release: (( meta.release.name ))
   # - name: metron_agent
   #   release: (( meta.release.name ))
   - name: haproxy
