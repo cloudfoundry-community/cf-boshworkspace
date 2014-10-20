@@ -18,12 +18,15 @@ templates:
   - cf/cf-infrastructure-aws.yml
   - cf/cf-minimal-dev.yml
   - cf-properties.yml
+  - parallel.yml
+  - cf-use-postgresql.yml
   - cf-single-az.yml
   - cf-no-ssl.yml
-  - cf-dedicated-haproxy.yml
-  - cf-use-postgresql.yml
   - cf-use-nfs.yml
+  - cf-dedicated-haproxy.yml
+  - cf-no-login-server.yml
   - cf-secrets.yml
+  # - cf-tiny-dev.yml
   - cf-use-haproxy.yml
   - cf-aws-ec2-networking.yml
 

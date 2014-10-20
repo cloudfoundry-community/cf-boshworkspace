@@ -12,20 +12,23 @@ stemcells:
     version: 2748
 
 templates:
-- cf/cf-deployment.yml
-- cf/cf-jobs.yml
-- cf/cf-properties.yml
-- cf/cf-infrastructure-aws.yml
-- cf-properties.yml
-- parallel.yml
-# - cf-single-az.yml   # alternate to cf-tiny-dev
-# - cf-no-ssl.yml
-# - cf-use-nfs.yml     # covered by cf-tiny-dev
-- cf-use-postgresql.yml
-- cf-secrets.yml
-- cf-tiny-dev.yml
-- cf-use-haproxy.yml
-- cf-aws-ec2-tiny-networking.yml
+  - cf/cf-deployment.yml
+  - cf/cf-jobs.yml
+  - cf/cf-properties.yml
+  - cf/cf-infrastructure-aws.yml
+  # - cf/cf-minimal-dev.yml
+  - cf-properties.yml
+  - parallel.yml
+  - cf-use-postgresql.yml
+  # - cf-single-az.yml   # alternate to cf-tiny-dev
+  # - cf-no-ssl.yml
+  # - cf-use-nfs.yml     # covered by cf-tiny-dev
+  # - cf-dedicated-haproxy.yml # in api job
+  - cf-no-login-server.yml
+  - cf-secrets.yml
+  - cf-tiny-dev.yml
+  - cf-use-haproxy.yml # covered by cf-tiny-dev
+  - cf-aws-ec2-tiny-networking.yml
 
 meta:
   domain: CF_ELASTIC_IP.xip.io
