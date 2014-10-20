@@ -9,4 +9,6 @@ properties:
     disk_mb: 81960
     memory_mb: 100000
 
-  
+  uaa:
+    scim:
+      userids_enabled: true
