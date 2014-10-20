@@ -3,6 +3,8 @@ meta:
   release:
     name: cf
 
+  ha_proxy:
+    ssl_pem: (( merge ))
   floating_static_ips: (( merge ))
   networks:
     z1:
@@ -94,6 +96,8 @@ jobs:
           z1:
             - (( "0.api.cf1." meta.deployment_name ".microbosh" ))
           z2: []
+      ha_proxy:
+        ssl_pem: (( meta.ha_proxy.ssl_pem ))
 
   - name: runner_z1
     instances: 1

@@ -20,11 +20,11 @@ templates:
 - parallel.yml
 # - cf-single-az.yml   # alternate to cf-tiny-dev
 # - cf-no-ssl.yml
-# - cf-use-haproxy.yml # covered by cf-tiny-dev
 # - cf-use-nfs.yml     # covered by cf-tiny-dev
 - cf-use-postgresql.yml
 - cf-secrets.yml
 - cf-tiny-dev.yml
+- cf-use-haproxy.yml
 - cf-aws-ec2-tiny-networking.yml
 
 meta:

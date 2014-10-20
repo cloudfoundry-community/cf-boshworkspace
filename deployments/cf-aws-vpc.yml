@@ -20,10 +20,11 @@ templates:
   - cf-properties.yml
   - cf-single-az.yml
   - cf-no-ssl.yml
-  - cf-use-haproxy.yml
+  - cf-dedicated-haproxy.yml
   - cf-use-postgresql.yml
   - cf-use-nfs.yml
   - cf-secrets.yml
+  - cf-use-haproxy.yml
   - cf-aws-ec2-networking.yml
 
 meta:

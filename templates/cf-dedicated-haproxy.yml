@@ -1,0 +1,23 @@
+meta:
+  floating_static_ips: (( merge ))
+  ha_proxy:
+    ssl_pem: (( merge ))
+
+networks:
+  - <<: (( merge ))
+  - name: floating
+    type: vip
+    cloud_properties: {}
+
+jobs:
+  - <<: (( merge ))
+  - name: ha_proxy_z1
+    instances: 1
+    networks:
+      - name: floating
+        static_ips: (( meta.floating_static_ips ))
+      - name: cf1
+        default: [dns, gateway]
+    properties:
+      ha_proxy:
+        ssl_pem: (( meta.ha_proxy.ssl_pem ))
