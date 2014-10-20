@@ -30,6 +30,8 @@ meta:
     release: (( meta.release.name ))
   - name: nats_stream_forwarder
     release: (( meta.release.name ))
+  - name: doppler
+    release: (( meta.release.name ))
 
   api_templates:
   - name: gorouter
@@ -42,8 +44,8 @@ meta:
     release: (( meta.release.name ))
   - name: uaa
     release: (( meta.release.name ))
-  # - name: metron_agent
-  #   release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
   - name: haproxy
     release: (( meta.release.name ))
 
@@ -52,14 +54,16 @@ meta:
     release: (( meta.release.name ))
   - name: dea_logging_agent
     release: (( meta.release.name ))
-  # - name: metron_agent
-  #   release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
 
   health_templates:
   - name: hm9000
     release: (( meta.release.name ))
-  # - name: metron_agent
-  #   release: (( meta.release.name ))
+  - name: loggregator_trafficcontroller
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
 
 
 networks:
@@ -78,6 +82,8 @@ jobs:
       - name: cf1
     properties:
       networks: (( meta.networks.z1 ))
+      doppler:
+        zone: z1
 
   - name: api
     instances: 1
@@ -109,6 +115,10 @@ jobs:
       - name: cf1
     properties:
       networks: (( meta.networks.z1 ))
+      traffic_controller:
+        zone: z1
+      metron_agent:
+        zone: z1
 
   - name: runner_z1
     instances: 1
