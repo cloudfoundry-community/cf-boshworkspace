@@ -6,6 +6,7 @@ properties:
     databases:
     - tag: cc
       name: ccdb
+      citext: true
     db_scheme: postgres
     port: 5524
     roles:
@@ -18,6 +19,7 @@ properties:
     databases:
     - name: uaadb
       tag: uaa
+      citext: true
     db_scheme: postgresql
     port: 5524
     roles:
