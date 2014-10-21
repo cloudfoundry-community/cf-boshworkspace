@@ -1,4 +1,2 @@
 update:
-  canary_watch_time: 30000-90000
-  update_watch_time: 5000-90000
   serial: false

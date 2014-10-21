@@ -1,0 +1,32 @@
+meta:
+  secrets: (( merge ))
+  smoke_tests:
+    org: (( merge || "smoke-tests" ))
+    space: (( merge || "smoke-tests" ))
+
+jobs:
+  - <<: (( merge ))
+  - name: acceptance_tests
+    instances: 1
+
+  - name: smoke_tests
+    instances: 1
+
+properties:
+  domain: (( merge ))
+  acceptance_tests:
+    api:  (( "api." properties.domain ))
+    apps_domain: (( properties.domain ))
+    admin_user: admin
+    admin_password: (( meta.secrets.cc_admin_password ))
+    skip_ssl_validation: true
+    nodes: 1
+
+  smoke_tests:
+    api:  (( "api." properties.domain ))
+    apps_domain: (( properties.domain ))
+    user: admin
+    password: (( meta.secrets.cc_admin_password ))
+    org: (( meta.smoke_tests.org ))
+    space: (( meta.smoke_tests.org ))
+    skip_ssl_validation: true
