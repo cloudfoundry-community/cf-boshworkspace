@@ -24,7 +24,7 @@ templates:
   # - cf-no-ssl.yml
   # - cf-use-nfs.yml     # covered by cf-tiny-dev
   # - cf-dedicated-haproxy.yml # in api job
-  - cf-no-login-server.yml
+  # - cf-no-login-server.yml
   - cf-secrets.yml
   - cf-tiny-dev.yml
   - cf-use-haproxy.yml # covered by cf-tiny-dev
