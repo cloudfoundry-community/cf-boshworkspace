@@ -19,7 +19,7 @@ templates:
   - cf/cf-minimal-dev.yml
   - cf-properties.yml
   - cf-single-az.yml
-  - cf-no-ssl.yml
+  #- cf-no-ssl.yml
   - cf-use-haproxy.yml
   - cf-use-postgresql.yml
   - cf-use-nfs.yml

@@ -27,7 +27,10 @@ networks:
   - name: floating
     type: vip
     cloud_properties: {}
-
+properties:
+  login:
+    # Certificate to import if the UAA is using self-signed certificates
+    uaa_certificate: (( meta.ha_proxy.ssl_pem ))
 jobs:
   - name: ha_proxy_z1
     instances: 1
