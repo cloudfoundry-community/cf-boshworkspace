@@ -1,0 +1,20 @@
+meta:
+  data_templates:
+  - name: boundary-meter
+    release: boundary
+
+  api_templates:
+  - name: boundary-meter
+    release: boundary
+
+  services_templates:
+  - name: boundary-meter
+    release: boundary
+
+  dea_templates:
+  - name: boundary-meter
+    release: boundary
+
+  health_templates:
+  - name: boundary-meter
+    release: boundary

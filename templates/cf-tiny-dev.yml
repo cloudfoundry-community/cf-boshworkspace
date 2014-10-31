@@ -3,6 +3,9 @@ meta:
   release:
     name: cf
 
+  boundary_meter:
+    org_id_and_api_key: (( merge ))
+
   ha_proxy:
     ssl_pem: (( merge ))
   floating_static_ips: (( merge ))
@@ -18,6 +21,7 @@ meta:
       - (( "*.*.cf1." meta.deployment_name ".microbosh" ))
 
   data_templates:
+  - <<: (( merge ))
   - name: debian_nfs_server
     release: (( meta.release.name ))
   - name: postgres
@@ -34,6 +38,7 @@ meta:
     release: (( meta.release.name ))
 
   api_templates:
+  - <<: (( merge ))
   - name: gorouter
     release: (( meta.release.name ))
   - name: cloud_controller_ng
@@ -44,6 +49,7 @@ meta:
     release: (( meta.release.name ))
 
   services_templates:
+  - <<: (( merge ))
   - name: uaa
     release: (( meta.release.name ))
   - name: login
@@ -54,6 +60,7 @@ meta:
     release: (( meta.release.name ))
 
   dea_templates:
+  - <<: (( merge ))
   - name: dea_next
     release: (( meta.release.name ))
   - name: dea_logging_agent
@@ -62,6 +69,7 @@ meta:
     release: (( meta.release.name ))
 
   health_templates:
+  - <<: (( merge ))
   - name: loggregator_trafficcontroller
     release: (( meta.release.name ))
   - name: hm9000
@@ -93,6 +101,8 @@ jobs:
       networks: (( meta.networks.z1 ))
       doppler:
         zone: z1
+      boundary_meter:
+        org_id_and_api_key: (( meta.boundary_meter.org_id_and_api_key ))
 
   - name: api
     instances: 1
@@ -115,6 +125,8 @@ jobs:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
       metron_agent:
         zone: z1
+      boundary_meter:
+        org_id_and_api_key: (( meta.boundary_meter.org_id_and_api_key ))
 
   - name: services
     instances: 1
@@ -126,6 +138,8 @@ jobs:
       networks: (( meta.networks.z1 ))
       metron_agent:
         zone: z1
+      boundary_meter:
+        org_id_and_api_key: (( meta.boundary_meter.org_id_and_api_key ))
 
   - name: health
     instances: 1
@@ -139,9 +153,26 @@ jobs:
         zone: z1
       metron_agent:
         zone: z1
+      boundary_meter:
+        org_id_and_api_key: (( meta.boundary_meter.org_id_and_api_key ))
+
+  - name: runner
+    instances: 1
+    templates: (( merge || meta.dea_templates ))
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+    properties:
+      dea_next:
+        zone: (( merge || "z1" ))
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+      boundary_meter:
+        org_id_and_api_key: (( meta.boundary_meter.org_id_and_api_key ))
 
   - name: runner_z1
-    instances: 1
+    instances: 0
     templates: (( merge || meta.dea_templates ))
 
   - name: ha_proxy_z1
