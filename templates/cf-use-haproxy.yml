@@ -40,6 +40,9 @@ jobs:
       - name: cf_lb1
         static_ips: (( static_ips(0) ))
         default: [dns, gateway]
+    properties:
+      ha_proxy:
+        ssl_pem: (( defaults.ha_proxy.ssl_pem ))
 
 resource_pools:
   - name: router_z1
