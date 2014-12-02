@@ -30,8 +30,7 @@ networks:
           - IPMASK.5.2
         cloud_properties:
           security_groups:
-            - cf
-            - bosh
+            - CF_SG
           subnet: (( properties.template_only.aws.subnet_ids.cf1 ))
   - name: cf2
     type: manual
@@ -47,5 +46,5 @@ networks:
           - IPMASK.0.2
         cloud_properties:
           security_groups:
-            - cf
+            - CF_SG
           subnet: (( properties.template_only.aws.subnet_ids.cf2 ))
