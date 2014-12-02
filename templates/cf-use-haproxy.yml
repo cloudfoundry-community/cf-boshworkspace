@@ -22,7 +22,7 @@ networks:
           - IPMASK.3.2
         cloud_properties:
           security_groups:
-            - cf
+            - CF_SG
           subnet: LB_SUBNET
   - name: floating
     type: vip
