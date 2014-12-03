@@ -27,7 +27,7 @@ networks:
           - IPMASK.5.10 - IPMASK.5.50
         gateway: IPMASK.5.1
         dns:
-          - IPMASK.5.2
+          - IPMASK.0.2
         cloud_properties:
           security_groups:
             - CF_SG
