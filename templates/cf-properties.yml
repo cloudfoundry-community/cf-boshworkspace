@@ -1,11 +1,42 @@
 meta:
   domain: (( merge || properties.domain ))
 
+update:
+  serial: false
+
 properties:
   domain: (( meta.domain ))
-
+  cc:
+    broker_client_timeout_seconds: 600
+    maximum_app_disk_in_mb: 4096
+    packages:
+      max_package_size: 4294967296
   dea_next:
-    disk_mb: 81960
-    memory_mb: 100000
+    memory_overcommit_factor: 1
+    disk_overcommit_factor: 1
+    disk_mb: 23552
+    memory_mb: 7500
+  login:
+    protocol: http
 
-  
+  uaa:
+    clients:
+      <<: (( merge || nil ))
+      cc-service-dashboards:
+        secret: (( merge ))
+        override: true
+        authorized-grant-types: client_credentials
+        scope: cloud_controller.write,openid,cloud_controller.read,cloud_controller_service_permissions.read
+        authorities: clients.read,clients.write,clients.admin
+        access-token-validity: 1209600
+        refresh-token-validity: 1209600
+        autoapprove: true
+      data-sci-portal:
+        override: true
+        scope: openid,cloud_controller.read,cloud_controller.write,password.write,console.admin,console.support
+        authorities: scim.write,scim.read,cloud_controller.read,cloud_controller.write,password.write,uaa.admin,uaa.resource,cloud_controller.admin,billing.admin
+        secret: (( merge ))
+        authorized-grant-types: authorization_code,client_credentials
+        access-token-validity: 1209600
+        refresh-token-validity: 1209600
+        redirect-uri: (( "https://data-sci-portal." domain "/oauth2callback" ))

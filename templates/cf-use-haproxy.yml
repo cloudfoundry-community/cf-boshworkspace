@@ -11,15 +11,15 @@ networks:
   - name: cf_lb1
     type: manual
     subnets:
-      - range: IPMASK.3.0/24
+      - range: IPMASK.2.0/24
         name: default_unused
         reserved:
-          - IPMASK.3.2 - IPMASK.3.5
+          - IPMASK.2.2 - IPMASK.2.5
         static:
-          - IPMASK.3.10 - IPMASK.3.50
-        gateway: IPMASK.3.1
+          - IPMASK.2.10 - IPMASK.2.100
+        gateway: IPMASK.2.1
         dns:
-          - IPMASK.3.2
+          - IPMASK.0.2
         cloud_properties:
           security_groups:
             - CF_SG
