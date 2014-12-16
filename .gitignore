@@ -3,3 +3,5 @@
 .releases*
 .stubs*
 *.log
+.bundle/
+vendor/
