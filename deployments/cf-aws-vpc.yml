@@ -4,7 +4,7 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: latest
+    version: 194
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
