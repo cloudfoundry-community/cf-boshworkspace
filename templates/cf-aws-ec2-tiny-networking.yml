@@ -1,98 +1,55 @@
 meta:
-  deployment_name: (( merge ))
+  subnet_ids:
+    cf1: (( merge ))
+    cf2: (( merge || nil ))
 
-jobs:
-  - <<: (( merge ))
-  - name: nfs_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: postgres_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: logs_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: logs_z2
-    networks:
-      - name: cf2
-        static_ips: ~
-
-  - name: nats_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: nats_z2
-    networks:
-      - name: cf2
-        static_ips: ~
-
-  - name: ha_proxy_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-    properties:
-      router:
-        servers:
-          z1:
-            - (( "0.api-z1.cf1." meta.deployment_name ".microbosh" ))
-          z2: []
-
-
-  - name: router_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: router_z2
-    networks:
-      - name: cf2
-        static_ips: ~
-
-  - name: loggregator_z1
-    networks:
-      - name: cf1
-
-  - name: loggregator_z2
-    networks:
-      - name: cf2
-
-  - name: loggregator_trafficcontroller_z1
-    networks:
-      - name: cf1
-
-  - name: loggregator_trafficcontroller_z2
-    networks:
-      - name: cf2
-
-  - name: etcd_z1
-    networks:
-      - name: cf1
-        static_ips: ~
-
-  - name: etcd_z2
-    networks:
-      - name: cf2
-        static_ips: ~
+properties:
+  template_only:
+    aws:
+      subnet_ids:
+        cf1: (( meta.subnet_ids.cf1 ))
+        cf2: (( meta.subnet_ids.cf2 ))
+      availability_zone: "us-west-2a" 
+      availability_zone2: "us-west-2a" 
 
 networks:
   - name: cf1
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - cf
+    type: manual
+    subnets:
+      - range: 10.10.3.0/24
+        name: default_unused
+        reserved:
+          - 10.10.3.2 - 10.10.3.5
+        static:
+          - 10.10.3.100 - 10.10.3.160
+        gateway: 10.10.3.1
+        dns:
+          - 10.10.0.2
+        cloud_properties:
+          security_groups:
+            - cf-0-vpc-9c9a3ff9
+          subnet: (( meta.subnet_ids.cf1 ))
 
   - name: cf2
-    type: dynamic
-    cloud_properties:
-      security_groups:
-        - cf
+    type: manual
+    subnets:
+      - range: 10.10.2.0/20
+        name: default_unused
+        reserved:
+          - 10.10.2.2 - 10.10.2.5
+        static:
+          - 10.10.2.60 - 10.10.2.90
+        gateway: 10.10.2.1
+        dns:
+          - 10.10.0.2
+        cloud_properties:
+          security_groups:
+            - cf-0-vpc-9c9a3ff9
+          subnet: (( meta.subnet_ids.cf2 ))
+
+  - name: floating
+    type: vip
+    cloud_properties: {}
 
 resource_pools:
   - name: small_z1
@@ -141,24 +98,6 @@ resource_pools:
 
 
 properties:
-  nats:
-    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-    machines:
-      - (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-
-  etcd:
-    machines:
-      - (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-
-  ccdb:
-    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-
-  uaadb:
-    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-
-  databases:
-    address: (( "0.data.cf1." meta.deployment_name ".microbosh" ))
-
   # use nfs
   template_only:
     aws:

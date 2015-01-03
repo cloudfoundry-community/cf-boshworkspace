@@ -4,3 +4,5 @@
 .stubs*
 *.log
 my*
+.bundle
+vendor/

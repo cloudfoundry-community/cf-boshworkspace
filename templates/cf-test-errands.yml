@@ -6,27 +6,19 @@ meta:
 
 jobs:
   - <<: (( merge ))
-  - name: acceptance_tests
-    instances: 1
-
-  - name: smoke_tests
+  - name: tests
     instances: 1
 
 properties:
   domain: (( merge ))
-  acceptance_tests:
-    api:  (( "api." properties.domain ))
-    apps_domain: (( properties.domain ))
-    admin_user: admin
-    admin_password: (( meta.secrets.cc_admin_password ))
-    skip_ssl_validation: true
-    nodes: 1
-
   smoke_tests:
     api:  (( "api." properties.domain ))
     apps_domain: (( properties.domain ))
+    admin_user: admin
+    admin_password: "c1oudc0w"
     user: admin
-    password: (( meta.secrets.cc_admin_password ))
+    password: "c1oudc0w"
+    skip_ssl_validation: true
     org: (( meta.smoke_tests.org ))
     space: (( meta.smoke_tests.org ))
-    skip_ssl_validation: true
+    nodes: 1

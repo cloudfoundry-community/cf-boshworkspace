@@ -2,7 +2,8 @@ networks: (( merge ))
 
 properties:
   ccdb:
-    address: (( jobs.postgres_z1.networks.cf1.static_ips.[0] ))
+    - <<: (( merge ))
+    address: (( jobs.data.networks.cf1.static_ips.[0] ))
     databases:
     - tag: cc
       name: ccdb
@@ -15,7 +16,7 @@ properties:
       tag: admin
 
   uaadb:
-    address: (( jobs.postgres_z1.networks.cf1.static_ips.[0] ))
+    address: (( jobs.data.networks.cf1.static_ips.[0] ))
     databases:
     - name: uaadb
       tag: uaa
@@ -29,7 +30,7 @@ properties:
 
   databases:
     db_scheme: postgres
-    address: (( jobs.postgres_z1.networks.cf1.static_ips.[0] ))
+    address: (( jobs.data.networks.cf1.static_ips.[0] ))
     port: 5524
     roles:
       - tag: admin
@@ -47,10 +48,10 @@ properties:
         name: uaadb
         citext: true
 
-jobs:
-  - <<: (( merge ))
-  - name: postgres_z1
-    instances: 1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(4) ))
+#jobs:
+#  - <<: (( merge ))
+#  - name: postgres_z1
+#    instances: 1
+#    networks:
+#      - name: cf1
+#        static_ips: (( static_ips(4) ))

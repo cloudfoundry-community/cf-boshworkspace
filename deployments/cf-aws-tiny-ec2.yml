@@ -1,39 +1,46 @@
 ---
 name: cf-aws-ec2
-director_uuid: DIRECTOR_UUID
+director_uuid: fa34994c-5785-40c1-8b01-1b0d5ecd42a2
 
 releases:
   - name: cf
-    version: 190
+    version: latest
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2748
+    version: 2778
 
 templates:
   - cf/cf-deployment.yml
-  - cf/cf-jobs.yml
+  - cf-tiny-dev.yml
+  #- cf/cf-jobs.yml
+  - cf-test-errands.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
   # - cf/cf-minimal-dev.yml
   - cf-properties.yml
   - parallel.yml
-  - cf-use-postgresql.yml
+  # - cf-use-postgresql.yml
   # - cf-single-az.yml   # alternate to cf-tiny-dev
-  # - cf-no-ssl.yml
+  - cf-no-ssl.yml
   # - cf-use-nfs.yml     # covered by cf-tiny-dev
   # - cf-dedicated-haproxy.yml # in api job
   # - cf-no-login-server.yml
   - cf-secrets.yml
-  - cf-tiny-dev.yml
+  #- cf-tiny-dev.yml
   - cf-use-haproxy.yml # covered by cf-tiny-dev
   - cf-aws-ec2-tiny-networking.yml
 
 meta:
-  domain: CF_ELASTIC_IP.xip.io
+  domain: 54.148.46.129.xip.io
   floating_static_ips:
-    - CF_ELASTIC_IP
+    - 54.148.46.129
   secret: c1oudc0w # Used for all passwords
+  subnet_ids:
+    cf1: subnet-38cc735d
+    cf2: subnet-39cc735c
+    #cf2: subnet-38cc735d
   availability_zones:
     cf1: ~
+    cf2: ~

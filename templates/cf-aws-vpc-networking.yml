@@ -15,33 +15,33 @@ networks:
   - name: cf1
     type: manual
     subnets:
-      - range: 172.31.32.0/20
+      - range: 10.10.3.0/24
         name: default_unused
         reserved:
-          - 172.31.32.2 - 172.31.32.9
+          - 10.10.3.2 - 10.10.3.5
         static:
-          - 172.31.32.10 - 172.31.32.255
-        gateway: 172.31.32.1
+          - 10.10.3.10 - 10.10.3.100
+        gateway: 10.10.3.1
         dns:
-          - 172.31.0.2
+          - 10.10.0.2
         cloud_properties:
           security_groups:
-            - cf
+            - cf-0-vpc-9c9a3ff9
           subnet: (( properties.template_only.aws.subnet_ids.cf1 ))
 
   - name: cf2
     type: manual
     subnets:
-      - range: 172.31.0.0/20
+      - range: 10.10.4.0/20
         name: default_unused
         reserved:
-          - 172.31.0.2 - 172.31.0.9
+          - 10.10.4.2 - 10.10.4.5
         static:
-          - 172.31.0.10 - 172.31.0.255
-        gateway: 172.31.0.1
+          - 10.10.4.10 - 10.10.4.50
+        gateway: 10.10.4.1
         dns:
-          - 172.31.0.2
+          - 10.10.0.2
         cloud_properties:
           security_groups:
-            - cf
+            - cf-0-vpc-9c9a3ff9
           subnet: (( properties.template_only.aws.subnet_ids.cf2 ))
