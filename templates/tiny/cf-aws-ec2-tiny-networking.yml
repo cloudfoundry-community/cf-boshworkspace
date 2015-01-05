@@ -9,42 +9,42 @@ properties:
       subnet_ids:
         cf1: (( meta.subnet_ids.cf1 ))
         cf2: (( meta.subnet_ids.cf2 ))
-      availability_zone: "us-west-2a" 
-      availability_zone2: "us-west-2a" 
+      availability_zone: "REGION"
+      availability_zone2: "REGION"
 
 networks:
   - name: cf1
     type: manual
     subnets:
-      - range: 10.10.3.0/24
+      - range: IPMASK.3.0/24
         name: default_unused
         reserved:
-          - 10.10.3.2 - 10.10.3.5
+          - IPMASK.3.2 - IPMASK.3.5
         static:
-          - 10.10.3.100 - 10.10.3.160
-        gateway: 10.10.3.1
+          - IPMASK.3.100 - IPMASK.3.160
+        gateway: IPMASK.3.1
         dns:
-          - 10.10.0.2
+          - IPMASK.0.2
         cloud_properties:
           security_groups:
-            - cf-0-vpc-9c9a3ff9
+            - CF_SG
           subnet: (( meta.subnet_ids.cf1 ))
 
   - name: cf2
     type: manual
     subnets:
-      - range: 10.10.2.0/20
+      - range: IPMASK.2.0/20
         name: default_unused
         reserved:
-          - 10.10.2.2 - 10.10.2.5
+          - IPMASK.2.2 - IPMASK.2.5
         static:
-          - 10.10.2.60 - 10.10.2.90
-        gateway: 10.10.2.1
+          - IPMASK.2.60 - IPMASK.2.90
+        gateway: IPMASK.2.1
         dns:
-          - 10.10.0.2
+          - IPMASK.0.2
         cloud_properties:
           security_groups:
-            - cf-0-vpc-9c9a3ff9
+            - CF_SG
           subnet: (( meta.subnet_ids.cf2 ))
 
   - name: floating
