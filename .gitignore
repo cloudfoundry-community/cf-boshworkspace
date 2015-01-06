@@ -3,5 +3,6 @@
 .releases*
 .stubs*
 *.log
-.bundle/
+my*
+.bundle
 vendor/

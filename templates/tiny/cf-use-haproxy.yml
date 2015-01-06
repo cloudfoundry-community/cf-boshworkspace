@@ -3,47 +3,6 @@ meta:
   ha_proxy:
     ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
 
-properties:
-  domain: (( jobs.ha_proxy_z1.networks.floating.static_ips.[0] ".xip.io" ))
-
-networks:
-  - <<: (( merge ))
-  - name: cf_lb1
-    type: manual
-    subnets:
-      - range: IPMASK.2.0/24
-        name: default_unused
-        reserved:
-          - IPMASK.2.2 - IPMASK.2.5
-        static:
-          - IPMASK.2.10 - IPMASK.2.100
-        gateway: IPMASK.2.1
-        dns:
-          - IPMASK.0.2
-        cloud_properties:
-          security_groups:
-            - CF_SG
-          subnet: LB_SUBNET
-  - name: floating
-    type: vip
-    cloud_properties: {}
-properties:
-  login:
-    # Certificate to import if the UAA is using self-signed certificates
-    uaa_certificate: (( meta.ha_proxy.ssl_pem ))
-jobs:
-  - name: ha_proxy_z1
-    instances: 1
-    networks:
-      - name: floating
-        static_ips: (( meta.floating_static_ips ))
-      - name: cf_lb1
-        static_ips: (( static_ips(0) ))
-        default: [dns, gateway]
-    properties:
-      ha_proxy:
-        ssl_pem: (( defaults.ha_proxy.ssl_pem ))
-
 resource_pools:
   - name: router_z1
     cloud_properties:

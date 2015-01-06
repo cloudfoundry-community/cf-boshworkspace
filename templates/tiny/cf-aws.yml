@@ -1,0 +1,13 @@
+meta:
+  subnet_ids:
+    cf1: (( merge ))
+    cf2: ~
+  availability_zones:
+    cf1: (( merge ))
+    cf2: ~
+properties:
+  template_only:
+    aws:
+      <<: (( merge ))
+      availability_zone: (( meta.availability_zones.cf1 ))
+      availability_zone2: (( meta.availability_zones.cf2 ))

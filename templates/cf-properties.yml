@@ -6,6 +6,8 @@ update:
 
 properties:
   domain: (( meta.domain ))
+  system_domain_organization: system
+
   cc:
     broker_client_timeout_seconds: 600
     maximum_app_disk_in_mb: 4096
@@ -20,6 +22,8 @@ properties:
     protocol: http
 
   uaa:
+    scim:
+      userids_enabled: true
     clients:
       <<: (( merge || nil ))
       cc-service-dashboards:
