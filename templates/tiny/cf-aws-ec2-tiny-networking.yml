@@ -1,16 +1,7 @@
 meta:
   subnet_ids:
     cf1: (( merge ))
-    cf2: (( merge || nil ))
-
-properties:
-  template_only:
-    aws:
-      subnet_ids:
-        cf1: (( meta.subnet_ids.cf1 ))
-        cf2: (( meta.subnet_ids.cf2 ))
-      availability_zone: "REGION"
-      availability_zone2: "REGION"
+    cf2: ~
 
 networks:
   - name: cf1

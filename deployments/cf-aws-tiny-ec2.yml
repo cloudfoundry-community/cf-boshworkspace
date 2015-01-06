@@ -19,6 +19,7 @@ templates:
   - cf/cf-infrastructure-aws.yml
   - cf-properties.yml
   - parallel.yml
+  - tiny/cf-aws.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
   - cf-use-haproxy.yml
