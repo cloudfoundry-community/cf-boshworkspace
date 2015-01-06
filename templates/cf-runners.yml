@@ -1,0 +1,27 @@
+meta:
+  zones:
+    z1: (( properties.template_only.aws.availability_zone ))
+    z2: (( properties.template_only.aws.availability_zone2 ))
+  runners:
+    z1: (( merge ))
+
+resource_pools:
+  - name: runner_z1
+    cloud_properties:
+      instance_type: m3.large
+      availability_zone: (( meta.zones.z1 ))
+
+  - name: runner_z2
+    cloud_properties:
+      instance_type: m3.large
+      availability_zone: (( meta.zones.z2 ))
+
+jobs:
+  - name: runner_z1
+    instances: (( meta.runners.z1 ))
+
+  - name: runner_z2
+    instances: 0
+
+properties:
+  template_only: (( merge ))
