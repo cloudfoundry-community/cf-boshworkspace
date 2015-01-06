@@ -1,15 +1,15 @@
 ---
 name: cf-aws-vpc
-director_uuid: fa34994c-5785-40c1-8b01-1b0d5ecd42a2
+director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 190
+    version: 194
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2748
+    version: 2778
 
 templates:
   - cf/cf-deployment.yml
@@ -17,23 +17,23 @@ templates:
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
   - cf/cf-minimal-dev.yml
-  - cf-properties.yml
-  - parallel.yml
-  - cf-use-postgresql.yml
+  - cf-runners.yml
   - cf-single-az.yml
   - cf-no-ssl.yml
-  - cf-use-nfs.yml
-  - cf-dedicated-haproxy.yml
-  - cf-no-login-server.yml
-  - cf-secrets.yml
-  # - cf-tiny-dev.yml
+  - cf-test-errands.yml
+  - cf-properties.yml
   - cf-use-haproxy.yml
-  - cf-aws-ec2-networking.yml
+  - cf-use-postgresql.yml
+  - cf-use-nfs.yml
+  - cf-secrets.yml
+  - cf-aws-networking.yml
+  - cf-deployment-size.yml
+  - cf-admin-secret.yml
 
 meta:
-  domain: 54.148.46.129.xip.io
+  domain: CF_DOMAIN
   secret: c1oudc0w # Used for all passwords except cf admin
-  admin_secret: WQXng43TEfj
+  admin_secret: CF_ADMIN_PASS
   instances:
     api_worker_z1: 1
     etcd_z1: 1
@@ -41,10 +41,10 @@ meta:
   runners:
     z1: 6
   floating_static_ips: 
-    - 54.148.46.129
+    - CF_ELASTIC_IP
   subnet_ids:
-    cf1: subnet-38cc735d
+    cf1: SUBNET_ID
     cf2: ~
   availability_zones:
-    cf1: us-west-2a
+    cf1: REGION
     cf2: ~
