@@ -1,50 +1,46 @@
 meta:
+  ipmask: (( merge ))
+  security_groups: (( merge ))
   subnet_ids:
     cf1: (( merge ))
-    cf2: (( merge || nil ))
-  availability_zones:
-    cf1: (( merge ))
-    cf2: (( merge || nil ))
-
-properties:
-  template_only:
-    aws:
-      subnet_ids:
-        cf1: (( meta.subnet_ids.cf1 ))
-        cf2: (( meta.subnet_ids.cf2 ))
-      availability_zone: (( meta.availability_zones.cf1 ))
-      availability_zone2: (( meta.availability_zones.cf2 ))
+    cf2: ~
+  availability_zones: (( merge ))
 
 networks:
   - name: cf1
     type: manual
     subnets:
-      - range: IPMASK.3.0/24
+      - range: (( meta.ipmask ".3.0/24" ))
         name: default_unused
         reserved:
-          - IPMASK.3.2 - IPMASK.3.5
+          - (( meta.ipmask ".3.2 - " meta.ipmask ".3.5" ))
         static:
-          - IPMASK.3.10 - IPMASK.3.100
-        gateway: IPMASK.3.1
+          - (( meta.ipmask ".3.10 - " meta.ipmask ".3.100" ))
+        gateway: (( meta.ipmask ".3.1" ))
         dns:
-          - IPMASK.0.2
+          - (( meta.ipmask ".0.2" ))
         cloud_properties:
-          security_groups:
-            - CF_SG
-          subnet: (( properties.template_only.aws.subnet_ids.cf1 ))
+          security_groups: (( meta.security_groups ))
+          subnet: (( meta.subnet_ids.cf1 ))
+          availability_zone: (( meta.availability_zones.cf1 ))
+
   - name: cf2
     type: manual
     subnets:
-      - range: IPMASK.4.0/20
+      - range: (( meta.ipmask ".4.0/24" ))
         name: default_unused
         reserved:
-          - IPMASK.4.2 - IPMASK.4.5
+          - (( meta.ipmask ".4.2 - " meta.ipmask ".4.5" ))
         static:
-          - IPMASK.4.10 - IPMASK.4.50
-        gateway: IPMASK.4.1
+          - (( meta.ipmask ".4.10 - " meta.ipmask ".4.100" ))
+        gateway: (( meta.ipmask ".4.1" ))
         dns:
-          - IPMASK.0.2
+          - (( meta.ipmask ".0.2" ))
         cloud_properties:
-          security_groups:
-            - CF_SG
-          subnet: (( properties.template_only.aws.subnet_ids.cf2 ))
+          security_groups: (( meta.security_groups ))
+          subnet: (( meta.subnet_ids.cf2 ))
+          availability_zone: (( meta.availability_zones.cf2 ))
+
+  - name: floating
+    type: vip
+    cloud_properties: {}

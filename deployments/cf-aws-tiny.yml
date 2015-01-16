@@ -23,7 +23,7 @@ templates:
   - cf-no-ssl.yml
   - cf-secrets.yml
   - tiny/cf-use-haproxy.yml
-  - tiny/cf-aws-ec2-tiny-networking.yml
+  - cf-aws-networking.yml
 
 meta:
   domain: CF_DOMAIN
@@ -31,10 +31,14 @@ meta:
     - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
+  ipmask: IPMASK
   subnet_ids:
-    cf1: SUBNET_ID
-    cf2: LB_SUBNET
+    cf1: CF_SUBNET1
+    cf2: CF_SUBNET2
+    lb1: LB_SUBNET1
+  security_groups: CF_SG
   availability_zones:
-    cf1: REGION
-    cf2: ~
+    cf1: CF_SUBNET1_AZ
+    cf2: CF_SUBNET2_AZ
+    lb1: LB_SUBNET1_AZ
   environment: cf-aws-tiny
