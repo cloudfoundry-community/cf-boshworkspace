@@ -1,5 +1,6 @@
 meta:
   secrets: (( merge ))
+  admin_secret: (( merge ))
   smoke_tests:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
@@ -14,10 +15,8 @@ properties:
   smoke_tests:
     api:  (( "api." properties.domain ))
     apps_domain: (( properties.domain ))
-    admin_user: admin
-    admin_password: "c1oudc0w"
     user: admin
-    password: "c1oudc0w"
+    password: (( meta.admin_secret ))
     skip_ssl_validation: true
     org: (( meta.smoke_tests.org ))
     space: (( meta.smoke_tests.org ))
