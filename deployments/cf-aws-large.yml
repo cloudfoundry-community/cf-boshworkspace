@@ -34,6 +34,8 @@ meta:
   domain: CF_DOMAIN
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
+  security_groups: CF_SG
+  ipmask: IPMASK
   instances:
     api_worker_z1: 1
     etcd_z1: 1
@@ -43,9 +45,11 @@ meta:
   floating_static_ips: 
     - CF_ELASTIC_IP
   subnet_ids:
-    cf1: SUBNET_ID
-    cf2: ~
+    cf1: CF_SUBNET1
+    cf2: CF_SUBNET2
+    lb1: LB_SUBNET1
   availability_zones:
-    cf1: REGION
-    cf2: ~
+    cf1: CF_SUBNET1_AZ
+    cf2: CF_SUBNET2_AZ
+    lb1: LB_SUBNET1_AZ
   environment: cf-aws-large

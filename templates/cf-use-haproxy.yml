@@ -1,7 +1,12 @@
 meta:
+  ipmask: (( merge ))
+  security_groups: (( merge ))
   floating_static_ips: (( merge ))
+  availability_zones: (( merge ))
   ha_proxy:
     ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
+  subnet_ids:
+    lb1: (( merge ))
 
 properties:
   domain: (( jobs.ha_proxy_z1.networks.floating.static_ips.[0] ".xip.io" ))
@@ -11,19 +16,20 @@ networks:
   - name: cf_lb1
     type: manual
     subnets:
-      - range: IPMASK.2.0/24
+      - range: (( meta.ipmask ".2.0/24" ))
         name: default_unused
         reserved:
-          - IPMASK.2.2 - IPMASK.2.5
+          - (( meta.ipmask ".2.2 - " meta.ipmask ".2.5" ))
         static:
-          - IPMASK.2.10 - IPMASK.2.100
-        gateway: IPMASK.2.1
+          - (( meta.ipmask ".2.10 - " meta.ipmask ".2.100" ))
+        gateway: (( meta.ipmask ".2.1" ))
         dns:
-          - IPMASK.0.2
+          - (( meta.ipmask ".0.2" ))
         cloud_properties:
           security_groups:
-            - CF_SG
-          subnet: LB_SUBNET
+            - (( meta.security_groups ))
+          subnet: (( meta.subnet_ids.lb1 ))
+          availability_zone: (( meta.availability_zones.lb1 ))
   - name: floating
     type: vip
     cloud_properties: {}

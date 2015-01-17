@@ -1,10 +1,10 @@
 meta:
   subnet_ids:
     cf1: (( merge ))
-    cf2: ~
+    cf2: (( merge ))
   availability_zones:
     cf1: (( merge ))
-    cf2: ~
+    cf2: (( merge ))
 properties:
   template_only:
     aws:
