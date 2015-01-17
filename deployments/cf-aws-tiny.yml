@@ -31,7 +31,7 @@ meta:
     - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
-  ipmask: IPMASK
+  ipmask: "IPMASK"
   subnet_ids:
     cf1: CF_SUBNET1
     cf2: CF_SUBNET2
