@@ -3,13 +3,14 @@ meta:
   security_groups: (( merge ))
   floating_static_ips: (( merge ))
   availability_zones: (( merge ))
+  domain: (( merge ))
   ha_proxy:
     ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
   subnet_ids:
     lb1: (( merge ))
 
 properties:
-  domain: (( jobs.ha_proxy_z1.networks.floating.static_ips.[0] ".xip.io" ))
+  domain: (( domain ))
 
 networks:
   - <<: (( merge ))
