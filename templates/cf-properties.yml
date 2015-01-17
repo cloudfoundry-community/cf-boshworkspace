@@ -5,6 +5,12 @@ update:
   serial: false
 
 properties:
+  template_only:
+    aws:
+      <<: (( merge ))
+      access_key_id: ~
+      secret_access_key: ~
+
   domain: (( meta.domain ))
   system_domain_organization: system
 
