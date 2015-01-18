@@ -40,14 +40,18 @@ meta:
   - name: metron_agent
     release: (( meta.release.name ))
 
+  ha_proxy_templates:
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: haproxy
+    release: (( meta.release.name ))
+
   api_templates:
   - name: gorouter
     release: (( meta.release.name ))
   - name: cloud_controller_ng
     release: (( meta.release.name ))
   - name: metron_agent
-    release: (( meta.release.name ))
-  - name: haproxy
     release: (( meta.release.name ))
   - name: nfs_mounter
     release: (( meta.release.name ))
@@ -106,24 +110,37 @@ jobs:
       metron_agent:
         zone: z1
 
-  - name: api
+  - name: haproxy
     instances: 1
-    templates: (( merge || meta.api_templates ))
-    resource_pool: medium_z2
+    templates: (( merge || meta.ha_proxy_templates ))
+    resource_pool: small_z1
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: cf2
+      - name: lb1
         default: [dns, gateway]
         static_ips: (( static_ips(1) ))
     properties:
-      networks: (( meta.networks.z2 ))
-      router:
-        port: 81 # haproxy needs 80
+      networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
       metron_agent:
-        zone: z2
+        zone: z1
+
+  - name: api
+    instances: 1
+    templates: (( merge || meta.api_templates ))
+    resource_pool: medium_z1
+    networks:
+      - name: cf1
+        default: [dns, gateway]
+        static_ips: (( static_ips(1) ))
+    properties:
+      networks: (( meta.networks.z1 ))
+      ha_proxy:
+        ssl_pem: (( meta.ha_proxy.ssl_pem ))
+      metron_agent:
+        zone: z1
 
   - name: services
     instances: 1
@@ -317,8 +334,8 @@ properties:
 
   router:
     servers:
-      z1: []
-      z2: (( jobs.api.networks.cf2.static_ips ))
+      z1: (( jobs.api.networks.cf1.static_ips ))
+      z2: []
     requested_route_registration_interval_in_seconds: 20
     status:
       user: (( merge ))
