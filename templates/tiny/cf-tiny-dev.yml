@@ -184,8 +184,20 @@ jobs:
       metron_agent:
         zone: z1
 
-  - name: tests
-    templates: (( merge || meta.test_templates ))
+  - name: acceptance_tests
+    templates:
+    - name: acceptance-tests
+      release: (( meta.release.name ))
+    instances: 0
+    resource_pool: small_errand
+    lifecycle: errand
+    networks:
+      - name: cf1
+
+  - name: smoke_tests
+    templates:
+    - name: smoke-tests
+      release: (( meta.release.name ))
     instances: 0
     resource_pool: small_errand
     lifecycle: errand
