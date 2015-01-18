@@ -1,0 +1,17 @@
+properties:
+  template_only:
+    aws:
+      <<: (( merge ))
+      access_key_id: ~
+      secret_access_key: ~
+  cc:
+    resource_pool:
+      fog_connection: ~
+    packages:
+      fog_connection: ~
+    droplets:
+      fog_connection: ~
+    buildpacks:
+      fog_connection: ~
+
+networks: (( merge ))

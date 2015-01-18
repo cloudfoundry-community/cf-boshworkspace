@@ -16,7 +16,7 @@ meta:
       apps: cf2
 
   nfs_server:
-    address: (( jobs.data.networks.cf1.static_ips.[0] || nil ))
+    address: (( jobs.data.networks.cf1.static_ips.[0] ))
     allow_from_entries:
       - (( "10.0.0.0/8" ))
 
@@ -208,6 +208,13 @@ jobs:
 
 properties:
   <<: (( merge ))
+
+  template_only:
+    aws:
+      <<: (( merge ))
+      access_key_id: ~
+      secret_access_key: ~
+
   dropsonde:
     enabled: true
 
