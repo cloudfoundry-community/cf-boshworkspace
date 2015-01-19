@@ -22,6 +22,7 @@ templates:
   - tiny/cf-aws.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
+  - tiny/cf-use-nfs.yml
   - tiny/cf-use-haproxy.yml
   - cf-aws-networking.yml
 
