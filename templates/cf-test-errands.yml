@@ -4,14 +4,35 @@ meta:
   smoke_tests:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
+  networks:
+    z1:
+      apps: cf1
+    z2:
+      apps: cf2
 
 jobs:
   - <<: (( merge ))
   - name: acceptance_tests
+    templates:
+    - name: acceptance-tests
+      release: cf
     instances: 1
+    resource_pool: small_errand
+    lifecycle: errand
+    networks:
+      - name: (( meta.networks.z1 ))
 
   - name: smoke_tests
+    templates:
+    - name: smoke-tests
+      release: cf
     instances: 1
+    resource_pool: small_errand
+    lifecycle: errand
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
 
 properties:
   domain: (( merge ))
