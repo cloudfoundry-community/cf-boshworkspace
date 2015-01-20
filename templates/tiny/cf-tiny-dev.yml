@@ -6,6 +6,10 @@ meta:
   release:
     name: cf
 
+  domain: (( merge ))
+  app_domains: (( "apps." domain ))
+  run_domain: (( "run." domain ))
+
   ha_proxy:
     ssl_pem: (( merge ))
   floating_static_ips: (( merge ))
@@ -198,12 +202,12 @@ properties:
 
   support_address: (( merge || "http://support.cloudfoundry.com" ))
   description: (( merge || "Cloud Foundry sponsored by Pivotal" ))
-  domain: (( merge ))
+  
   ssl:
     skip_cert_verify: (( merge || true ))
-  system_domain: (( domain ))
+  system_domain: (( meta.run_domain ))
   system_domain_organization: ~
-  app_domains: (( [domain] ))
+  app_domains: (( [meta.app_domains] ))
 
   disk_quota_enabled: true
 
