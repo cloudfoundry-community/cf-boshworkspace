@@ -89,14 +89,6 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
-  - name: etcd
-    release: (( meta.release.name ))
-
-  test_templates:
-  - name: smoke-tests
-    release: (( meta.release.name ))
-#  - name: acceptance-tests
-#    release: (( meta.release.name ))
 
 jobs:
   - name: data
@@ -271,7 +263,7 @@ properties:
     prof_port: 0
 
   etcd:
-    machines: (( jobs.data.networks.cf1.static_ips  jobs.health.networks.cf1.static_ips))
+    machines: (( jobs.data.networks.cf1.static_ips ))
 
   etcd_metrics_server:
     nats:
