@@ -7,8 +7,7 @@ meta:
     name: cf
 
   domain: (( merge ))
-  app_domains: (( "apps." domain ))
-  run_domain: (( "run." domain ))
+  app_domains: (( merge ))
 
   domain: (( merge ))
   app_domains: (( merge ))
