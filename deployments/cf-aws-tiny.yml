@@ -27,7 +27,8 @@ templates:
   - cf-aws-networking.yml
 
 meta:
-  domain: CF_DOMAIN
+  domain: run.CF_DOMAIN
+  app_domains: apps.CF_DOMAIN
   floating_static_ips:
     - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin

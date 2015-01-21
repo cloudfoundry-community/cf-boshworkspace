@@ -10,6 +10,8 @@ meta:
   app_domains: (( "apps." domain ))
   run_domain: (( "run." domain ))
 
+  domain: (( merge ))
+  app_domains: (( merge ))
   ha_proxy:
     ssl_pem: (( merge ))
   floating_static_ips: (( merge ))
@@ -172,7 +174,7 @@ jobs:
     resource_pool: runner_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(4,5,6,7,8) ))
+        static_ips: (( static_ips(4,5,6,7,8,9,10,11,12,13,14) ))
     properties:
       dea_next:
         zone: (( merge || "z1" ))
@@ -219,7 +221,7 @@ properties:
   
   ssl:
     skip_cert_verify: (( merge || true ))
-  system_domain: (( meta.run_domain ))
+  system_domain: (( meta.domain ))
   system_domain_organization: ~
   app_domains: (( [meta.app_domains] ))
 
