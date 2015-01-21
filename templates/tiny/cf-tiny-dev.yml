@@ -180,6 +180,28 @@ jobs:
       metron_agent:
         zone: z1
 
+  - name: acceptance_tests_runner
+    templates:
+    - name: acceptance-tests
+      release: cf
+    instances: 0
+    resource_pool: small_errand
+    lifecycle: errand
+    networks:
+      - name: cf1
+
+  - name: smoke_tests_runner
+    templates:
+    - name: smoke-tests
+      release: cf
+    instances: 0
+    resource_pool: small_errand
+    lifecycle: errand
+    networks:
+      - name: cf1
+    properties:
+      networks: (( meta.networks.z1 ))
+
 properties:
   <<: (( merge ))
 
