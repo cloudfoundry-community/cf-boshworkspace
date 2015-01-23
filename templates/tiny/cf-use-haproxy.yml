@@ -29,7 +29,7 @@ networks:
         reserved:
           - (( meta.ipmask ".2.2 - " meta.ipmask ".2.5" ))
         static:
-          - (( meta.ipmask ".2.10 - " meta.ipmask ".2.100" ))
+          - (( meta.ipmask ".2.6 - " meta.ipmask ".2.30" ))
         gateway: (( meta.ipmask ".2.1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
