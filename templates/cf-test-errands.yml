@@ -1,6 +1,8 @@
 meta:
   secrets: (( merge ))
   admin_secret: (( merge ))
+  domain: (( merge ))
+  app_domains: (( merge ))
   smoke_tests:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
@@ -18,18 +20,17 @@ jobs:
     instances: 1
 
 properties:
-  domain: (( merge ))
   acceptance_tests:
-    api:  (( "api." properties.domain ))
-    apps_domain: (( properties.domain ))
+    api:  (( "api." meta.domain ))
+    apps_domain: (( meta.app_domains ))
     admin_user: admin
     admin_password: (( meta.admin_secret ))
     skip_ssl_validation: true
     nodes: 1
 
   smoke_tests:
-    api:  (( "api." properties.domain ))
-    apps_domain: (( properties.domain ))
+    api:  (( "api." meta.domain ))
+    apps_domain: (( meta.app_domains ))
     user: admin
     password: (( meta.admin_secret ))
     org: (( meta.smoke_tests.org ))
