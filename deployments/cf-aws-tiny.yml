@@ -14,6 +14,7 @@ stemcells:
 templates:
   - cf/cf-deployment.yml
   - tiny/cf-tiny-dev.yml
+  - cf-uaa-port.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
 # - cf-test-errands.yml

@@ -1,0 +1,8 @@
+# Note this is a hack to keep up with changes upstream
+# while allowing the changing of uaa port. This is needed 
+# because uaa and login server run on same port
+properties:
+  domain: (( merge ))
+  uaa:
+    <<: (( merge ))
+    port: ~
