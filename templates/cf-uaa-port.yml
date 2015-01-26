@@ -1,8 +1,9 @@
 # Note this is a hack to keep up with changes upstream
 # while allowing the changing of uaa port. This is needed 
 # because uaa and login server run on same port
+# Side note: this can be tossed when uaa and login merge
 properties:
   domain: (( merge ))
   uaa:
     <<: (( merge ))
-    port: ~
+    port: 8082
