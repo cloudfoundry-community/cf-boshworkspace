@@ -40,7 +40,7 @@ networks:
         reserved:
           - (( meta.ipmask ".3.2 - " meta.ipmask ".3.5" ))
         static:
-          - (( meta.ipmask ".3.6 - " meta.ipmask ".3.30" ))
+          - (( meta.ipmask ".3.6 - " meta.ipmask ".3.50" ))
         gateway: (( meta.ipmask ".3.1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
@@ -57,7 +57,7 @@ networks:
         reserved:
           - (( meta.ipmask ".4.2 - " meta.ipmask ".4.5" ))
         static:
-          - (( meta.ipmask ".4.6 - " meta.ipmask ".4.30" ))
+          - (( meta.ipmask ".4.6 - " meta.ipmask ".4.50" ))
         gateway: (( meta.ipmask ".4.1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
