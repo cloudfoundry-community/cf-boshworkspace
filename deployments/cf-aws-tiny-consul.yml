@@ -51,3 +51,7 @@ meta:
     cf2: CF_SUBNET2_AZ
     lb1: LB_SUBNET1_AZ
   environment: cf-aws-tiny
+  consul:
+    join_hosts:
+    CONSUL-HOSTS
+    user: root
