@@ -92,6 +92,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
+  - name: collector
+    release: (( meta.release.name ))
 
 jobs:
   - name: data
