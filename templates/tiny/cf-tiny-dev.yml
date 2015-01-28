@@ -70,6 +70,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
+  - name: etcd
+    release: (( meta.release.name ))
   - name: nfs_mounter
     release: (( meta.release.name ))
 
@@ -142,6 +144,7 @@ jobs:
   - name: services
     instances: 1
     templates: (( merge || meta.services_templates ))
+    persistent_disk: 102400
     resource_pool: medium_z1
     networks:
       - name: cf1
@@ -286,7 +289,7 @@ properties:
     prof_port: 0
 
   etcd:
-    machines: (( jobs.data.networks.cf1.static_ips ))
+    machines: (( jobs.data.networks.cf1.static_ips jobs.services.networks.cf1.static_ips ))
 
   etcd_metrics_server:
     nats:
