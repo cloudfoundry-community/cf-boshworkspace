@@ -1,6 +1,5 @@
 meta:
   domain: (( merge || properties.domain ))
-  consul: (( merge || nil ))
 update:
   serial: false
 
@@ -13,7 +12,6 @@ properties:
 
   domain: (( meta.domain ))
   system_domain_organization: system
-  consul: (( meta.consul ))
   cc:
     broker_client_timeout_seconds: 600
     maximum_app_disk_in_mb: 4096
