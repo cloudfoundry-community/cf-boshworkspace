@@ -1,0 +1,53 @@
+---
+name: cf-aws-tiny
+director_uuid: DIRECTOR_UUID
+
+releases:
+  - name: cf
+    version: 196
+    git: https://github.com/cloudfoundry/cf-release.git
+  - name: consul
+    version: 9
+    git: https://github.com/cloudfoundry-community/consul-boshrelease.git
+  - name: cf-consul
+    version: 1
+    git: https://github.com/cloudfoundry-community/cf-consul-boshrelease.git
+
+stemcells:
+  - name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2778
+
+templates:
+  - cf/cf-deployment.yml
+  - tiny/cf-tiny-dev-consul.yml
+  - cf-uaa-port.yml
+  - cf/cf-properties.yml
+  - cf/cf-infrastructure-aws.yml
+# - cf-test-errands.yml
+  - cf-properties.yml
+  - parallel.yml
+  - tiny/cf-aws.yml
+  - cf-no-ssl.yml
+  - cf-secrets.yml
+  - tiny/cf-use-nfs.yml
+  - tiny/cf-use-haproxy.yml
+  - cf-aws-networking.yml
+
+meta:
+  domain: run.CF_DOMAIN
+  app_domains: apps.CF_DOMAIN
+  floating_static_ips:
+    - CF_ELASTIC_IP
+  secret: c1oudc0w # Used for all passwords except cf admin
+  admin_secret: CF_ADMIN_PASS
+  ipmask: "IPMASK"
+  subnet_ids:
+    cf1: CF_SUBNET1
+    cf2: CF_SUBNET2
+    lb1: LB_SUBNET1
+  security_groups: CF_SG
+  availability_zones:
+    cf1: CF_SUBNET1_AZ
+    cf2: CF_SUBNET2_AZ
+    lb1: LB_SUBNET1_AZ
+  environment: cf-aws-tiny
