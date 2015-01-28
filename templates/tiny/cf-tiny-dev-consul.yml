@@ -88,7 +88,7 @@ meta:
     release: cf-consul
   - name: cloud-controller-ng-consul
     release: cf-consul
-  - name: nfs_mounter-consul
+  - name: nfs-mounter-consul
     release: cf-consul
   - name: consul
     release: consul
