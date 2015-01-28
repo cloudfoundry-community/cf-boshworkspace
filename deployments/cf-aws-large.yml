@@ -28,28 +28,27 @@ templates:
   - cf-secrets.yml
   - cf-aws-networking.yml
   - cf-deployment-size.yml
-  - cf-admin-secret.yml
 
 meta:
-  domain: CF_DOMAIN
+  domain: run.CF_DOMAIN
+  app_domains: apps.CF_DOMAIN
+  floating_static_ips:
+    - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
-  security_groups: CF_SG
-  ipmask: IPMASK
-  instances:
-    api_worker_z1: 1
-    etcd_z1: 1
-    router_z1: 2
-  runners:
-    z1: 6
-  floating_static_ips: 
-    - CF_ELASTIC_IP
+  ipmask: "IPMASK"
   subnet_ids:
     cf1: CF_SUBNET1
     cf2: CF_SUBNET2
     lb1: LB_SUBNET1
+  security_groups: CF_SG
   availability_zones:
     cf1: CF_SUBNET1_AZ
     cf2: CF_SUBNET2_AZ
     lb1: LB_SUBNET1_AZ
+  instances:
+    api_worker_z1: 1
+    router_z1: 2
+  runners:
+    z1: 2
   environment: cf-aws-large
