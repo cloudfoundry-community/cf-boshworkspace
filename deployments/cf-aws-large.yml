@@ -28,7 +28,6 @@ templates:
   - cf-secrets.yml
   - cf-aws-networking.yml
   - cf-deployment-size.yml
-  - cf-admin-secret.yml
 
 meta:
   domain: run.CF_DOMAIN
