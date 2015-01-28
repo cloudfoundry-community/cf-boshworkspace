@@ -1,4 +1,4 @@
 meta:
   consul: (( merge || nil ))
 properties:
-  consul: (( merge ))
+  consul: (( meta.consul ))
