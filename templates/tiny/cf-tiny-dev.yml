@@ -96,7 +96,7 @@ jobs:
     instances: 1
     persistent_disk: 102400
     templates: (( merge || meta.data_templates ))
-    resource_pool: medium_z1
+    resource_pool: large_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(0) ))
