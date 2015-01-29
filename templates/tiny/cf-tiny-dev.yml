@@ -114,7 +114,7 @@ jobs:
 
   - name: haproxy
     instances: 1
-    templates: (( merge || meta.ha_proxy_templates ))
+    templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
     networks:
       - name: floating
@@ -132,7 +132,7 @@ jobs:
 
   - name: api
     instances: 1
-    templates: (( merge || meta.api_templates ))
+    templates: (( meta.api_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
@@ -148,7 +148,7 @@ jobs:
 
   - name: services
     instances: 1
-    templates: (( merge || meta.services_templates ))
+    templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z1
     networks:
@@ -162,7 +162,7 @@ jobs:
 
   - name: health
     instances: 1
-    templates: (( merge || meta.health_templates ))
+    templates: (( meta.health_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
@@ -176,7 +176,7 @@ jobs:
         zone: z1
 
   - name: runner_z1
-    templates: (( merge || meta.dea_templates ))
+    templates: (( meta.dea_templates ))
     instances: 1
     update:
       max_in_flight: 1
