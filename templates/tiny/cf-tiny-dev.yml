@@ -26,8 +26,9 @@ meta:
       - (( "10.0.0.0/8" ))
 
       - name: floating
-        static_ips: (( meta.floating_static_ips )) 
+        static_ips: (( meta.floating_static_ips ))
   data_templates:
+  - <<: (( merge ))
   - name: debian_nfs_server
     release: (( meta.release.name ))
   - name: postgres
@@ -46,12 +47,14 @@ meta:
     release: (( meta.release.name ))
 
   ha_proxy_templates:
+  - <<: (( merge ))
   - name: metron_agent
     release: (( meta.release.name ))
   - name: haproxy
     release: (( meta.release.name ))
 
   api_templates:
+  - <<: (( merge ))
   - name: gorouter
     release: (( meta.release.name ))
   - name: cloud_controller_ng
@@ -62,6 +65,7 @@ meta:
     release: (( meta.release.name ))
 
   services_templates:
+  - <<: (( merge ))
   - name: uaa
     release: (( meta.release.name ))
   - name: login
@@ -76,6 +80,7 @@ meta:
     release: (( meta.release.name ))
 
   dea_templates:
+  - <<: (( merge ))
   - name: dea_next
     release: (( meta.release.name ))
   - name: dea_logging_agent
@@ -84,6 +89,7 @@ meta:
     release: (( meta.release.name ))
 
   health_templates:
+  - <<: (( merge ))
   - name: loggregator_trafficcontroller
     release: (( meta.release.name ))
   - name: hm9000
@@ -105,6 +111,7 @@ jobs:
       - name: cf1
         static_ips: (( static_ips(0) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       doppler:
         zone: z1
@@ -122,6 +129,7 @@ jobs:
         default: [dns, gateway]
         static_ips: (( static_ips(1) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -137,6 +145,7 @@ jobs:
         default: [dns, gateway]
         static_ips: (( static_ips(1) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -152,6 +161,7 @@ jobs:
       - name: cf1
         static_ips: (( static_ips(2) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       metron_agent:
         zone: z1
@@ -164,6 +174,7 @@ jobs:
       - name: cf1
         static_ips: (( static_ips(3) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       traffic_controller:
         zone: z1
@@ -180,6 +191,7 @@ jobs:
       - name: cf1
         static_ips: (( static_ips(4,5,6,7,8,9,10,11,12,13,14) ))
     properties:
+      <<: (( merge ))
       dea_next:
         zone: (( merge || "z1" ))
       networks: (( meta.networks.z1 ))
@@ -222,7 +234,7 @@ properties:
 
   support_address: (( merge || "http://support.cloudfoundry.com" ))
   description: (( merge || "Cloud Foundry sponsored by Pivotal" ))
-  
+
   ssl:
     skip_cert_verify: (( merge || true ))
   system_domain: (( meta.domain ))

@@ -1,49 +1,4 @@
-networks: (( merge ))
-
 meta:
-  environment: ~
-
-  release:
-    name: cf
-
-  domain: (( merge ))
-  app_domains: (( merge ))
-
-  domain: (( merge ))
-  app_domains: (( merge ))
-  ha_proxy:
-    ssl_pem: (( merge ))
-  floating_static_ips: (( merge ))
-  networks:
-    z1:
-      apps: cf1
-    z2:
-      apps: cf2
-
-  nfs_server:
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
-    allow_from_entries:
-      - (( "10.0.0.0/8" ))
-
-      - name: floating
-        static_ips: (( meta.floating_static_ips ))
-  data_templates:
-  - name: debian_nfs_server
-    release: (( meta.release.name ))
-  - name: postgres
-    release: (( meta.release.name ))
-  - name: nats
-    release: (( meta.release.name ))
-  - name: nats_stream_forwarder
-    release: (( meta.release.name ))
-  - name: etcd
-    release: (( meta.release.name ))
-  - name: etcd_metrics_server
-    release: (( meta.release.name ))
-  - name: doppler
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
   - name: debian-nfs-server-consul
     release: cf-consul
   - name: postgres-consul
@@ -64,10 +19,6 @@ meta:
     release: consul
 
   ha_proxy_templates:
-  - name: metron_agent
-    release: (( meta.release.name ))
-  - name: haproxy
-    release: (( meta.release.name ))
   - name: haproxy-consul
     release: cf-consul
   - name: consul
@@ -76,14 +27,6 @@ meta:
     release: consul
 
   api_templates:
-  - name: gorouter
-    release: (( meta.release.name ))
-  - name: cloud_controller_ng
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
-  - name: nfs_mounter
-    release: (( meta.release.name ))
   - name: gorouter-consul
     release: cf-consul
   - name: cloud-controller-ng-consul
@@ -96,18 +39,6 @@ meta:
     release: consul
 
   services_templates:
-  - name: uaa
-    release: (( meta.release.name ))
-  - name: login
-    release: (( meta.release.name ))
-  - name: cloud_controller_worker
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
-  - name: etcd
-    release: (( meta.release.name ))
-  - name: nfs_mounter
-    release: (( meta.release.name ))
   - name: uaa-consul
     release: cf-consul
   - name: login-consul
@@ -124,12 +55,6 @@ meta:
     release: consul
 
   dea_templates:
-  - name: dea_next
-    release: (( meta.release.name ))
-  - name: dea_logging_agent
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
   - name: dea-next-consul
     release: cf-consul
   - name: dea-logging-agent-consul
@@ -140,16 +65,6 @@ meta:
     release: consul
 
   health_templates:
-  - name: loggregator_trafficcontroller
-    release: (( meta.release.name ))
-  - name: hm9000
-    release: (( meta.release.name ))
-  - name: cloud_controller_clock
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
-  - name: collector
-    release: (( meta.release.name ))
   - name: loggregator-trafficcontroller-consul
     release: cf-consul
   - name: hm9000-consul
@@ -160,286 +75,27 @@ meta:
     release: consul
   - name: vm-consul
     release: consul
-
 jobs:
   - name: data
-    instances: 1
-    persistent_disk: 102400
-    templates: (( merge || meta.data_templates ))
-    resource_pool: large_z1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(0) ))
     properties:
-      network: cf1
-      networks: (( meta.networks.z1 ))
-      doppler:
-        zone: z1
-      metron_agent:
-        zone: z1
+      network: (( meta.networks.z1 ))
 
   - name: haproxy
-    instances: 1
-    templates: (( merge || meta.ha_proxy_templates ))
-    resource_pool: small_z1
-    networks:
-      - name: floating
-        static_ips: (( meta.floating_static_ips ))
-      - name: lb1
-        default: [dns, gateway]
-        static_ips: (( static_ips(1) ))
     properties:
       network: lb1
-      networks: (( meta.networks.z1 ))
-      ha_proxy:
-        ssl_pem: (( meta.ha_proxy.ssl_pem ))
-      metron_agent:
-        zone: z1
 
   - name: api
-    instances: 1
-    templates: (( merge || meta.api_templates ))
-    resource_pool: medium_z1
-    networks:
-      - name: cf1
-        default: [dns, gateway]
-        static_ips: (( static_ips(1) ))
     properties:
-      network: cf1
-      networks: (( meta.networks.z1 ))
-      ha_proxy:
-        ssl_pem: (( meta.ha_proxy.ssl_pem ))
-      metron_agent:
-        zone: z1
+      network: (( meta.networks.z1 ))
 
   - name: services
-    instances: 1
-    templates: (( merge || meta.services_templates ))
-    persistent_disk: 102400
-    resource_pool: medium_z1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(2) ))
     properties:
-      network: cf1
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
+      network: (( meta.networks.z1 ))
 
   - name: health
-    instances: 1
-    templates: (( merge || meta.health_templates ))
-    resource_pool: medium_z1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(3) ))
     properties:
-      network: cf1
-      networks: (( meta.networks.z1 ))
-      traffic_controller:
-        zone: z1
-      metron_agent:
-        zone: z1
+      network: (( meta.networks.z1 ))
 
   - name: runner_z1
-    templates: (( merge || meta.dea_templates ))
-    instances: 1
-    update:
-      max_in_flight: 1
-    resource_pool: runner_z1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(4,5,6,7,8,9,10,11,12,13,14) ))
     properties:
-      network: cf1
-      dea_next:
-        zone: (( merge || "z1" ))
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
-
-  - name: acceptance_tests_runner
-    templates:
-    - name: acceptance-tests
-      release: cf
-    instances: 0
-    resource_pool: small_errand
-    lifecycle: errand
-    networks:
-      - name: cf1
-
-  - name: smoke_tests_runner
-    templates:
-    - name: smoke-tests
-      release: cf
-    instances: 0
-    resource_pool: small_errand
-    lifecycle: errand
-    networks:
-      - name: cf1
-    properties:
-      networks: (( meta.networks.z1 ))
-
-properties:
-  <<: (( merge ))
-
-  template_only:
-    aws:
-      <<: (( merge ))
-      access_key_id: ~
-      secret_access_key: ~
-
-  dropsonde:
-    enabled: true
-
-  support_address: (( merge || "http://support.cloudfoundry.com" ))
-  description: (( merge || "Cloud Foundry sponsored by Pivotal" ))
-
-  ssl:
-    skip_cert_verify: (( merge || true ))
-  system_domain: (( meta.domain ))
-  system_domain_organization: ~
-  app_domains: (( [meta.app_domains] ))
-
-  disk_quota_enabled: true
-
-  request_timeout_in_seconds: 900
-
-  ccdb:
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
-    databases:
-    - tag: cc
-      name: ccdb
-      citext: true
-    db_scheme: postgres
-    port: 5524
-    roles:
-    - name: ccadmin
-      password: (( merge ))
-      tag: admin
-
-  uaadb:
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
-    databases:
-    - name: uaadb
-      tag: uaa
-      citext: true
-    db_scheme: postgresql
-    port: 5524
-    roles:
-    - name: uaaadmin
-      password: (( merge ))
-      tag: admin
-
-  databases:
-    db_scheme: postgres
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
-    port: 5524
-    roles:
-      - tag: admin
-        name: ccadmin
-        password: (( merge ))
-      - tag: admin
-        name: uaaadmin
-        password: (( merge ))
-
-    databases:
-      - tag: cc
-        name: ccdb
-        citext: true
-      - tag: uaa
-        name: uaadb
-        citext: true
-
-  nats:
-    user: (( merge ))
-    password: (( merge ))
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
-    port: 4222
-    machines: (( jobs.data.networks.cf1.static_ips ))
-    debug: false
-    trace: false
-    monitor_port: 0
-    prof_port: 0
-
-  etcd:
-    machines: (( jobs.data.networks.cf1.static_ips jobs.services.networks.cf1.static_ips ))
-
-  etcd_metrics_server:
-    nats:
-      machines: (( .properties.nats.machines ))
-      username: (( .properties.nats.user ))
-      password: (( .properties.nats.password ))
-
-  dea_next:
-    memory_mb: (( merge ))
-    memory_overcommit_factor: 3
-    disk_mb: (( merge ))
-    disk_overcommit_factor: 2
-    staging_disk_inode_limit: 200000
-    instance_disk_inode_limit: 200000
-    deny_networks: (( merge || [] ))
-    allow_networks: (( merge || [] ))
-    kernel_network_tuning_enabled: true
-    directory_server_protocol: https
-    evacuation_bail_out_time_in_seconds: 600
-    logging_level: debug
-    staging_disk_limit_mb: 4096
-    staging_memory_limit_mb: 1024
-    default_health_check_timeout: 60
-    advertise_interval_in_seconds: 5
-    heartbeat_interval_in_seconds: 10
-    rlimit_core: (( merge || 0 ))
-
-  loggregator_endpoint:
-    shared_secret: (( merge ))
-
-  doppler_endpoint:
-    shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
-
-  metron_endpoint:
-    shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
-
-  logger_endpoint: ~
-
-  loggregator:
-    maxRetainedLogMessages: 100
-    debug: (( merge || false ))
-    blacklisted_syslog_ranges: ~
-    incoming_port: 3458
-    dropsonde_incoming_port: 3459
-
-  doppler:
-    maxRetainedLogMessages: 100
-    debug: (( merge || false ))
-    blacklisted_syslog_ranges: ~
-    incoming_port: 3458
-    dropsonde_incoming_port: 3459
-
-  cc: (( merge ))
-
-  hm9000: (( merge ))
-
-  uaa: (( merge ))
-
-
-  login: (( merge ))
-
-  router:
-    servers:
-      z1: (( jobs.api.networks.cf1.static_ips ))
-      z2: []
-    requested_route_registration_interval_in_seconds: 20
-    status:
-      user: (( merge ))
-      password: (( merge ))
-
-  syslog_daemon_config: ~
-
-  nfs_server: (( meta.nfs_server ))
-
-  collector: (( merge || nil ))
-
-  acceptance_tests: (( merge || nil ))
-
-  smoke_tests: (( merge || nil ))
+      network: (( meta.networks.z1 ))
