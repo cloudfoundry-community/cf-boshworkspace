@@ -1,4 +1,9 @@
 meta:
+  networks:
+    z1:
+      apps: cf1
+
+  data_templates:
   - name: debian-nfs-server-consul
     release: cf-consul
   - name: postgres-consul
