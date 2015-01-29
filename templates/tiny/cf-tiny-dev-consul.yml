@@ -83,7 +83,7 @@ meta:
 jobs:
   - name: data
     properties:
-      network: (( meta.networks.z1 ))
+      network: (( meta.networks.z1.apps ))
 
   - name: haproxy
     properties:
@@ -91,16 +91,16 @@ jobs:
 
   - name: api
     properties:
-      network: (( meta.networks.z1 ))
+      network: (( meta.networks.z1.apps ))
 
   - name: services
     properties:
-      network: (( meta.networks.z1 ))
+      network: (( meta.networks.z1.apps ))
 
   - name: health
     properties:
-      network: (( meta.networks.z1 ))
+      network: (( meta.networks.z1.apps ))
 
   - name: runner_z1
     properties:
-      network: (( meta.networks.z1 ))
+      network: (( meta.networks.z1.apps ))
