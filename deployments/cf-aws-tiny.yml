@@ -6,6 +6,13 @@ releases:
   - name: cf
     version: 196
     git: https://github.com/cloudfoundry/cf-release.git
+  - name: consul
+    version: 10
+    git: https://github.com/cloudfoundry-community/consul-boshrelease.git
+  - name: cf-consul
+    version: 1
+    git: https://github.com/cloudfoundry-community/cf-consul-boshrelease.git
+
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
@@ -14,6 +21,7 @@ stemcells:
 templates:
   - cf/cf-deployment.yml
   - tiny/cf-tiny-dev.yml
+#  - tiny/cf-tiny-dev-consul.yml
   - cf-uaa-port.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml

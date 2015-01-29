@@ -28,7 +28,6 @@ meta:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
   data_templates:
-  - <<: (( merge ))
   - name: debian_nfs_server
     release: (( meta.release.name ))
   - name: postgres
@@ -47,14 +46,12 @@ meta:
     release: (( meta.release.name ))
 
   ha_proxy_templates:
-  - <<: (( merge ))
   - name: metron_agent
     release: (( meta.release.name ))
   - name: haproxy
     release: (( meta.release.name ))
 
   api_templates:
-  - <<: (( merge ))
   - name: gorouter
     release: (( meta.release.name ))
   - name: cloud_controller_ng
@@ -65,7 +62,6 @@ meta:
     release: (( meta.release.name ))
 
   services_templates:
-  - <<: (( merge ))
   - name: uaa
     release: (( meta.release.name ))
   - name: login
@@ -80,7 +76,6 @@ meta:
     release: (( meta.release.name ))
 
   dea_templates:
-  - <<: (( merge ))
   - name: dea_next
     release: (( meta.release.name ))
   - name: dea_logging_agent
@@ -89,7 +84,6 @@ meta:
     release: (( meta.release.name ))
 
   health_templates:
-  - <<: (( merge ))
   - name: loggregator_trafficcontroller
     release: (( meta.release.name ))
   - name: hm9000
@@ -105,7 +99,7 @@ jobs:
   - name: data
     instances: 1
     persistent_disk: 102400
-    templates: (( merge || meta.data_templates ))
+    templates: (( meta.data_templates ))
     resource_pool: large_z1
     networks:
       - name: cf1
