@@ -23,6 +23,7 @@ templates:
   - tiny/cf-tiny-dev.yml
 #  - tiny/cf-tiny-dev-consul.yml
   - cf-uaa-port.yml
+#  - cf-consul.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
 # - cf-test-errands.yml
@@ -53,3 +54,9 @@ meta:
     cf2: CF_SUBNET2_AZ
     lb1: LB_SUBNET1_AZ
   environment: cf-aws-tiny
+  consul:
+    cluster:
+      join_hosts:
+      CONSUL-HOSTS
+    user: root
+    server: false
