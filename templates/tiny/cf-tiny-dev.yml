@@ -26,7 +26,7 @@ meta:
       - (( "10.0.0.0/8" ))
 
       - name: floating
-        static_ips: (( meta.floating_static_ips )) 
+        static_ips: (( meta.floating_static_ips ))
   data_templates:
   - name: debian_nfs_server
     release: (( meta.release.name ))
@@ -99,12 +99,13 @@ jobs:
   - name: data
     instances: 1
     persistent_disk: 102400
-    templates: (( merge || meta.data_templates ))
+    templates: (( meta.data_templates ))
     resource_pool: large_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(0) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       doppler:
         zone: z1
@@ -113,7 +114,7 @@ jobs:
 
   - name: haproxy
     instances: 1
-    templates: (( merge || meta.ha_proxy_templates ))
+    templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
     networks:
       - name: floating
@@ -122,6 +123,7 @@ jobs:
         default: [dns, gateway]
         static_ips: (( static_ips(1) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -130,13 +132,14 @@ jobs:
 
   - name: api
     instances: 1
-    templates: (( merge || meta.api_templates ))
+    templates: (( meta.api_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
         default: [dns, gateway]
         static_ips: (( static_ips(1) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -145,25 +148,27 @@ jobs:
 
   - name: services
     instances: 1
-    templates: (( merge || meta.services_templates ))
+    templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(2) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       metron_agent:
         zone: z1
 
   - name: health
     instances: 1
-    templates: (( merge || meta.health_templates ))
+    templates: (( meta.health_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(3) ))
     properties:
+      <<: (( merge ))
       networks: (( meta.networks.z1 ))
       traffic_controller:
         zone: z1
@@ -171,7 +176,7 @@ jobs:
         zone: z1
 
   - name: runner_z1
-    templates: (( merge || meta.dea_templates ))
+    templates: (( meta.dea_templates ))
     instances: 1
     update:
       max_in_flight: 1
@@ -180,6 +185,7 @@ jobs:
       - name: cf1
         static_ips: (( static_ips(4,5,6,7,8,9,10,11,12,13,14) ))
     properties:
+      <<: (( merge ))
       dea_next:
         zone: (( merge || "z1" ))
       networks: (( meta.networks.z1 ))
@@ -222,7 +228,7 @@ properties:
 
   support_address: (( merge || "http://support.cloudfoundry.com" ))
   description: (( merge || "Cloud Foundry sponsored by Pivotal" ))
-  
+
   ssl:
     skip_cert_verify: (( merge || true ))
   system_domain: (( meta.domain ))

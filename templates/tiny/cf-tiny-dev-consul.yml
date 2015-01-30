@@ -1,0 +1,169 @@
+meta:
+  release:
+    name: cf
+  networks:
+    z1:
+      apps: cf1
+  data_templates:
+  - name: debian_nfs_server
+    release: (( meta.release.name ))
+  - name: postgres
+    release: (( meta.release.name ))
+  - name: nats
+    release: (( meta.release.name ))
+  - name: nats_stream_forwarder
+    release: (( meta.release.name ))
+  - name: etcd
+    release: (( meta.release.name ))
+  - name: etcd_metrics_server
+    release: (( meta.release.name ))
+  - name: doppler
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: debian-nfs-server-consul
+    release: (( meta.release.name "-consul" ))
+  - name: postgres-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nats-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nats-stream-forwarder-consul
+    release: (( meta.release.name "-consul" ))
+  - name: etcd-consul
+    release: (( meta.release.name "-consul" ))
+  - name: etcd-metrics-server-consul
+    release: (( meta.release.name "-consul" ))
+  - name: doppler-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  ha_proxy_templates:
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: haproxy
+    release: (( meta.release.name ))
+  - name: haproxy-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  api_templates:
+  - name: gorouter
+    release: (( meta.release.name ))
+  - name: cloud_controller_ng
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: nfs_mounter
+    release: (( meta.release.name ))
+  - name: gorouter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: cloud-controller-ng-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nfs-mounter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  services_templates:
+  - name: uaa
+    release: (( meta.release.name ))
+  - name: login
+    release: (( meta.release.name ))
+  - name: cloud_controller_worker
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: etcd
+    release: (( meta.release.name ))
+  - name: nfs_mounter
+    release: (( meta.release.name ))
+  - name: uaa-consul
+    release: (( meta.release.name "-consul" ))
+  - name: login-consul
+    release: (( meta.release.name "-consul" ))
+  - name: cloud-controller-worker-consul
+    release: (( meta.release.name "-consul" ))
+  - name: etcd-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nfs-mounter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  dea_templates:
+  - name: dea_next
+    release: (( meta.release.name ))
+  - name: dea_logging_agent
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: dea-next-consul
+    release: (( meta.release.name "-consul" ))
+  - name: dea-logging-agent-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  health_templates:
+  - name: loggregator_trafficcontroller
+    release: (( meta.release.name ))
+  - name: hm9000
+    release: (( meta.release.name ))
+  - name: cloud_controller_clock
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: collector
+    release: (( meta.release.name ))
+  - name: loggregator-trafficcontroller-consul
+    release: (( meta.release.name "-consul" ))
+  - name: hm9000-consul
+    release: (( meta.release.name "-consul" ))
+  - name: cloud-controller-clock-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+jobs:
+  - name: data
+    templates: (( meta.data_templates ))
+    properties:
+      network: (( meta.networks.z1.apps ))
+
+  - name: haproxy
+    templates: (( meta.ha_proxy_templates ))
+    properties:
+      network: lb1
+
+  - name: api
+    templates: (( meta.api_templates ))
+    properties:
+      network: (( meta.networks.z1.apps ))
+
+  - name: services
+    templates: (( meta.services_templates ))
+    properties:
+      network: (( meta.networks.z1.apps ))
+
+  - name: health
+    templates: (( meta.health_templates ))
+    properties:
+      network: (( meta.networks.z1.apps ))
+
+  - name: runner_z1
+    templates: (( meta.dea_templates ))
+    properties:
+      network: (( meta.networks.z1.apps ))
