@@ -8,7 +8,7 @@ meta:
     cf1: (( merge ))
     cf2: ~
     lb1: ~
-  availability_zones: 
+  availability_zones:
     cf1: ~
     cf2: ~
     lb1: ~
@@ -37,7 +37,7 @@ properties:
        - protocol: udp
          destination: 0.0.0.0/0
          ports: '53'
- 
+
 
 networks:
   - name: cf1
