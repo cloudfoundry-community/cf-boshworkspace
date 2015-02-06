@@ -1,0 +1,79 @@
+meta:
+  ipmask: (( merge ))
+  cf1_quad: (( merge ))
+  cf2_quad: (( merge ))
+  security_groups: (( merge ))
+  dns_servers: (( merge ))
+  subnet_ids:
+    cf1: (( merge ))
+    cf2: ~
+    lb1: ~
+  availability_zones: 
+    cf1: ~
+    cf2: ~
+    lb1: ~
+
+  # expose 10.10.5.0-10.255.255.255 for services
+properties:
+  cc:
+    security_group_definitions:
+    - name: public_networks
+      rules:
+       - protocol: all
+         destination: 0.0.0.0-9.255.255.255
+       - protocol: all
+         destination: 10.10.5.0-169.253.255.255
+       - protocol: all
+         destination: 169.255.0.0-172.15.255.255
+       - protocol: all
+         destination: 172.32.0.0-192.167.255.255
+       - protocol: all
+         destination: 192.169.0.0-255.255.255.255
+    - name: dns
+      rules:
+       - protocol: tcp
+         destination: 0.0.0.0/0
+         ports: '53'
+       - protocol: udp
+         destination: 0.0.0.0/0
+         ports: '53'
+ 
+
+networks:
+  - name: cf1
+    type: manual
+    subnets:
+      - range: (( meta.ipmask meta.cf1_quad ".0/24" ))
+        name: default_unused
+        reserved:
+          - (( meta.ipmask meta.cf1_quad ".2 - " meta.ipmask meta.cf1_quad ".5" ))
+        static:
+          - (( meta.ipmask meta.cf1_quad ".6 - " meta.ipmask meta.cf1_quad ".50" ))
+        gateway: (( meta.ipmask meta.cf1_quad ".1" ))
+        dns: (( meta.dns_servers ))
+        cloud_properties:
+          security_groups: (( meta.security_groups ))
+          subnet: (( meta.subnet_ids.cf1 ))
+          net_id: (( meta.subnet_ids.cf1 ))
+          availability_zone: (( meta.availability_zones.cf1 ))
+
+  - name: cf2
+    type: manual
+    subnets:
+      - range: (( meta.ipmask meta.cf2_quad ".0/24" ))
+        name: default_unused
+        reserved:
+          - (( meta.ipmask meta.cf2_quad ".2 - " meta.ipmask meta.cf2_quad ".5" ))
+        static:
+          - (( meta.ipmask meta.cf2_quad ".6 - " meta.ipmask meta.cf2_quad ".50" ))
+        gateway: (( meta.ipmask meta.cf2_quad ".1" ))
+        dns: (( meta.dns_servers ))
+        cloud_properties:
+          security_groups: (( meta.security_groups ))
+          subnet: (( meta.subnet_ids.cf2 ))
+          net_id: (( meta.subnet_ids.cf2 ))
+          availability_zone: (( meta.availability_zones.cf2 ))
+
+  - name: floating
+    type: vip
+    cloud_properties: {}

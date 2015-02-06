@@ -1,6 +1,7 @@
 networks: (( merge ))
 
 meta:
+  haproxy_network: (( merge ))
   environment: ~
 
   release:
@@ -24,6 +25,7 @@ meta:
     address: (( jobs.data.networks.cf1.static_ips.[0] ))
     allow_from_entries:
       - (( "10.0.0.0/8" ))
+      - (( "192.168.0.0/16" ))
 
       - name: floating
         static_ips: (( meta.floating_static_ips ))
@@ -103,7 +105,7 @@ jobs:
     resource_pool: large_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(0) ))
+        static_ips: (( static_ips(4) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -119,9 +121,9 @@ jobs:
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: lb1
+      - name: (( meta.haproxy_network ))
         default: [dns, gateway]
-        static_ips: (( static_ips(1) ))
+        static_ips: (( static_ips(0) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -183,7 +185,7 @@ jobs:
     resource_pool: runner_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(4,5,6,7,8,9,10,11,12,13,14) ))
+        #static_ips: (( static_ips(5,6,7,8,9,10,11,12,13,14) ))
     properties:
       <<: (( merge ))
       dea_next:

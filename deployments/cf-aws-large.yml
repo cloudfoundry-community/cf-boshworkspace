@@ -26,7 +26,7 @@ templates:
   - cf-use-postgresql.yml
   - cf-use-nfs.yml
   - cf-secrets.yml
-  - cf-aws-networking.yml
+  - cf-networking.yml
   - cf-deployment-size.yml
 
 meta:
@@ -37,6 +37,12 @@ meta:
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
   ipmask: "IPMASK"
+  haproxy_network: "lb1"
+  lb1_quad: ".2"
+  cf1_quad: ".3"
+  cf2_quad: ".4"
+  dns_servers:
+    - IPMASK.0.2
   subnet_ids:
     cf1: CF_SUBNET1
     cf2: CF_SUBNET2
@@ -52,3 +58,9 @@ meta:
   runners:
     z1: 2
   environment: cf-aws-large
+  consul:
+    cluster:
+      join_hosts:
+        CONSUL-HOSTS
+    user: root
+    server: false
