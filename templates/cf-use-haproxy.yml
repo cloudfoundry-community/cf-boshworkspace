@@ -1,6 +1,7 @@
 meta:
   ipmask: (( merge ))
   security_groups: (( merge ))
+  lb1_quad: (( merge ))
   floating_static_ips: (( merge ))
   availability_zones: (( merge ))
   haproxy_network: (( merge ))
@@ -18,13 +19,13 @@ networks:
   - name: cf_lb1
     type: manual
     subnets:
-      - range: (( meta.ipmask lb1_quad ".0/24" ))
+      - range: (( meta.ipmask meta.lb1_quad ".0/24" ))
         name: default_unused
         reserved:
-          - (( meta.ipmask lb1_quad ".2 - " meta.ipmask lb1_quad ".5" ))
+          - (( meta.ipmask meta.lb1_quad ".2 - " meta.ipmask meta.lb1_quad ".5" ))
         static:
-          - (( meta.ipmask lb1_quad ".10 - " meta.ipmask lb1_quad ".100" ))
-        gateway: (( meta.ipmask lb1_quad ".1" ))
+          - (( meta.ipmask meta.lb1_quad ".10 - " meta.ipmask meta.lb1_quad ".100" ))
+        gateway: (( meta.ipmask meta.lb1_quad ".1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
         cloud_properties:
