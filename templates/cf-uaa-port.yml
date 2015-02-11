@@ -8,3 +8,4 @@ properties:
   uaa:
     <<: (( merge ))
     port: 8082
+  template_only: ~

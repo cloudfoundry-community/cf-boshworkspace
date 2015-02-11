@@ -1,0 +1,278 @@
+meta:
+  release:
+    name: cf
+  api_templates:
+  - name: cloud_controller_ng
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: nfs_mounter
+    release: (( meta.release.name ))
+  - name: cloud-controller-ng-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nfs-mounter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  api_worker_templates:
+  - name: cloud_controller_worker
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: nfs_mounter
+    release: (( meta.release.name ))
+  - name: cloud-controller-worker-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nfs-mounter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  clock_templates:
+  - name: cloud_controller_clock
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: cloud-controller-clock-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  etcd_templates:
+  - name: etcd
+    release: (( meta.release.name ))
+  - name: etcd_metrics_server
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: etcd-consul
+    release: (( meta.release.name "-consul" ))
+  - name: etcd-metrics-server-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  nats_templates:
+  - name: nats
+    release: (( meta.release.name ))
+  - name: nats_stream_forwarder
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: nats-consul
+    release: (( meta.release.name "-consul" ))
+  - name: nats-stream-forwarder-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  dea_templates:
+  - name: dea_next
+    release: (( meta.release.name ))
+  - name: dea_logging_agent
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: dea-next-consul
+    release: (( meta.release.name "-consul" ))
+  - name: dea-logging-agent-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  router_templates:
+  - name: gorouter
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: gorouter-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  ha_proxy_templates:
+  - name: haproxy
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: haproxy-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  stats_templates:
+  - name: collector
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  postgres_templates:
+  - name: postgres
+    release: (( meta.release.name ))
+  - name: postgres-consul
+    release: (( meta.release.name "-consul" ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  uaa_templates:
+  - name: uaa
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: uaa-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  login_templates:
+  - name: login
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: login-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  hm9000_templates:
+  - name: hm9000
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: hm9000-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  loggregator_templates:
+  - name: doppler
+    release: (( meta.release.name ))
+  - name: doppler-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+
+  loggregator_trafficcontroller_templates:
+  - name: loggregator_trafficcontroller
+    release: (( meta.release.name ))
+  - name: metron_agent
+    release: (( meta.release.name ))
+  - name: loggregator-trafficcontroller-consul
+    release: (( meta.release.name "-consul" ))
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
+jobs:
+  - name: ha_proxy_z1
+    templates: (( meta.ha_proxy_templates ))
+
+  - name: nats_z1
+    templates: (( meta.nats_templates ))
+
+  - name: nats_z2
+    templates: (( meta.nats_templates ))
+
+  - name: etcd_z1
+    templates: (( meta.etcd_templates ))
+
+  - name: etcd_z2
+    templates: (( meta.etcd_templates ))
+
+  - name: stats_z1
+    templates: (( meta.stats_templates ))
+
+  - name: postgres_z1
+    templates: (( meta.postgres_templates ))
+
+  - name: uaa_z1
+    templates: (( meta.uaa_templates ))
+
+  - name: uaa_z2
+    templates: (( meta.uaa_templates ))
+
+  - name: login_z1
+    templates: (( meta.login_templates ))
+
+  - name: login_z2
+    templates: (( meta.login_templates ))
+
+  - name: api_z1
+    templates: (( meta.api_templates ))
+
+  - name: api_z2
+    templates: (( meta.api_templates ))
+
+  - name: clock_global
+    templates: (( meta.clock_templates ))
+
+  - name: api_worker_z1
+    templates: (( meta.api_worker_templates ))
+
+  - name: api_worker_z2
+    templates: (( meta.api_worker_templates ))
+
+  - name: hm9000_z1
+    templates: (( meta.hm9000_templates ))
+
+  - name: hm9000_z2
+    templates: (( meta.hm9000_templates ))
+
+  - name: runner_z1
+    templates: (( meta.dea_templates ))
+
+  - name: runner_z2
+    templates: (( meta.dea_templates ))
+
+  - name: loggregator_z1
+    templates: (( meta.loggregator_templates ))
+
+  - name: loggregator_z2
+    templates: (( meta.loggregator_templates ))
+
+
+  - name: loggregator_trafficcontroller_z1
+    templates: (( meta.loggregator_trafficcontroller_templates ))
+
+
+  - name: loggregator_trafficcontroller_z2
+    templates: (( meta.loggregator_trafficcontroller_templates ))
+
+  - name: router_z1
+    templates: (( meta.router_templates ))
+
+  - name: router_z2
+    templates: (( meta.router_templates ))
