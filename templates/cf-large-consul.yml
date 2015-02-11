@@ -130,8 +130,6 @@ meta:
   postgres_templates:
   - name: postgres
     release: (( meta.release.name ))
-  - name: postgres-consul
-    release: (( meta.release.name "-consul" ))
   - name: metron_agent
     release: (( meta.release.name ))
   - name: consul
