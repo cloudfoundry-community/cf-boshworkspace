@@ -21,7 +21,7 @@ stemcells:
 templates:
   - cf/cf-deployment.yml
   - cf/cf-jobs.yml
-  - cf-uaa-port
+  - cf-uaa-port.yml
   - cf-consul.yml
   - cf-large-consul.yml
   - cf/cf-properties.yml
