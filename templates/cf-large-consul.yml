@@ -127,16 +127,6 @@ meta:
   - name: vm-consul
     release: consul
 
-  postgres_templates:
-  - name: postgres
-    release: (( meta.release.name ))
-  - name: metron_agent
-    release: (( meta.release.name ))
-  - name: consul
-    release: consul
-  - name: vm-consul
-    release: consul
-
   uaa_templates:
   - name: uaa
     release: (( meta.release.name ))
@@ -212,9 +202,6 @@ jobs:
 
   - name: stats_z1
     templates: (( meta.stats_templates ))
-
-  - name: postgres_z1
-    templates: (( meta.postgres_templates ))
 
   - name: uaa_z1
     templates: (( meta.uaa_templates ))
