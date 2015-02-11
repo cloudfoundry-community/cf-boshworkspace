@@ -140,30 +140,18 @@ meta:
 jobs:
   - name: data
     templates: (( meta.data_templates ))
-    properties:
-      network: (( meta.networks.z1.apps ))
 
   - name: haproxy
     templates: (( meta.ha_proxy_templates ))
-    properties:
-      network: lb1
 
   - name: api
     templates: (( meta.api_templates ))
-    properties:
-      network: (( meta.networks.z1.apps ))
 
   - name: services
     templates: (( meta.services_templates ))
-    properties:
-      network: (( meta.networks.z1.apps ))
 
   - name: health
     templates: (( meta.health_templates ))
-    properties:
-      network: (( meta.networks.z1.apps ))
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
-    properties:
-      network: (( meta.networks.z1.apps ))
