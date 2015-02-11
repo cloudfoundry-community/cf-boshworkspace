@@ -1,7 +1,8 @@
 meta:
   ipmask: (( merge ))
   security_groups: (( merge ))
-  subnet_ids: 
+  lb1_quad: (( merge ))
+  subnet_ids:
     cf1: (( merge ))
     cf2: (( merge ))
     lb1: (( merge ))
@@ -24,13 +25,13 @@ networks:
   - name: lb1
     type: manual
     subnets:
-      - range: (( meta.ipmask ".2.0/24" ))
+      - range: (( meta.ipmask lb1_quad ".0/24" ))
         name: default_unused
         reserved:
-          - (( meta.ipmask ".2.2 - " meta.ipmask ".2.5" ))
+          - (( meta.ipmask lb1_quad ".2 - " meta.ipmask lb1_quad ".5" ))
         static:
-          - (( meta.ipmask ".2.6 - " meta.ipmask ".2.30" ))
-        gateway: (( meta.ipmask ".2.1" ))
+          - (( meta.ipmask lb1_quad ".6 - " meta.ipmask lb1_quad ".30" ))
+        gateway: (( meta.ipmask lb1_quad ".1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
         cloud_properties:
