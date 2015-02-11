@@ -3,6 +3,7 @@ meta:
   security_groups: (( merge ))
   floating_static_ips: (( merge ))
   availability_zones: (( merge ))
+  haproxy_network: (( merge ))
   domain: (( merge ))
   ha_proxy:
     ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
@@ -17,13 +18,13 @@ networks:
   - name: cf_lb1
     type: manual
     subnets:
-      - range: (( meta.ipmask ".2.0/24" ))
+      - range: (( meta.ipmask lb1_quad ".0/24" ))
         name: default_unused
         reserved:
-          - (( meta.ipmask ".2.2 - " meta.ipmask ".2.5" ))
+          - (( meta.ipmask lb1_quad ".2 - " meta.ipmask lb1_quad ".5" ))
         static:
-          - (( meta.ipmask ".2.10 - " meta.ipmask ".2.100" ))
-        gateway: (( meta.ipmask ".2.1" ))
+          - (( meta.ipmask lb1_quad ".10 - " meta.ipmask lb1_quad ".100" ))
+        gateway: (( meta.ipmask lb1_quad ".1" ))
         dns:
           - (( meta.ipmask ".0.2" ))
         cloud_properties:
@@ -40,14 +41,14 @@ jobs:
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: cf_lb1
+      - name: (( meta.haproxy_network ))
         static_ips: (( static_ips(0) ))
         default: [dns, gateway]
     properties:
       ha_proxy:
         ssl_pem: (( defaults.ha_proxy.ssl_pem ))
       networks:
-        apps: cf_lb1
+        apps: (( meta.haproxy_network ))
 
 resource_pools:
   - name: router_z1
