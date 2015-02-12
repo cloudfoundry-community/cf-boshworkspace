@@ -23,7 +23,7 @@ templates:
   - cf-no-ssl.yml
   - cf-secrets.yml
   - tiny/cf-use-nfs.yml
-  - cf-os-networking.yml
+  - cf-networking.yml
 
 meta:
   openstack:
@@ -34,7 +34,7 @@ meta:
     api_key: OS_APIKEY
   domain: run.CF_DOMAIN
   app_domains: apps.CF_DOMAIN
-  security_groups: [ "cf" ] 
+  security_groups: [ "cf" ]
   floating_static_ips:
     - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
