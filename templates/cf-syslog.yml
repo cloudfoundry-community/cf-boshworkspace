@@ -1,0 +1,12 @@
+meta:
+  syslog_daemon_config:
+    address: (( merge ))
+    port: (( merge ))
+
+
+properties:
+  syslog_daemon_config:
+    address: (( meta.syslog_daemon_config.address ))
+    port: (( meta.syslog_daemon_config.port ))
+    transport: relp
+
