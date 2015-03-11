@@ -4,7 +4,7 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 196
+    version: 202
     git: https://github.com/cloudfoundry/cf-release.git
   - name: consul
     version: 11
@@ -16,7 +16,7 @@ releases:
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2831
+    version: 2865
 
 templates:
   - cf/cf-deployment.yml
