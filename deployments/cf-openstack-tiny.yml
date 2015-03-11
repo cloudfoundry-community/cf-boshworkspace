@@ -1,5 +1,5 @@
 ---
-name: cf-os-tiny
+name: cf-openstack-tiny
 director_uuid: DIRECTOR_UUID
 
 releases:
@@ -47,7 +47,7 @@ meta:
   dns_servers:
     - 8.8.8.8
     - 8.8.4.4
-  environment: cf-os-tiny
+  environment: cf-openstack-tiny
   subnet_ids:
     cf1: CF_SUBNET1
     cf2: CF_SUBNET2
