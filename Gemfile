@@ -1,4 +1,5 @@
 source "https://rubygems.org"
 
+gem "git", "1.2.7"
 gem "bosh_cli_plugin_micro"
-gem 'bosh-workspace', :git => 'https://github.com/cloudfoundry-incubator/bosh-workspace.git', :branch => 'deployment-patch'
+gem 'bosh-workspace'
