@@ -3,9 +3,14 @@ Change Log
 
 `cf-boshworkspace` is a project that allows you to quickly boot up a microbosh and CloudFoundry environment.
 
+
+v1.1.3
+------
+- removed gemset file
+
 v1.1.2
 ------
-Updated boshworkspace to use latest and specify git to v1.2.7
+- Updated boshworkspace to use latest and specify git to v1.2.7
 
 v1.1.1
 ------
