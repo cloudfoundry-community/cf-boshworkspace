@@ -1,0 +1,45 @@
+meta:
+  # Settings from cf deployment
+  cc:
+    external_port: (( merge || "9022" ))
+    internal_api_password: (( merge ))
+    srv_api_uri: (( merge ))
+    staging_upload_user: (( merge ))
+    staging_upload_password: (( merge ))
+    service_name: (( merge ))
+  consul:
+    lan_servers: (( merge ))
+    domain: (( merge ))
+  etcd:
+    machines: (( merge ))
+  loggregator_endpoint:
+    shared_secret: (( merge ))
+  nats:
+    user: (( merge || "nats" ))
+    password: (( merge ))
+    port: (( merge || "4222" ))
+    machines: (( merge ))
+
+property_overrides: {}  
+
+config_from_cf:
+  cf_deployment_name: overridden_by_bosh_workspace
+  cc:
+    external_port: (( meta.cc.external_port))
+    internal_api_password: (( meta.cc.internal_api_password ))
+    srv_api_uri: (( meta.cc.srv_api_uri ))
+    staging_upload_user: (( meta.cc.staging_upload_user ))
+    staging_upload_password: (( meta.cc.staging_upload_password ))
+    service_name: (( meta.cc.service_name ))
+  consul:
+    lan_servers: (( meta.consul.lan_servers ))
+    domain: (( meta.consul.domain ))
+  etcd:
+    machines: (( meta.etcd.machines ))
+  loggregator_endpoint:
+    shared_secret: (( meta.loggregator_endpoint.shared_secret ))
+  nats:
+    user: (( meta.nats.user ))
+    password: (( meta.nats.password ))
+    port: (( meta.nats.port ))
+    machines: (( meta.nats.machines ))

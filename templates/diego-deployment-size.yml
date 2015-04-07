@@ -1,0 +1,49 @@
+meta:
+  instances:
+    etcd_z1: (( merge || 1 ))
+    etcd_z2: (( merge || 1 ))
+    etcd_z3: (( merge || 1 ))
+    brain_z1: (( merge || 1 ))
+    brain_z2: (( merge || 1 ))
+    brain_z3: (( merge || 1 ))
+    cell_z1: (( merge || 1 ))
+    cell_z2: (( merge || 1 ))
+    cell_z3: (( merge || 1 ))
+    cc_bridge_z1: (( merge || 1 ))
+    cc_bridge_z2: (( merge || 1 ))
+    cc_bridge_z3: (( merge || 1 ))
+    route_emitter_z1: (( merge || 1 ))
+    route_emitter_z2: (( merge || 1 ))
+    route_emitter_z3: (( merge || 1 ))
+
+instance_count_overrides:
+  etcd_z1:
+    instances: (( meta.instances.etcd_z1 ))
+  etcd_z2:
+    instances: (( meta.instances.etcd_z2 ))
+  etcd_z3:
+    instances: (( meta.instances.etcd_z3 ))
+  brain_z1:
+    instances: (( meta.instances.brain_z1 ))
+  brain_z2:
+    instances: (( meta.instances.brain_z2 ))
+  brain_z3:
+    instances: (( meta.instances.brain_z3 ))
+  cell_z1:
+    instances: (( meta.instances.cell_z1 ))
+  cell_z2:
+    instances: (( meta.instances.cell_z2 ))
+  cell_z3:
+    instances: (( meta.instances.cell_z3 ))
+  cc_bridge_z1:
+    instances: (( meta.instances.cc_bridge_z1 ))
+  cc_bridge_z2:
+    instances: (( meta.instances.cc_bridge_z2 ))
+  cc_bridge_z3:
+    instances: (( meta.instances.cc_bridge_z3 ))
+  route_emitter_z1:
+    instances: (( meta.instances.route_emitter_z1 ))
+  route_emitter_z2:
+    instances: (( meta.instances.route_emitter_z2 ))
+  route_emitter_z3:
+    instances: (( meta.instances.route_emitter_z3 ))
