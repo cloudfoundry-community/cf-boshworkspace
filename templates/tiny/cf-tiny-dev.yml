@@ -63,6 +63,8 @@ meta:
     release: (( meta.release.name ))
   - name: nfs_mounter
     release: (( meta.release.name ))
+  - name: consul_agent
+    release: (( meta.release.name ))
 
   services_templates:
   - name: uaa
@@ -96,6 +98,8 @@ meta:
   - name: metron_agent
     release: (( meta.release.name ))
   - name: collector
+    release: (( meta.release.name ))
+  - name: consul_agent
     release: (( meta.release.name ))
 
 jobs:
@@ -143,6 +147,10 @@ jobs:
         static_ips: (( static_ips(1) ))
     properties:
       <<: (( merge ))
+      consul:
+        agent:
+          services:
+            - cloud_controller_ng
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -177,6 +185,11 @@ jobs:
         zone: z1
       metron_agent:
         zone: z1
+      consul:
+        agent:
+          mode: server
+          servers:
+            lan: []
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
@@ -358,7 +371,6 @@ properties:
 
   uaa: (( merge ))
 
-
   login: (( merge ))
 
   router:
@@ -379,3 +391,8 @@ properties:
   acceptance_tests: (( merge || nil ))
 
   smoke_tests: (( merge || nil ))
+
+  consul:
+    agent:
+      servers:
+        lan: (( jobs.health.networks.cf1.static_ips ))
