@@ -1,0 +1,151 @@
+meta:
+  stemcell: (( merge ))
+  zones:
+    z1: (( merge ))
+    z2: (( merge ))
+    z3: (( merge ))
+
+  instance_type:
+    compilation: (( merge || "m3.medium" ))
+    brain: (( merge || "m2.2xlarge" ))
+    cc_bridge: (( merge || "c3.xlarge" ))
+    cell: (( merge || "m2.2xlarge" ))
+    etcd: (( merge || "m3.medium" ))
+    route_emitter: (( merge || "m3.medium" ))
+
+  networking:
+    ipmask: (( merge ))
+    quads:
+      diego1: (( merge ))
+      diego2: (( merge ))
+      diego3: (( merge ))
+    security_groups: (( merge ))
+    dns_servers: (( merge ))
+    subnet_ids:
+      diego1: (( merge ))
+      diego2: (( merge ))
+      diego3: (( merge ))
+
+tmp:
+  net:
+    d1: (( meta.networking.ipmask "." meta.networking.quads.diego1 ))
+    d2: (( meta.networking.ipmask "." meta.networking.quads.diego2 ))
+    d3: (( meta.networking.ipmask "." meta.networking.quads.diego3 ))
+
+iaas_settings:
+  stemcell: (( meta.stemcell ))
+  subnet_configs:
+    - name: diego1
+      subnets:
+      - range: (( tmp.net.d1 ".0/24" ))
+        name: diego1
+        reserved:
+          - (( tmp.net.d1 ".2 - " tmp.net.d1 ".5" ))
+        static:
+          - (( tmp.net.d1 ".6 - " tmp.net.d1 ".50" ))
+        gateway: (( tmp.net.d1 ".1" ))
+        dns: (( meta.networking.dns_servers ))
+        cloud_properties:
+          security_groups: (( meta.networking.security_groups ))
+          subnet: (( meta.networking.subnet_ids.diego1 ))
+          net_id: (( meta.networking.subnet_ids.diego1 ))
+          availability_zone: (( meta.zones.z1 ))
+
+    - name: diego2
+      subnets:
+      - range: (( tmp.net.d2 ".0/24" ))
+        name: diego1
+        reserved:
+          - (( tmp.net.d2 ".2 - " tmp.net.d2 ".5" ))
+        static:
+          - (( tmp.net.d2 ".6 - " tmp.net.d2 ".50" ))
+        gateway: (( tmp.net.d2 ".1" ))
+        dns: (( meta.networking.dns_servers ))
+        cloud_properties:
+          security_groups: (( meta.networking.security_groups ))
+          subnet: (( meta.networking.subnet_ids.diego2 ))
+          net_id: (( meta.networking.subnet_ids.diego2 ))
+          availability_zone: (( meta.zones.z2 ))
+
+    - name: diego3
+      subnets:
+      - range: (( tmp.net.d3 ".0/24" ))
+        name: diego1
+        reserved:
+          - (( tmp.net.d3 ".2 - " tmp.net.d3 ".5" ))
+        static:
+          - (( tmp.net.d3 ".6 - " tmp.net.d3 ".50" ))
+        gateway: (( tmp.net.d3 ".1" ))
+        dns: (( meta.networking.dns_servers ))
+        cloud_properties:
+          security_groups: (( meta.networking.security_groups ))
+          subnet: (( meta.networking.subnet_ids.diego3 ))
+          net_id: (( meta.networking.subnet_ids.diego3 ))
+          availability_zone: (( meta.zones.z3 ))
+
+  compilation_cloud_properties:
+    instance_type: (( meta.instance_type.compilation ))
+    availability_zone: (( meta.zones.z1 ))
+  resource_pool_cloud_properties:
+    - name: brain_z1
+      cloud_properties: 
+        instance_type: (( meta.instance_type.brain ))
+        availability_zone: (( meta.zones.z1 ))
+    - name: brain_z2
+      cloud_properties:
+        instance_type: (( meta.instance_type.brain ))
+        availability_zone: (( meta.zones.z2 ))
+    - name: brain_z3
+      cloud_properties:
+        instance_type: (( meta.instance_type.brain ))
+        availability_zone: (( meta.zones.z3 ))
+    - name: cc_bridge_z1
+      cloud_properties:
+        instance_type: (( meta.instance_type.cc_bridge ))
+        availability_zone: (( meta.zones.z1 ))
+    - name: cc_bridge_z2
+      cloud_properties:
+        instance_type: (( meta.instance_type.cc_bridge ))
+        availability_zone: (( meta.zones.z2 ))
+    - name: cc_bridge_z3
+      cloud_properties:
+        instance_type: (( meta.instance_type.cc_bridge ))
+        availability_zone: (( meta.zones.z3 ))
+    - name: cell_z1
+      cloud_properties:
+        instance_type: (( meta.instance_type.cell ))
+        availability_zone: (( meta.zones.z1 ))
+    - name: cell_z2
+      cloud_properties:
+        instance_type: (( meta.instance_type.cell ))
+        availability_zone: (( meta.zones.z2 ))
+    - name: cell_z3
+      cloud_properties:
+        instance_type: (( meta.instance_type.cell ))
+        availability_zone: (( meta.zones.z3 ))
+    - name: etcd_z1
+      cloud_properties:
+        instance_type: (( meta.instance_type.etcd ))
+        availability_zone: (( meta.zones.z1 ))
+    - name: etcd_z2
+      cloud_properties:
+        instance_type: (( meta.instance_type.etcd ))
+        availability_zone: (( meta.zones.z2 ))
+    - name: etcd_z3
+      cloud_properties:
+        instance_type: (( meta.instance_type.etcd ))
+        availability_zone: (( meta.zones.z3 ))
+    - name: route_emitter_z1
+      cloud_properties:
+        instance_type: (( meta.instance_type.route_emitter ))
+        availability_zone: (( meta.zones.z1 ))
+    - name: route_emitter_z2
+      cloud_properties:
+        instance_type: (( meta.instance_type.route_emitter ))
+        availability_zone: (( meta.zones.z2 ))
+    - name: route_emitter_z3
+      cloud_properties:
+        instance_type: (( meta.instance_type.route_emitter ))
+        availability_zone: (( meta.zones.z3 ))
+
+persistent_disk_overrides: {}

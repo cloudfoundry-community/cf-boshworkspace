@@ -1,0 +1,92 @@
+name: diego-aws
+director_uuid: DIRECTOR_UUID
+releases:
+- name: diego
+  version: 0.1072.0
+  git: https://github.com/cloudfoundry-incubator/diego-release.git
+- name: cf
+  version: 205
+  git: https://github.com/cloudfoundry/cf-release.git
+
+stemcells:
+- name: bosh-aws-xen-ubuntu-trusty-go_agent
+  version: 2905
+
+templates:
+- diego/misc-templates/bosh.yml
+- diego/diego.yml
+- diego/misc-templates/iaas-settings.yml
+- diego/config-from-cf.yml
+- diego-settings.yml
+- diego-aws.yml
+- diego-deployment-size.yml
+
+meta:
+  cc:
+    internal_api_password: c1oudc0w
+    srv_api_uri: https://api.run.CF_DOMAIN
+    staging_upload_user: staging
+    staging_upload_password: c1oudc0w
+    service_name: cloud_controller_ng # jobs.api_z1.properties.consul.agent.services
+  consul:
+    lan_servers: [ IPMASK.3.9 ]
+    domain: consul # http://goo.gl/XTdsIw
+  etcd:
+    machines:
+    - IPMASK.3.10
+    - IPMASK.3.8
+  loggregator_endpoint:
+    shared_secret: c1oudc0w
+  nats:
+    password: c1oudc0w
+    machines:
+    - IPMASK.3.10
+
+  zones:
+    z1: DIEGO_AZ1
+    z2: ~
+    z3: ~
+
+  # Tiny instances
+  # hvm stemcell not available in us-west-1
+  # instance_type:
+  #   compilation: m3.medium
+  #   brain: t2.medium
+  #   cc_bridge: t2.small
+  #   cell: t2.medium
+  #   etcd: t2.micro
+  #   route_emitter: t2.micro
+
+  instance_type:
+    compilation: m3.medium
+    brain: m3.medium
+    cc_bridge: m3.medium
+    cell: m3.medium
+    etcd: m3.medium
+    route_emitter: m3.medium
+
+  networking:
+    ipmask: "IPMASK"
+    quads:
+      diego1: "6"
+      diego2: "6"
+      diego3: "6"
+    security_groups: [ CF_SG ]
+    dns_servers: [ IPMASK.0.2 ]
+    subnet_ids:
+      diego1: DIEGO_SUBNET1
+      diego2: ~
+      diego3: ~
+
+  # Single Availability Zone
+  instances:
+    etcd_z2: 0
+    etcd_z3: 0
+    brain_z2: 0
+    brain_z3: 0
+    cell_z2: 0
+    cell_z3: 0
+    cc_bridge_z2: 0
+    cc_bridge_z3: 0
+    route_emitter_z2: 0
+    route_emitter_z3: 0
