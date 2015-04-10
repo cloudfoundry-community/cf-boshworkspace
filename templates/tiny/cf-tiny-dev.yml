@@ -393,6 +393,7 @@ properties:
   smoke_tests: (( merge || nil ))
 
   consul:
+    domain: "consul"
     agent:
       servers:
         lan: (( jobs.health.networks.cf1.static_ips ))
