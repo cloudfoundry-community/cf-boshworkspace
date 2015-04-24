@@ -4,12 +4,12 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 206
+    version: 207
     git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
   - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2859
+    version: 2941
 
 templates:
   - cf/cf-deployment.yml
