@@ -47,12 +47,6 @@ meta:
   dns_servers:
     - 8.8.8.8
     - 8.8.4.4
-  instances:
-    runner_size: 1
-    api_size: 1
-    haproxy_size: 1
-    service_size: 1
-    health_size: 1
   environment: cf-openstack-tiny
   subnet_ids:
     cf1: CF_SUBNET1

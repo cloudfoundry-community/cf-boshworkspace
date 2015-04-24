@@ -48,12 +48,6 @@ meta:
   lb1_quad: ".2"
   cf1_quad: ".3"
   cf2_quad: ".4"
-  instances:
-    runner_size: 1
-    api_size: 1
-    haproxy_size: 1
-    service_size: 1
-    health_size: 1
   dns_servers:
     - IPMASK.0.2
   subnet_ids:
