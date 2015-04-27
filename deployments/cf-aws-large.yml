@@ -47,7 +47,7 @@ meta:
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
   ipmask: "IPMASK"
-  haproxy_network: "lb1"
+  haproxy_network: "cf_lb1"
   lb1_quad: ".2"
   cf1_quad: ".3"
   cf2_quad: ".4"
