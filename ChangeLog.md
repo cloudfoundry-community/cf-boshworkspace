@@ -3,6 +3,10 @@ Change Log
 
 `cf-boshworkspace` is a project that allows you to quickly boot up a microbosh and CloudFoundry environment.
 
+v1.1.4
+------
+- bumped to v207
+- fixed large to work upstream
 
 v1.1.3
 ------
