@@ -27,6 +27,7 @@ templates:
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
   - cf/cf-minimal-dev.yml
+  - cf/cf-lamb.yml
   - cf-runners.yml
   - cf-single-az.yml
   - cf-no-ssl.yml
