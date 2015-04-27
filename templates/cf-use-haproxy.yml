@@ -43,7 +43,6 @@ jobs:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
       - name: (( meta.haproxy_network ))
-        static_ips: (( static_ips(0) ))
         default: [dns, gateway]
     properties:
       ha_proxy:
