@@ -1,8 +1,17 @@
 meta:
   instances:
     api_worker_z1: (( merge || 1 ))
+    api_worker_z2: (( merge || 1 ))
+    api_worker_z3: (( merge || 1 ))
     etcd_z1: (( merge || 1 ))
+    etcd_z2: (( merge || 1 ))
+    etcd_z3: (( merge || 1 ))
     router_z1: (( merge || 1 ))
+    router_z2: (( merge || 1 ))
+    router_z3: (( merge || 1 ))
+    runner_z1: (( merge || 1 ))
+    runner_z2: (( merge || 1 ))
+    runner_z3: (( merge || 1 ))
 jobs:
   - name: api_worker_z1
     instances: (( meta.instances.api_worker_z1 ))
@@ -10,3 +19,21 @@ jobs:
     instances: (( meta.instances.etcd_z1 ))
   - name: router_z1
     instances: (( meta.instances.router_z1 ))
+  - name: runner_z1
+    instances: (( meta.instances.runner_z1 ))
+  - name: api_worker_z2
+    instances: (( meta.instances.api_worker_z2 ))
+  - name: etcd_z2
+    instances: (( meta.instances.etcd_z2 ))
+  - name: router_z2
+    instances: (( meta.instances.router_z2 ))
+  - name: runner_z2
+    instances: (( meta.instances.runner_z2 ))
+  - name: api_worker_z3
+    instances: (( meta.instances.api_worker_z3 ))
+  - name: etcd_z3
+    instances: (( meta.instances.etcd_z3 ))
+  - name: router_z3
+    instances: (( meta.instances.router_z3 ))
+  - name: runner_z3
+    instances: (( meta.instances.runner_z3 ))

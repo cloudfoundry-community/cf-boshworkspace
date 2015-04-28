@@ -4,11 +4,13 @@ meta:
   smoke_tests:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
+  instances:
+    tests: (( merge || 1 ))
 
 jobs:
   - <<: (( merge ))
   - name: tests
-    instances: 1
+    instances: (( meta.instances.tests ))
 
 properties:
   domain: (( merge ))
