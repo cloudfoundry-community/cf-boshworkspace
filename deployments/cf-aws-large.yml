@@ -66,8 +66,7 @@ meta:
   instances:
     api_worker_z1: 1
     router_z1: 2
-  runners:
-    z1: 2
+    runner_z1: 2
   environment: cf-aws-large
   consul:
     cluster:

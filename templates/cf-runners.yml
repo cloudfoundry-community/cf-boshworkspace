@@ -2,8 +2,7 @@ meta:
   zones:
     z1: (( properties.template_only.aws.availability_zone ))
     z2: (( properties.template_only.aws.availability_zone2 ))
-  runners:
-    z1: (( merge ))
+  instances: (( merge ))
 
 resource_pools:
   - name: runner_z1
@@ -18,10 +17,10 @@ resource_pools:
 
 jobs:
   - name: runner_z1
-    instances: (( meta.runners.z1 ))
+    instances: (( meta.instances.runner_z1 ))
 
   - name: runner_z2
-    instances: 0
+    instances: (( meta.instances.runner_z2 ))
 
 properties:
   template_only: (( merge ))
