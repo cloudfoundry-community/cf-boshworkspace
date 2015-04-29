@@ -147,7 +147,7 @@ GEM
     fog-atmos (0.1.0)
       fog-core
       fog-xml
-    fog-aws (0.1.2)
+    fog-aws (0.1.1)
       fog-core (~> 1.27)
       fog-json (~> 1.0)
       fog-xml (~> 0.1)
@@ -280,9 +280,9 @@ GEM
     rspec-expectations (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
-    rspec-its (1.0.1)
-      rspec-core (>= 2.99.0.beta1)
-      rspec-expectations (>= 2.99.0.beta1)
+    rspec-its (1.2.0)
+      rspec-core (>= 3.0.0)
+      rspec-expectations (>= 3.0.0)
     rspec-mocks (3.2.1)
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.2.0)
@@ -318,6 +318,7 @@ PLATFORMS
 DEPENDENCIES
   bosh-workspace (~> 0.9.0.rc3)
   bosh_cli_plugin_micro
+  fog-aws (<= 0.1.1)
   guard-rspec
   rake
   rspec-its
