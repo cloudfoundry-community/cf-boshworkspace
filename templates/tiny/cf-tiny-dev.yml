@@ -109,7 +109,6 @@ meta:
     services:                (( merge || 1 ))
     health:                  (( merge || 1 ))
     runner:                  (( merge || 1 ))
-    tests:                   (( merge || 1 ))
 jobs:
   - name: data
     instances: (( meta.instances.data ))
