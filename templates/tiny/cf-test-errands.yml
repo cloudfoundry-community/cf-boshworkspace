@@ -4,8 +4,7 @@ meta:
   smoke_tests:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
-  instances:
-    tests: (( merge || 1 ))
+  instances: (( merge ))
 
 jobs:
   - <<: (( merge ))
