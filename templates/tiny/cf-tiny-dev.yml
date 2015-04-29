@@ -102,15 +102,22 @@ meta:
   - name: consul_agent
     release: (( meta.release.name ))
 
+  instances:
+    data:                    (( merge || 1 ))
+    haproxy:                 (( merge || 1 ))
+    api:                     (( merge || 1 ))
+    services:                (( merge || 1 ))
+    health:                  (( merge || 1 ))
+    runner:                  (( merge || 1 ))
 jobs:
   - name: data
-    instances: 1
+    instances: (( meta.instances.data ))
     persistent_disk: 102400
     templates: (( meta.data_templates ))
     resource_pool: large_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(4) ))
+        static_ips: (( static_ips(4, 5, 6, 7, 8, 9) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -120,7 +127,7 @@ jobs:
         zone: z1
 
   - name: haproxy
-    instances: 1
+    instances: (( meta.instances.haproxy ))
     templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
     networks:
@@ -128,7 +135,7 @@ jobs:
         static_ips: (( meta.floating_static_ips ))
       - name: (( meta.haproxy_network ))
         default: [dns, gateway]
-        static_ips: (( static_ips(0) ))
+        static_ips: (( static_ips(0, 10, 11, 12, 13, 14) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -138,13 +145,13 @@ jobs:
         zone: z1
 
   - name: api
-    instances: 1
+    instances: (( meta.instances.api ))
     templates: (( meta.api_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
         default: [dns, gateway]
-        static_ips: (( static_ips(1) ))
+        static_ips: (( static_ips(1, 15, 16, 17, 18, 19) ))
     properties:
       <<: (( merge ))
       consul:
@@ -158,13 +165,13 @@ jobs:
         zone: z1
 
   - name: services
-    instances: 1
+    instances: (( meta.instances.services ))
     templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(2) ))
+        static_ips: (( static_ips(2, 20, 21, 22, 23, 24) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -172,12 +179,12 @@ jobs:
         zone: z1
 
   - name: health
-    instances: 1
+    instances: (( meta.instances.health ))
     templates: (( meta.health_templates ))
     resource_pool: medium_z1
     networks:
       - name: cf1
-        static_ips: (( static_ips(3) ))
+        static_ips: (( static_ips(3, 25, 26, 27, 28, 29) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
@@ -193,7 +200,7 @@ jobs:
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
-    instances: 1
+    instances: (( meta.instances.runner ))
     update:
       max_in_flight: 1
     resource_pool: runner_z1
