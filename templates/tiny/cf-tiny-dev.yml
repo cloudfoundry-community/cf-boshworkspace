@@ -218,7 +218,7 @@ jobs:
     templates:
     - name: acceptance-tests
       release: cf
-    instances: (( meta.instances.acceptance_tests_runner ))
+    instances: 0
     resource_pool: small_errand
     lifecycle: errand
     networks:
@@ -228,7 +228,7 @@ jobs:
     templates:
     - name: smoke-tests
       release: cf
-    instances: (( meta.instances.smoke_tests_runner ))
+    instances: 0
     resource_pool: small_errand
     lifecycle: errand
     networks:
