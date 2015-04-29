@@ -1,7 +1,6 @@
 networks: (( merge ))
 
 meta:
-  haproxy_network: (( merge ))
   environment: ~
 
   release:
@@ -126,7 +125,7 @@ jobs:
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: (( meta.haproxy_network ))
+      - name: lb1
         default: [dns, gateway]
         static_ips: (( static_ips(0) ))
     properties:
