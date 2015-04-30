@@ -24,6 +24,7 @@ templates:
   - cf-uaa-port.yml
 #  - cf-consul.yml
 #  - cf-large-consul.yml
+  - cf-allow-services-access.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
   - cf/cf-minimal-dev.yml
@@ -45,6 +46,11 @@ meta:
   app_domains: apps.CF_DOMAIN
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
+  zones:
+    z1: CF_SUBNET1_AZ
+    z2: CF_SUBNET2_AZ
+  allowed_services_network_range:
+    - 10.10.5.0 - 10.255.255.255
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
@@ -55,15 +61,12 @@ meta:
     cf1:
       quad: "3"
       net_id: CF_SUBNET1
-      availability_zone: CF_SUBNET1_AZ
     cf2:
       quad: "4"
       net_id: CF_SUBNET2
-      availability_zone: CF_SUBNET2_AZ
     lb1:
       quad: "2"
       net_id: LB_SUBNET1
-      availability_zone: LB_SUBNET1_AZ
   instances:
     api_worker_z1: 1
     router_z1: 2

@@ -15,6 +15,7 @@ templates:
   - cf/cf-deployment.yml
   - tiny/cf-tiny-dev.yml
   - cf-uaa-port.yml
+  - cf-allow-services-access.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
   - cf-test-errands.yml
@@ -37,6 +38,11 @@ meta:
   security_groups: [ "cf" ]
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: c1oudc0wc1oudc0w
+  zones:
+    z1: CF_SUBNET1_AZ
+    z2: CF_SUBNET2_AZ
+  allowed_services_network_range:
+    - 192.168.5.0 - 192.168.255.255
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
@@ -48,16 +54,12 @@ meta:
     cf1:
       quad: "2"
       net_id: CF_SUBNET1
-      availability_zone: CF_SUBNET1_AZ
     cf2:
       quad: "3"
       net_id: CF_SUBNET2
-      availability_zone: CF_SUBNET2_AZ
     lb1:
       quad: "UNUSED"
       net_id: UNUSED
-      availability_zone: LB_SUBNET1_AZ
-
   environment: cf-openstack-tiny
   ha_proxy:
     ssl_pem: |
