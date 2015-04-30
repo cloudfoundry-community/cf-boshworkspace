@@ -21,7 +21,6 @@ describe "cf-networking.yml" do
             net_id: foo
             subnet: foo
             security_groups: ~
-            availability_zone: ~
           dns: ~
           gateway: 10.10.1.1
           name: default_unused
@@ -39,7 +38,6 @@ describe "cf-networking.yml" do
             net_id: bar
             subnet: bar
             security_groups: ~
-            availability_zone: ~
           dns: ~
           gateway: 10.10.2.1
           name: default_unused
@@ -73,7 +71,6 @@ describe "cf-networking.yml" do
             net_id: foo
             subnet: foo
             security_groups: [ foo, bar ]
-            availability_zone: ~
           dns: [ 8.8.8.8 ]
           gateway: 10.11.1.1
           name: default_unused
@@ -91,7 +88,6 @@ describe "cf-networking.yml" do
             net_id: bar
             subnet: bar
             security_groups: [ foo, bar ]
-            availability_zone: ~
           dns: [ 8.8.8.8 ]
           gateway: 10.11.2.1
           name: default_unused
@@ -125,7 +121,6 @@ describe "cf-networking.yml" do
             net_id: foo
             subnet: foo
             security_groups: ~
-            availability_zone: ~
           dns: ~
           gateway: 10.11.8.1
           name: default_unused
@@ -143,7 +138,6 @@ describe "cf-networking.yml" do
             net_id: bar
             subnet: bar
             security_groups: ~
-            availability_zone: ~
           dns: ~
           gateway: 10.11.9.1
           name: default_unused
@@ -174,7 +168,6 @@ describe "cf-networking.yml" do
               static:
               - 100.20.1.0 - 100.20.5.254
               security_groups: [ foo ]
-              availability_zone: foo
             cf2:
               quad: "9"
               net_id: bar
@@ -186,7 +179,6 @@ describe "cf-networking.yml" do
               static:
               - 100.21.1.0 - 100.21.5.254
               security_groups: [ bar ]
-              availability_zone: bar
       STUB
     end
 
@@ -196,7 +188,6 @@ describe "cf-networking.yml" do
             net_id: foo
             subnet: foo
             security_groups: [ foo ]
-            availability_zone: foo
           dns: [ 100.20.15.253, 100.20.15.252 ]
           gateway: 100.20.0.1
           name: default_unused
@@ -214,7 +205,6 @@ describe "cf-networking.yml" do
             net_id: bar
             subnet: bar
             security_groups: [ bar ]
-            availability_zone: bar
           dns: [ 100.21.15.253, 100.21.15.252 ]
           gateway: 100.21.0.1
           name: default_unused

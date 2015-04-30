@@ -21,7 +21,6 @@ describe "cf-use-haproxy.yml" do
             net_id: foo
             subnet: foo
             security_groups: ~
-            availability_zone: ~
           dns: ~
           name: default_unused
           gateway: 10.10.0.1
@@ -94,7 +93,6 @@ describe "cf-use-haproxy.yml" do
             net_id: foo
             subnet: foo
             security_groups: [ foo, bar ]
-            availability_zone: ~
           dns: [ 8.8.8.8 ]
           gateway: 10.11.0.1
           name: default_unused
@@ -127,7 +125,6 @@ describe "cf-use-haproxy.yml" do
             net_id: foo
             subnet: foo
             security_groups: ~
-            availability_zone: ~
           dns: ~
           gateway: 10.11.8.1
           name: default_unused
@@ -160,7 +157,6 @@ describe "cf-use-haproxy.yml" do
               static:
               - 100.20.1.0 - 100.20.5.254
               security_groups: [ foo ]
-              availability_zone: foo
       STUB
     end
 
@@ -170,7 +166,6 @@ describe "cf-use-haproxy.yml" do
             net_id: foo
             subnet: foo
             security_groups: [ foo ]
-            availability_zone: foo
           dns: [ 100.20.15.253, 100.20.15.252 ]
           gateway: 100.20.0.1
           name: default_unused

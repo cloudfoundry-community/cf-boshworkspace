@@ -14,7 +14,6 @@ meta:
       reserved: (( merge || defaults.lb1.reserved ))
       static: (( merge || defaults.lb1.static ))
       security_groups: (( merge || meta.networks.security_groups ))
-      availability_zone: (( merge || nil ))
 
   floating_static_ips: (( merge ))
   domain: (( merge ))
@@ -38,7 +37,6 @@ networks:
           security_groups: (( meta.networks.lb1.security_groups ))
           subnet: (( meta.networks.lb1.net_id ))
           net_id: (( meta.networks.lb1.net_id ))
-          availability_zone: (( meta.networks.lb1.availability_zone ))
   - name: floating
     type: vip
     cloud_properties: {}
