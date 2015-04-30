@@ -30,7 +30,6 @@ templates:
 # - cf-test-errands.yml
   - cf-properties.yml
   - parallel.yml
-  - tiny/cf-aws.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
   - tiny/cf-use-nfs.yml
