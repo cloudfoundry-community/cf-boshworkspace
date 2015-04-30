@@ -39,26 +39,27 @@ templates:
 meta:
   domain: run.CF_DOMAIN
   app_domains: apps.CF_DOMAIN
-  floating_static_ips:
-    - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
-  ipmask: "IPMASK"
-  haproxy_network: "lb1"
-  lb1_quad: ".2"
-  cf1_quad: ".3"
-  cf2_quad: ".4"
-  dns_servers:
+  floating_static_ips:
+    - CF_ELASTIC_IP
+  networks:
+    security_groups: CF_SG
+    ipmask: "IPMASK"
+    dns:
     - IPMASK.0.2
-  subnet_ids:
-    cf1: CF_SUBNET1
-    cf2: CF_SUBNET2
-    lb1: LB_SUBNET1
-  security_groups: CF_SG
-  availability_zones:
-    cf1: CF_SUBNET1_AZ
-    cf2: CF_SUBNET2_AZ
-    lb1: LB_SUBNET1_AZ
+    cf1:
+      quad: "3"
+      net_id: CF_SUBNET1
+      availability_zone: CF_SUBNET1_AZ
+    cf2:
+      quad: "4"
+      net_id: CF_SUBNET2
+      availability_zone: CF_SUBNET2_AZ
+    lb1:
+      quad: "2"
+      net_id: LB_SUBNET1
+      availability_zone: LB_SUBNET1_AZ
   environment: cf-aws-tiny
   consul:
     cluster:

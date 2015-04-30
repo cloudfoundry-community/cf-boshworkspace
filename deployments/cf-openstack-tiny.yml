@@ -35,23 +35,30 @@ meta:
   domain: run.CF_DOMAIN
   app_domains: apps.CF_DOMAIN
   security_groups: [ "cf" ]
-  floating_static_ips:
-    - CF_ELASTIC_IP
   secret: c1oudc0w # Used for all passwords except cf admin
   admin_secret: c1oudc0wc1oudc0w
-  ipmask: "192.168"
-  lb1_quad: "UNUSED"
-  cf1_quad: ".2"
-  cf2_quad: ".3"
-  haproxy_network: "cf1"
-  dns_servers:
+  floating_static_ips:
+    - CF_ELASTIC_IP
+  networks:
+    security_groups: CF_SG
+    ipmask: "192.168"
+    dns:
     - 8.8.8.8
     - 8.8.4.4
+    cf1:
+      quad: "2"
+      net_id: CF_SUBNET1
+      availability_zone: CF_SUBNET1_AZ
+    cf2:
+      quad: "3"
+      net_id: CF_SUBNET2
+      availability_zone: CF_SUBNET2_AZ
+    lb1:
+      quad: "UNUSED"
+      net_id: UNUSED
+      availability_zone: LB_SUBNET1_AZ
+
   environment: cf-openstack-tiny
-  subnet_ids:
-    cf1: CF_SUBNET1
-    cf2: CF_SUBNET2
-    lb1: UNUSED
   ha_proxy:
     ssl_pem: |
       -----BEGIN RSA PRIVATE KEY-----

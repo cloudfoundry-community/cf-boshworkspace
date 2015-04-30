@@ -1,54 +1,59 @@
 meta:
-  ipmask: (( merge ))
-  security_groups: (( merge ))
-  lb1_quad: (( merge ))
+  networks:
+    ipmask: (( merge || "10.10" ))
+    dns: (( merge || nil ))
+    security_groups: (( merge || nil ))
+
+    lb1:
+      quad: (( merge || "0" ))
+      net_id: (( merge ))
+      subnet: (( net_id ))
+      range: (( merge || defaults.lb1.range ))
+      gateway: (( merge || defaults.lb1.gateway ))
+      dns: (( merge || meta.networks.dns ))
+      reserved: (( merge || defaults.lb1.reserved ))
+      static: (( merge || defaults.lb1.static ))
+      security_groups: (( merge || meta.networks.security_groups ))
+      availability_zone: (( merge || nil ))
+
   floating_static_ips: (( merge ))
-  availability_zones: (( merge ))
-  haproxy_network: (( merge ))
   domain: (( merge ))
-  ha_proxy:
-    ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
-  subnet_ids:
-    lb1: (( merge ))
+  ha_proxy_ssl_pem: (( merge || defaults.ha_proxy.ssl_pem ))
 
 properties:
   domain: (( domain ))
 
 networks:
   - <<: (( merge ))
-  - name: cf_lb1
+  - name: lb1
     type: manual
     subnets:
-      - range: (( meta.ipmask meta.lb1_quad ".0/24" ))
-        name: default_unused
-        reserved:
-          - (( meta.ipmask meta.lb1_quad ".2 - " meta.ipmask meta.lb1_quad ".5" ))
-        static:
-          - (( meta.ipmask meta.lb1_quad ".10 - " meta.ipmask meta.lb1_quad ".100" ))
-        gateway: (( meta.ipmask meta.lb1_quad ".1" ))
-        dns:
-          - (( meta.ipmask ".0.2" ))
+      - name: default_unused
+        range: (( meta.networks.lb1.range ))
+        reserved: (( meta.networks.lb1.reserved ))
+        static: (( meta.networks.lb1.static ))
+        gateway: (( meta.networks.lb1.gateway ))
+        dns: (( meta.networks.lb1.dns ))
         cloud_properties:
-          security_groups:
-            - (( meta.security_groups ))
-          subnet: (( meta.subnet_ids.lb1 ))
-          availability_zone: (( meta.availability_zones.lb1 ))
+          security_groups: (( meta.networks.lb1.security_groups ))
+          subnet: (( meta.networks.lb1.net_id ))
+          net_id: (( meta.networks.lb1.net_id ))
+          availability_zone: (( meta.networks.lb1.availability_zone ))
   - name: floating
     type: vip
     cloud_properties: {}
+    
 jobs:
   - name: ha_proxy_z1
     instances: 1
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
-      - name: (( meta.haproxy_network ))
+      - name: lb1
         default: [dns, gateway]
     properties:
-      ha_proxy:
-        ssl_pem: (( defaults.ha_proxy.ssl_pem ))
       networks:
-        apps: (( meta.haproxy_network ))
+        apps: lb1
 
 resource_pools:
   - name: router_z1
@@ -60,11 +65,22 @@ resource_pools:
       elbs: ~
 
 properties:
+  ha_proxy:
+    ssl_pem: (( meta.ha_proxy_ssl_pem ))
   login:
     # Certificate to import if the UAA is using self-signed certificates
-    uaa_certificate: (( meta.ha_proxy.ssl_pem ))
+    uaa_certificate: (( meta.ha_proxy_ssl_pem ))
 
 defaults:
+  lb1:
+    net: (( meta.networks.ipmask "." meta.networks.lb1.quad ))
+    range: (( defaults.lb1.net ".0/24" ))
+    gateway: (( defaults.lb1.net ".1" ))
+    reserved:
+      - (( defaults.lb1.net ".2 - " defaults.lb1.net ".5" ))
+    static:
+      - (( defaults.lb1.net ".6 - " defaults.lb1.net ".50" ))
+      
   ha_proxy:
     ssl_pem: |
       -----BEGIN RSA PRIVATE KEY-----

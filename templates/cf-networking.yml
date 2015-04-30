@@ -1,17 +1,51 @@
 meta:
-  ipmask: (( merge ))
-  cf1_quad: (( merge ))
-  cf2_quad: (( merge ))
-  security_groups: (( merge ))
-  dns_servers: (( merge ))
-  subnet_ids:
-    cf1: (( merge ))
-    cf2: ~
-    lb1: ~
-  availability_zones:
-    cf1: ~
-    cf2: ~
-    lb1: ~
+  networks:
+    ipmask: (( merge || "10.10" ))
+    dns: (( merge || nil ))
+    security_groups: (( merge || nil ))
+  
+    cf1:
+      quad: (( merge || "1" ))
+      net_id: (( merge ))
+      subnet: (( net_id ))
+      range: (( merge || defaults.cf1.range ))
+      gateway: (( merge || defaults.cf1.gateway ))
+      dns: (( merge || meta.networks.dns ))
+      reserved: (( merge || defaults.cf1.reserved ))
+      static: (( merge || defaults.cf1.static ))
+      security_groups: (( merge || meta.networks.security_groups ))
+      availability_zone: (( merge || nil ))
+
+    cf2:
+      quad: (( merge || "2" ))
+      net_id: (( merge ))
+      subnet: (( net_id ))
+      range: (( merge || defaults.cf2.range ))
+      gateway: (( merge || defaults.cf2.gateway ))
+      dns: (( merge || meta.networks.dns ))
+      reserved: (( merge || defaults.cf2.reserved ))
+      static: (( merge || defaults.cf2.static ))
+      security_groups: (( merge || meta.networks.security_groups ))
+      availability_zone: (( merge || nil ))
+
+defaults:
+  cf1:
+    net: (( meta.networks.ipmask "." meta.networks.cf1.quad ))
+    range: (( defaults.cf1.net ".0/24" ))
+    gateway: (( defaults.cf1.net ".1" ))
+    reserved:
+      - (( defaults.cf1.net ".2 - " defaults.cf1.net ".5" ))
+    static:
+      - (( defaults.cf1.net ".6 - " defaults.cf1.net ".50" ))
+
+  cf2:
+    net: (( meta.networks.ipmask "." meta.networks.cf2.quad ))
+    range: (( defaults.cf2.net ".0/24" ))
+    gateway: (( defaults.cf2.net ".1" ))
+    reserved:
+      - (( defaults.cf2.net ".2 - " defaults.cf2.net ".5" ))
+    static:
+      - (( defaults.cf2.net ".6 - " defaults.cf2.net ".50" ))
 
   # expose 10.10.5.0-10.255.255.255 for services
 properties:
@@ -43,36 +77,32 @@ networks:
   - name: cf1
     type: manual
     subnets:
-      - range: (( meta.ipmask meta.cf1_quad ".0/24" ))
-        name: default_unused
-        reserved:
-          - (( meta.ipmask meta.cf1_quad ".2 - " meta.ipmask meta.cf1_quad ".5" ))
-        static:
-          - (( meta.ipmask meta.cf1_quad ".6 - " meta.ipmask meta.cf1_quad ".50" ))
-        gateway: (( meta.ipmask meta.cf1_quad ".1" ))
-        dns: (( meta.dns_servers ))
+      - name: default_unused
+        range: (( meta.networks.cf1.range ))
+        reserved: (( meta.networks.cf1.reserved ))
+        static: (( meta.networks.cf1.static ))
+        gateway: (( meta.networks.cf1.gateway ))
+        dns: (( meta.networks.cf1.dns ))
         cloud_properties:
-          security_groups: (( meta.security_groups ))
-          subnet: (( meta.subnet_ids.cf1 ))
-          net_id: (( meta.subnet_ids.cf1 ))
-          availability_zone: (( meta.availability_zones.cf1 ))
+          security_groups: (( meta.networks.cf1.security_groups ))
+          subnet: (( meta.networks.cf1.net_id ))
+          net_id: (( meta.networks.cf1.net_id ))
+          availability_zone: (( meta.networks.cf1.availability_zone ))
 
   - name: cf2
     type: manual
     subnets:
-      - range: (( meta.ipmask meta.cf2_quad ".0/24" ))
-        name: default_unused
-        reserved:
-          - (( meta.ipmask meta.cf2_quad ".2 - " meta.ipmask meta.cf2_quad ".5" ))
-        static:
-          - (( meta.ipmask meta.cf2_quad ".6 - " meta.ipmask meta.cf2_quad ".50" ))
-        gateway: (( meta.ipmask meta.cf2_quad ".1" ))
-        dns: (( meta.dns_servers ))
+      - name: default_unused
+        range: (( meta.networks.cf2.range ))
+        reserved: (( meta.networks.cf2.reserved ))
+        static: (( meta.networks.cf2.static ))
+        gateway: (( meta.networks.cf2.gateway ))
+        dns: (( meta.networks.cf2.dns ))
         cloud_properties:
-          security_groups: (( meta.security_groups ))
-          subnet: (( meta.subnet_ids.cf2 ))
-          net_id: (( meta.subnet_ids.cf2 ))
-          availability_zone: (( meta.availability_zones.cf2 ))
+          security_groups: (( meta.networks.cf2.security_groups ))
+          subnet: (( meta.networks.cf2.net_id ))
+          net_id: (( meta.networks.cf2.net_id ))
+          availability_zone: (( meta.networks.cf2.availability_zone ))
 
   - name: floating
     type: vip

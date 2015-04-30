@@ -1,0 +1,8 @@
+language: ruby
+
+go:
+  - 1.3
+
+before_install:
+  - ./scripts/install_spiff
+  - export PATH=$PATH:$PWD
