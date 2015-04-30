@@ -12,6 +12,23 @@ meta:
     runner_z1: (( merge || 1 ))
     runner_z2: (( merge || 1 ))
     runner_z3: (( merge || 1 ))
+
+  instance_types:
+    large_z1: (( merge || "m3.large" ))
+    runner_z1: (( merge || "m3.large" ))
+    router_z1: (( merge || "m3.medium" ))
+
+resource_pools:
+  - name: large_z1
+    cloud_properties:
+      instance_type: (( meta.instance_types.large_z1 ))
+  - name: runner_z1
+    cloud_properties:
+      instance_type: (( meta.instance_types.runner_z1 ))
+  - name: router_z1
+    cloud_properties:
+      instance_type: (( meta.instance_types.router_z1 ))
+    
 jobs:
   - name: api_worker_z1
     instances: (( meta.instances.api_worker_z1 ))
