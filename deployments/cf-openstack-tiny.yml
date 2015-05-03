@@ -13,7 +13,9 @@ stemcells:
 
 templates:
   - cf/cf-deployment.yml
-  - tiny/cf-tiny-dev.yml
+  - tiny/cf-tiny-scalable.yml
+# NOTE: cf-tiny-dev.yml is now deprecated. See README-tiny-migrations.md for migration info
+#  - tiny/cf-tiny-dev.ymli
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
   - cf/cf-properties.yml
