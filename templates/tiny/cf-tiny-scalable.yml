@@ -39,11 +39,11 @@ meta:
     release: (( meta.release.name ))
   - name: doppler
     release: (( meta.release.name ))
+  - name: syslog_drain_binder
+    release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
   - name: consul_agent
-    release: (( meta.release.name ))
-  - name: nfs_mounter
     release: (( meta.release.name ))
 
   ha_proxy_templates:
@@ -55,6 +55,8 @@ meta:
     release: (( meta.release.name ))
 
   api_templates:
+  - name: routing-api
+    release: (( meta.release.name ))
   - name: gorouter
     release: (( meta.release.name ))
   - name: cloud_controller_ng
