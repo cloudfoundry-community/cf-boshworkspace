@@ -58,8 +58,120 @@ With the dependencies resolved it's time to deploy Cloud Foundry version 196. Th
 - [SSL has been disabled](https://github.com/starkandwayne/cf-boshworkspace/blob/master/templates/cf-no-ssl.yml)
 - [Single availability zone deployment](https://github.com/starkandwayne/cf-boshworkspace/blob/master/templates/cf-single-az.yml)
 
-With the above changes __5 vms__ of different sizes will be deployed. If you use cf-aws-large.yml, it will be __19 vms__.
+With the above changes __7 vms__ of different sizes will be deployed. If you use cf-aws-large.yml, it will be __19 vms__.
 
 ```
 bosh deploy
 ```
+
+## Scaling cf-aws-tiny
+
+To achieve the VM savings over cf-aws-large.yml cf-aws-tiny.yml colocates a number of like jobs on the same VMs, allowing
+you to scale groups of services with eachother. Here's a breakdown of what's running where, to help you decide which VMs to
+scale, based on your traffic patterns:
+
+| VM Name | Role | Jobs |
+|------|----|-------------|
+| data | Data Services | `postgres` `debian_nfs_server` `metron_agent` `consul_agent` |
+| haproxy_z1 | Optional LoadBalancer | `haproxy` `metron_agent` `consul_agent` |
+| api_z1 | Cloud Controller/Router | `routing-api` `gorouter` `cloud_controller_ng` `nfs_mounter` ` metron_agent` `consul_agent` |
+| api_z2 | Cloud Controller/Router | `routing-api` `gorouter` `cloud_controller_ng` `nfs_mounter` ` metron_agent` `consul_agent` |
+| backbone_z1 | Infrastructural Services | `nats` `nats_stream_forwarder` `doppler` `syslog_drain_binder` `etcd` `etcd_metrics_server` `metron_agent` `consul_agent` |
+| backbone_z2 | Infrastructural Services | `nats` `nats_stream_forwarder` `doppler` `syslog_drain_binder` `etcd` `etcd_metrics_server` `metron_agent` `consul_agent` |
+| health_z1 | Health Checking Services | `loggregator_trafficcontroller` `hm9000` `cloud_controller_clock` `collector` `metron_agent` `consul_agent` |
+| health_z2 | Health Checking Services | `loggregator_trafficcontroller` `hm9000` `cloud_controller_clock` `collector` `metron_agent` `consul_agent` |
+| services_z1 | Support Services | `uaa` `login` `cloud_controller_worker` `nfs_mounter` `metron_agent` `consul_agent` |
+| services_z2 | Support Services | `uaa` `login` `cloud_controller_worker` `nfs_mounter` `metron_agent` `consul_agent` |
+| runner_z1 | DEA nodes | `dea_next` `dea_logging_agent` `metron_agent` `consul_agent` |
+| runner_z2 | DEA nodes | `dea_next` `dea_logging_agent` `metron_agent` `consul_agent` |
+
+By default, none of the \*\_z2 nodes are enabled in cf-aws-tiny.yml, to keep the basic deployment minimal.
+If you wish to make your deployment more fault tolerant, deploy some \*\_z2 instances to run in your second availability zone.
+
+## Migrating from cf-tiny-dev to cf-tiny-scalable
+
+Previously, a template called _cf-tiny-dev_ had been used to consolidate jobs into a small number of VMs. Recently, that
+has been replaced with _cf-tiny-scalable_, allowing for multi-AZ scalable deployments of CloudFoundry on a smaller footprint
+than the upstream deployment. However, it involved some job name changes, which requires some extra care when migrating from
+one to the other. These steps are laid out below:
+
+1. Edit `templates/tiny/cf-tiny-dev.yml` to prepare the services machine for the migration (don't worry, this file won't be used
+   soon, so you dont need to worry about any future merge conflicts)
+   1. Remove the `etcd` template declaration from the `services` job definition
+   2. Remove the persistent\_disk from the `services` job definition
+    ```diff
+diff --git a/templates/tiny/cf-tiny-dev.yml b/templates/tiny/cf-tiny-dev.yml
+index 330d07b..aa3064c 100644
+--- a/templates/tiny/cf-tiny-dev.yml
++++ b/templates/tiny/cf-tiny-dev.yml
+@@ -74,8 +74,6 @@ meta:
+     release: (( meta.release.name ))
+   - name: metron_agent
+     release: (( meta.release.name ))
+-  - name: etcd
+-    release: (( meta.release.name ))
+   - name: nfs_mounter
+     release: (( meta.release.name ))
+@@ -166,7 +164,6 @@ jobs:
+   - name: services
+     instances: (( meta.instances.services ))
+     templates: (( meta.services_templates ))
+-    persistent_disk: 102400
+     resource_pool: medium_z1
+     networks:
+       - name: cf1
+```
+    Removing the `etcd` job from the services VM up-front reduces the chance of errors during migration due to `etcd` failing to start while it is being migrated to the new backbone VMs. Additionally
+ it allows us to remove the persistent disk ahead of time, and adjust permissions for when `consul_agent` will be added.
+
+2. Deploy the above changes with `bosh deploy`.
+
+3. When removing the persistent disk the permissions are set such that consul_agent won't be able to access its configs anymore.
+    We'll need to update them to prevent problems during migration:
+
+    1. Connect to the services VM(s) using `bosh ssh services`.
+    1. Once inside the services vm, fix the ownership of the store directory with `sudo chmod 755 /var/vcap/store`.
+
+4. **CAUTION!** Do ***NOT*** run `bosh deploy` at any further point during the migration, unless the instructions indicate it. This will
+    erase your current deployment manifest, which you will have been manually updating to prepare the migration. You will
+    then have a large headache, and a mouth full of explitives.
+
+5.  Rename existing jobs:
+    ```bash
+for job in health services api haproxy; do
+    # edit the instance names in your deployment
+    vi .deployments/cf-aws-tiny.yml  # NOTE: '.deployments', not 'deployments'
+
+    # rename the bosh job - takes about 1 min per job
+    bosh rename job $job ${job}_z1
+done
+```
+    Beware of using `sed` for the above steps - bosh won't let you rename if you make any changes other than job name.
+
+    **NOTE:** If you happen to run into issues renaming a job, `bosh ssh` into the VM, find what service is failing, via
+    `/var/vcap/bosh/bin/monit summary`, and troubleshoot the service until it will start up normally. Then retry the `bosh rename job`
+    task.
+
+6.  Ensure all VMs are named correctly:
+   ```
+$ bosh vms
+Deployment 'cf-aws-tiny'
+Director task 210
+Task 210 done
++---------------+---------+---------------+-------------+
+| Job/index     | State   | Resource Pool | IPs         |
++---------------+---------+---------------+-------------+
+| api_z1/0      | running | medium_z1     | 10.10.3.7   |
+| data/0        | running | large_z1      | 10.10.3.10  |
+| haproxy_z1/0  | running | small_z1      | 52.7.24.173 |
+|               |         |               | 10.10.2.6   |
+| health_z1/0   | running | medium_z1     | 10.10.3.9   |
+| runner_z1/0   | running | runner_z1     | 10.10.3.57  |
+| services_z1/0 | running | medium_z1     | 10.10.3.8   |
++---------------+---------+---------------+-------------+
+```
+    Depending on your deployment, the IPs and resource pools may differ.
+
+7.  Update your deployment template (something like `deployments/cf-aws-tiny.yml`) to include the `tiny/cf-tiny-scalable.yml` template, instead of `tiny/cf-tiny-dev.yml`
+8.  Generate + deploy the new manifest via `bosh deploy`
+9.  Celebrate by cracking open a tasty beverage!
