@@ -6,24 +6,11 @@ releases:
   - name: cf
     version: 207
     git: https://github.com/cloudfoundry/cf-release.git
-#  - name: consul
-#    version: 11
-#    git: https://github.com/cloudfoundry-community/consul-boshrelease.git
-#  - name: cf-consul
-#    version: 2
-#    git: https://github.com/cloudfoundry-community/cf-consul-boshrelease.git
-
-
-stemcells:
-  - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
 
 templates:
   - cf/cf-deployment.yml
   - cf/cf-jobs.yml
   - cf-uaa-port.yml
-#  - cf-consul.yml
-#  - cf-large-consul.yml
   - cf-allow-services-access.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
@@ -40,6 +27,10 @@ templates:
   - cf-secrets.yml
   - cf-networking.yml
   - cf-deployment-size.yml
+
+stemcells:
+  - name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2941
 
 meta:
   domain: run.CF_DOMAIN
