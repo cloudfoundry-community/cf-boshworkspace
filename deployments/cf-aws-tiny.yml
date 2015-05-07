@@ -55,3 +55,18 @@ meta:
   environment: cf-aws-tiny
     user: root
     server: false
+  instances:
+    # Primary AZ nodes
+    haproxy_z1:   1
+    backbone_z1:  1
+    api_z1:       1
+    services_z1:  1
+    health_z1:    1
+    runner_z1:    1
+
+    # Secondary AZ nodes (for HA operations)
+    backbone_z2:  0
+    api_z2:       0
+    services_z2:  0
+    health_z2:    0
+    runner_z2:    0

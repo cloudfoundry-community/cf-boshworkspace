@@ -14,8 +14,6 @@ stemcells:
 templates:
   - cf/cf-deployment.yml
   - tiny/cf-tiny-scalable.yml
-# NOTE: cf-tiny-dev.yml is now deprecated. See README-tiny-migrations.md for migration info
-#  - tiny/cf-tiny-dev.ymli
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
   - cf/cf-properties.yml
@@ -63,6 +61,21 @@ meta:
       quad: "UNUSED"
       net_id: UNUSED
   environment: cf-openstack-tiny
+  instances:
+    # Primary AZ nodes
+    haproxy_z1:   1
+    backbone_z1:  1
+    api_z1:       1
+    services_z1:  1
+    health_z1:    1
+    runner_z1:    1
+
+    # Secondary AZ nodes (for HA operations)
+    backbone_z2:  0
+    api_z2:       0
+    services_z2:  0
+    health_z2:    0
+    runner_z2:    0
   ha_proxy:
     ssl_pem: |
       -----BEGIN RSA PRIVATE KEY-----
