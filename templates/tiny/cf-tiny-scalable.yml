@@ -47,10 +47,6 @@ meta:
     release: (( meta.release.name ))
   - name: consul_agent
     release: (( meta.release.name ))
-  - name: etcd
-    release: (( meta.release.name ))
-  - name: etcd_metrics_server
-    release: (( meta.release.name ))
 
   ha_proxy_templates:
   - name: metron_agent
@@ -80,6 +76,10 @@ meta:
   - name: login
     release: (( meta.release.name ))
   - name: cloud_controller_worker
+    release: (( meta.release.name ))
+  - name: etcd
+    release: (( meta.release.name ))
+  - name: etcd_metrics_server
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
@@ -240,6 +240,7 @@ jobs:
   - name: services_z1
     instances: (( meta.instances.services_z1 ))
     templates: (( meta.services_templates ))
+    persistent_disk: 102400
     resource_pool: medium_z1
     networks:
       - name: cf1
@@ -252,6 +253,7 @@ jobs:
   - name: services_z2
     instances: (( meta.instances.services_z2 ))
     templates: (( meta.services_templates ))
+    persistent_disk: 102400
     resource_pool: medium_z2
     networks:
       - name: cf2
@@ -418,7 +420,7 @@ properties:
   nats:
     user: (( merge ))
     password: (( merge ))
-    address: (( jobs.backbone_z1.networks.cf1.static_ips.[0] ))
+    address: (( jobs.backbone_z1.networks.cf1.static_ips.[0] || jobs.backbone_z2.networks.cf2.static_ips.[0] ))
     port: 4222
     machines: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
     debug: false
@@ -427,7 +429,7 @@ properties:
     prof_port: 0
 
   etcd:
-    machines: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
+    machines: (( jobs.services_z1.networks.cf1.static_ips jobs.services_z2.networks.cf2.static_ips ))
 
   etcd_metrics_server:
     nats:
