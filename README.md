@@ -95,48 +95,11 @@ has been replaced with _cf-tiny-scalable_, allowing for multi-AZ scalable deploy
 than the upstream deployment. However, it involved some job name changes, which requires some extra care when migrating from
 one to the other. These steps are laid out below:
 
-1. Edit `templates/tiny/cf-tiny-dev.yml` to prepare the services machine for the migration (don't worry, this file won't be used
-   soon, so you dont need to worry about any future merge conflicts)
-   1. Remove the `etcd` template declaration from the `services` job definition
-   2. Remove the persistent\_disk from the `services` job definition
-    ```diff
-diff --git a/templates/tiny/cf-tiny-dev.yml b/templates/tiny/cf-tiny-dev.yml
-index 330d07b..aa3064c 100644
---- a/templates/tiny/cf-tiny-dev.yml
-+++ b/templates/tiny/cf-tiny-dev.yml
-@@ -74,8 +74,6 @@ meta:
-     release: (( meta.release.name ))
-   - name: metron_agent
-     release: (( meta.release.name ))
--  - name: etcd
--    release: (( meta.release.name ))
-   - name: nfs_mounter
-     release: (( meta.release.name ))
-@@ -166,7 +164,6 @@ jobs:
-   - name: services
-     instances: (( meta.instances.services ))
-     templates: (( meta.services_templates ))
--    persistent_disk: 102400
-     resource_pool: medium_z1
-     networks:
-       - name: cf1
-```
-    Removing the `etcd` job from the services VM up-front reduces the chance of errors during migration due to `etcd` failing to start while it is being migrated to the new backbone VMs. Additionally
- it allows us to remove the persistent disk ahead of time, and adjust permissions for when `consul_agent` will be added.
-
-2. Deploy the above changes with `bosh deploy`.
-
-3. When removing the persistent disk the permissions are set such that consul_agent won't be able to access its configs anymore.
-    We'll need to update them to prevent problems during migration:
-
-    1. Connect to the services VM(s) using `bosh ssh services`.
-    1. Once inside the services vm, fix the ownership of the store directory with `sudo chmod 755 /var/vcap/store`.
-
-4. **CAUTION!** Do ***NOT*** run `bosh deploy` at any further point during the migration, unless the instructions indicate it. This will
+**CAUTION!** Do ***NOT*** run `bosh deploy` at any point during the migration, unless the instructions indicate it. bosh-workspace will
     erase your current deployment manifest, which you will have been manually updating to prepare the migration. You will
     then have a large headache, and a mouth full of explitives.
 
-5.  Rename existing jobs:
+1.  Rename existing jobs:
     ```bash
 for job in health services api haproxy; do
     # edit the instance names in your deployment
@@ -152,7 +115,7 @@ done
     `/var/vcap/bosh/bin/monit summary`, and troubleshoot the service until it will start up normally. Then retry the `bosh rename job`
     task.
 
-6.  Ensure all VMs are named correctly:
+2.  Ensure all VMs are named correctly:
    ```
 $ bosh vms
 Deployment 'cf-aws-tiny'
@@ -172,6 +135,6 @@ Task 210 done
 ```
     Depending on your deployment, the IPs and resource pools may differ.
 
-7.  Update your deployment template (something like `deployments/cf-aws-tiny.yml`) to include the `tiny/cf-tiny-scalable.yml` template, instead of `tiny/cf-tiny-dev.yml`
-8.  Generate + deploy the new manifest via `bosh deploy`
-9.  Celebrate by cracking open a tasty beverage!
+3.  Update your deployment template (something like `deployments/cf-aws-tiny.yml`) to include the `tiny/cf-tiny-scalable.yml` template, instead of `tiny/cf-tiny-dev.yml`
+4.  Generate + deploy the new manifest via `bosh deploy`
+5.  Celebrate by cracking open a tasty beverage!
