@@ -95,7 +95,44 @@ has been replaced with _cf-tiny-scalable_, allowing for multi-AZ scalable deploy
 than the upstream deployment. However, it involved some job name changes, which requires some extra care when migrating from
 one to the other. These steps are laid out below:
 
-**CAUTION!** Do ***NOT*** run `bosh deploy` at any point during the migration, unless the instructions indicate it. bosh-workspace will
+1. Edit `templates/tiny/cf-tiny-dev.yml` to prepare the services machine for the migration (don't worry, this file won't be used
+   soon, so you dont need to worry about any future merge conflicts)
+   1. Remove the `etcd` template declaration from the `services` job definition
+    ```diff
+diff --git a/templates/tiny/cf-tiny-dev.yml b/templates/tiny/cf-tiny-dev.yml
+index 5ecfec9..2c2e9d5 100644
+--- a/templates/tiny/cf-tiny-dev.yml
++++ b/templates/tiny/cf-tiny-dev.yml
+@@ -65,22 +65,20 @@ meta:
+ 
+   services_templates:
+   - name: uaa
+     release: (( meta.release.name ))
+   - name: login
+     release: (( meta.release.name ))
+   - name: cloud_controller_worker
+     release: (( meta.release.name ))
+   - name: metron_agent
+     release: (( meta.release.name ))
+-  - name: etcd
+-    release: (( meta.release.name ))
+   - name: nfs_mounter
+     release: (( meta.release.name ))
+ 
+   dea_templates:
+   - name: dea_next
+     release: (( meta.release.name ))
+   - name: dea_logging_agent
+     release: (( meta.release.name ))
+   - name: metron_agent
+     release: (( meta.release.name ))
+```
+    Removing the `etcd` job from the `services` VM up-front reduces the chance of errors during migration due to `etcd` failing
+    to start while the VM is being renamed.
+
+1. Deploy the above changes with `bosh deploy`.
+
+1. **CAUTION!** Do ***NOT*** run `bosh deploy` at any further point during the migration, unless the instructions indicate it. This will
     erase your current deployment manifest, which you will have been manually updating to prepare the migration. You will
     then have a large headache, and a mouth full of explitives.
 
@@ -115,7 +152,7 @@ done
     `/var/vcap/bosh/bin/monit summary`, and troubleshoot the service until it will start up normally. Then retry the `bosh rename job`
     task.
 
-2.  Ensure all VMs are named correctly:
+1.  Ensure all VMs are named correctly:
    ```
 $ bosh vms
 Deployment 'cf-aws-tiny'
@@ -135,6 +172,6 @@ Task 210 done
 ```
     Depending on your deployment, the IPs and resource pools may differ.
 
-3.  Update your deployment template (something like `deployments/cf-aws-tiny.yml`) to include the `tiny/cf-tiny-scalable.yml` template, instead of `tiny/cf-tiny-dev.yml`
-4.  Generate + deploy the new manifest via `bosh deploy`
-5.  Celebrate by cracking open a tasty beverage!
+1.  Update your deployment template (something like `deployments/cf-aws-tiny.yml`) to include the `tiny/cf-tiny-scalable.yml` template, instead of `tiny/cf-tiny-dev.yml`
+1.  Generate + deploy the new manifest via `bosh deploy`
+1.  Celebrate by cracking open a tasty beverage!
