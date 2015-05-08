@@ -125,11 +125,29 @@ meta:
     runner_z1:               (( merge || 1 ))
     runner_z2:               (( merge || 0 ))
 jobs:
+  - name: data
+    instances: 1
+    persistent_disk: 102400
+    templates: (( meta.data_templates ))
+    resource_pool: large_z1
+    update:
+      serial: true
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(4) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+
   - name: backbone_z1
     instances: (( meta.instances.backbone_z1 ))
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
     resource_pool: large_z1
+    update:
+      serial: true
     networks:
       - name: cf1
         static_ips: (( static_ips(5, 6, 7, 8, 9, 10) ))
@@ -150,6 +168,8 @@ jobs:
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
     resource_pool: large_z2
+    update:
+      serial: true
     networks:
       - name: cf2
         static_ips: (( static_ips(5, 6, 7, 8, 9, 10) ))
@@ -166,42 +186,12 @@ jobs:
           servers:
             lan: []
 
-  - name: data
-    instances: 1
-    persistent_disk: 102400
-    templates: (( meta.data_templates ))
-    resource_pool: large_z1
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(4) ))
-    properties:
-      <<: (( merge ))
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
-
-  - name: haproxy_z1
-    instances: (( meta.instances.haproxy_z1 ))
-    templates: (( meta.ha_proxy_templates ))
-    resource_pool: small_z1
-    networks:
-      - name: floating
-        static_ips: (( meta.floating_static_ips ))
-      - name: lb1
-        default: [dns, gateway]
-        static_ips: (( static_ips(0, 11, 12, 13, 14, 15) ))
-    properties:
-      <<: (( merge ))
-      networks: (( meta.networks.z1 ))
-      ha_proxy:
-        ssl_pem: (( meta.ha_proxy.ssl_pem ))
-      metron_agent:
-        zone: z1
-
   - name: api_z1
     instances: (( meta.instances.api_z1 ))
     templates: (( meta.api_templates ))
     resource_pool: medium_z1
+    update:
+      serial: true
     networks:
       - name: cf1
         default: [dns, gateway]
@@ -221,6 +211,8 @@ jobs:
     instances: (( meta.instances.api_z2 ))
     templates: (( meta.api_templates ))
     resource_pool: medium_z2
+    update:
+      serial: true
     networks:
       - name: cf2
         default: [dns, gateway]
@@ -242,6 +234,8 @@ jobs:
     templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z1
+    update:
+      serial: true
     networks:
       - name: cf1
         static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
@@ -255,6 +249,8 @@ jobs:
     templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z2
+    update:
+      serial: true
     networks:
       - name: cf2
         static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
@@ -263,6 +259,24 @@ jobs:
       networks: (( meta.networks.z2 ))
       metron_agent:
         zone: z2
+
+  - name: haproxy_z1
+    instances: (( meta.instances.haproxy_z1 ))
+    templates: (( meta.ha_proxy_templates ))
+    resource_pool: small_z1
+    networks:
+      - name: floating
+        static_ips: (( meta.floating_static_ips ))
+      - name: lb1
+        default: [dns, gateway]
+        static_ips: (( static_ips(0, 11, 12, 13, 14, 15) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z1 ))
+      ha_proxy:
+        ssl_pem: (( meta.ha_proxy.ssl_pem ))
+      metron_agent:
+        zone: z1
 
   - name: health_z1
     instances: (( meta.instances.health_z1 ))
