@@ -170,13 +170,42 @@ jobs:
           servers:
             lan: []
 
+  - name: runner_z1
+    templates: (( meta.dea_templates ))
+    instances: (( meta.instances.runner_z1 ))
+    update:
+      max_in_flight: 1
+    resource_pool: runner_z1
+    networks:
+      - name: cf1
+    properties:
+      <<: (( merge ))
+      dea_next:
+        zone: (( merge || "z1" ))
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+  - name: runner_z2
+    templates: (( meta.dea_templates ))
+    instances: (( meta.instances.runner_z2 ))
+    update:
+      max_in_flight: 1
+    resource_pool: runner_z2
+    networks:
+      - name: cf2
+    properties:
+      <<: (( merge ))
+      dea_next:
+        zone: (( merge || "z2" ))
+      networks: (( meta.networks.z2 ))
+      metron_agent:
+        zone: z2
+
   - name: data
     instances: 1
     persistent_disk: 102400
     templates: (( meta.data_templates ))
     resource_pool: large_z1
-    update:
-      serial: true
     networks:
       - name: cf1
         static_ips: (( static_ips(4) ))
@@ -304,37 +333,6 @@ jobs:
       networks: (( meta.networks.z2 ))
       traffic_controller:
         zone: z2
-      metron_agent:
-        zone: z2
-
-  - name: runner_z1
-    templates: (( meta.dea_templates ))
-    instances: (( meta.instances.runner_z1 ))
-    update:
-      max_in_flight: 1
-    resource_pool: runner_z1
-    networks:
-      - name: cf1
-    properties:
-      <<: (( merge ))
-      dea_next:
-        zone: (( merge || "z1" ))
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
-  - name: runner_z2
-    templates: (( meta.dea_templates ))
-    instances: (( meta.instances.runner_z2 ))
-    update:
-      max_in_flight: 1
-    resource_pool: runner_z2
-    networks:
-      - name: cf2
-    properties:
-      <<: (( merge ))
-      dea_next:
-        zone: (( merge || "z2" ))
-      networks: (( meta.networks.z2 ))
       metron_agent:
         zone: z2
 
