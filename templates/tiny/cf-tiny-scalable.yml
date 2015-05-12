@@ -125,22 +125,6 @@ meta:
     runner_z1:               (( merge || 1 ))
     runner_z2:               (( merge || 0 ))
 jobs:
-  - name: data
-    instances: 1
-    persistent_disk: 102400
-    templates: (( meta.data_templates ))
-    resource_pool: large_z1
-    update:
-      serial: true
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(4) ))
-    properties:
-      <<: (( merge ))
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
-
   - name: backbone_z1
     instances: (( meta.instances.backbone_z1 ))
     persistent_disk: 102400
@@ -185,6 +169,22 @@ jobs:
           mode: server
           servers:
             lan: []
+
+  - name: data
+    instances: 1
+    persistent_disk: 102400
+    templates: (( meta.data_templates ))
+    resource_pool: large_z1
+    update:
+      serial: true
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(4) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
 
   - name: api_z1
     instances: (( meta.instances.api_z1 ))
