@@ -41,8 +41,7 @@ meta:
   zones:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
-  allowed_services_network_range:
-    - 192.168.5.0 - 192.168.255.255
+  allowed_services_network_range: 192.168.5.0 - 192.168.255.255
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
