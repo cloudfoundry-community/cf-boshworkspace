@@ -132,6 +132,9 @@ index 5ecfec9..2c2e9d5 100644
 
 1. Deploy the above changes with `bosh deploy`.
 
+1. ```bosh ssh services``` to log into the services VM, and run ```sudo rm -rf /var/vcap/store/etcd``` to clean out the previous etcd data. This
+will prevent etcd from having issues when migrating to cf-tiny-scalable, where etcd is *only* run on the services nodes.
+
 1. **CAUTION!** Do ***NOT*** run `bosh deploy` at any further point during the migration, unless the instructions indicate it. This will
     erase your current deployment manifest, which you will have been manually updating to prepare the migration. You will
     then have a large headache, and a mouth full of explitives.
