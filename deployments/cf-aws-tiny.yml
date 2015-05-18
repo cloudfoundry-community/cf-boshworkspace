@@ -52,8 +52,6 @@ meta:
       quad: "2"
       net_id: LB_SUBNET1
   environment: cf-aws-tiny
-    user: root
-    server: false
   instances:
     # Primary AZ nodes
     haproxy_z1:   1 # MARKER_FOR_PROVISION
