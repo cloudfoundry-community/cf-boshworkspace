@@ -53,7 +53,8 @@ meta:
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
-    security_groups: CF_SG
+    security_groups:
+    - CF_SG
     ipmask: "IPMASK"
     dns:
     - IPMASK.0.2

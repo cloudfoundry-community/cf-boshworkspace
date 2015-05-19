@@ -18,12 +18,12 @@ templates:
   - cf-allow-services-access.yml
   - cf/cf-properties.yml
   - cf/cf-infrastructure-openstack.yml
-  - cf-test-errands.yml
   - cf-properties.yml
   - parallel.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
   - tiny/cf-use-nfs.yml
+  - tiny/cf-use-haproxy.yml
   - cf-networking.yml
 
 meta:
@@ -45,7 +45,8 @@ meta:
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
-    security_groups: CF_SG
+    security_groups:
+    - CF_SG
     ipmask: "192.168"
     dns:
     - 8.8.8.8
@@ -57,8 +58,8 @@ meta:
       quad: "3"
       net_id: CF_SUBNET2
     lb1:
-      quad: "UNUSED"
-      net_id: UNUSED
+      quad: "0"
+      net_id: LB_SUBNET1
   environment: cf-openstack-tiny
   instances:
     # Primary AZ nodes

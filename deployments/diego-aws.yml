@@ -71,7 +71,8 @@ meta:
       diego1: "6"
       diego2: "6"
       diego3: "6"
-    security_groups: [ CF_SG ]
+    security_groups:
+    - CF_SG
     dns_servers: [ IPMASK.0.2 ]
     subnet_ids:
       diego1: DIEGO_SUBNET1
