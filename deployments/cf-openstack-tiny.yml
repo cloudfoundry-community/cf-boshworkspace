@@ -62,19 +62,19 @@ meta:
   environment: cf-openstack-tiny
   instances:
     # Primary AZ nodes
-    haproxy_z1:   1
-    backbone_z1:  1
-    api_z1:       1
-    services_z1:  1
-    health_z1:    1
-    runner_z1:    1
+    haproxy_z1:   1 # MARKER_FOR_PROVISION
+    backbone_z1:  1 # MARKER_FOR_PROVISION
+    api_z1:       1 # MARKER_FOR_PROVISION
+    services_z1:  1 # MARKER_FOR_PROVISION
+    health_z1:    1 # MARKER_FOR_PROVISION
+    runner_z1:    1 # MARKER_FOR_PROVISION
 
     # Secondary AZ nodes (for HA operations)
-    backbone_z2:  0
-    api_z2:       0
-    services_z2:  0
-    health_z2:    0
-    runner_z2:    0
+    backbone_z2:  0 # MARKER_FOR_PROVISION
+    api_z2:       0 # MARKER_FOR_PROVISION
+    services_z2:  0 # MARKER_FOR_PROVISION
+    health_z2:    0 # MARKER_FOR_PROVISION
+    runner_z2:    0 # MARKER_FOR_PROVISION
   ha_proxy:
     ssl_pem: |
       -----BEGIN RSA PRIVATE KEY-----
