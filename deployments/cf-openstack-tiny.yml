@@ -33,6 +33,10 @@ meta:
     tenant: OS_TENANT
     username: OS_USERNAME
     api_key: OS_APIKEY
+  proxy:
+    http_server: ~ # HTTP_PROXY
+    https_server: ~ # HTTPS_PROXY
+    ignored_domains: ~ # NO_PROXY
   domain: run.CF_DOMAIN
   app_domains: apps.CF_DOMAIN
   security_groups: [ "cf" ]
