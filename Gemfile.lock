@@ -36,7 +36,7 @@ GEM
       bosh_aws_cpi (~> 1.2950.0)
     bosh-template (1.2950.0)
       semi_semantic (~> 1.1.0)
-    bosh-workspace (0.9.0.rc4)
+    bosh-workspace (0.9.0.rc5)
       bosh_cli (>= 1.2905.0)
       bosh_common (>= 1.2905.0)
       hashdiff (~> 0.2.1)
@@ -316,9 +316,10 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bosh-workspace (~> 0.9.0.rc3)
+  bosh-workspace (~> 0.9.0.rc5)
   bosh_cli_plugin_micro
   fog-aws (<= 0.1.1)
   guard-rspec
   rake
   rspec-its
+  rugged (= 0.23.0b1)
