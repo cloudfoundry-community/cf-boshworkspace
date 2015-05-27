@@ -487,6 +487,9 @@ properties:
   doppler_endpoint:
     shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
 
+  metron_agent:
+    deployment: (( meta.environment ))
+
   metron_endpoint:
     shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
 
