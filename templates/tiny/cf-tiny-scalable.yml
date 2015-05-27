@@ -2,7 +2,10 @@ networks: (( merge ))
 
 meta:
   environment: ~
-  proxy: (( merge ))
+  proxy:
+    http_server:     (( merge || nil ))
+    https_server:    (( merge || nil ))
+    ignored_domains: (( merge || [] ))
 
   release:
     name: cf
