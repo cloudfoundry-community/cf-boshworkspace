@@ -77,8 +77,6 @@ meta:
   services_templates:
   - name: uaa
     release: (( meta.release.name ))
-  - name: login
-    release: (( meta.release.name ))
   - name: cloud_controller_worker
     release: (( meta.release.name ))
   - name: etcd
