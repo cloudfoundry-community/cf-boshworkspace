@@ -77,8 +77,6 @@ meta:
   services_templates:
   - name: uaa
     release: (( meta.release.name ))
-  - name: login
-    release: (( meta.release.name ))
   - name: cloud_controller_worker
     release: (( meta.release.name ))
   - name: etcd
@@ -486,6 +484,9 @@ properties:
 
   doppler_endpoint:
     shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
+
+  metron_agent:
+    deployment: (( meta.environment ))
 
   metron_endpoint:
     shared_secret: (( .properties.loggregator_endpoint.shared_secret ))
