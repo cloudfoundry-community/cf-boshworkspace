@@ -14,6 +14,7 @@ meta:
   app_domains: (( merge ))
 
   admin_secret: (( merge ))
+  secrets: (( merge ))
 
   smoke_tests:
     org: (( merge || "smoke-tests" ))
@@ -536,7 +537,6 @@ properties:
 
   collector: (( merge || nil ))
 
-  acceptance_tests: (( merge || nil ))
 
   smoke_tests:
     <<: (( merge ))
@@ -548,10 +548,13 @@ properties:
     org: (( meta.smoke_tests.org ))
     space: (( meta.smoke_tests.space ))
   acceptance_tests:
+    <<: (( merge ))
     api: (( "api." meta.domain ))
     apps_domain: (( meta.app_domains ))
+    system_domain: (( meta.domain ))
     admin_user: admin
     admin_password: (( meta.admin_secret ))
+    oauth_password: (( meta.secrets.uaa_secrets.gorouter ))
     skip_ssl_validation: true
     nodes: 1
 
