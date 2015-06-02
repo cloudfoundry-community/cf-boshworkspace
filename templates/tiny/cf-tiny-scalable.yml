@@ -13,6 +13,12 @@ meta:
   domain: (( merge ))
   app_domains: (( merge ))
 
+  admin_secret: (( merge ))
+
+  smoke_tests:
+    org: (( merge || "smoke-tests" ))
+    space: (( merge || "smoke-tests" ))
+
   ha_proxy:
     ssl_pem: (( merge ))
   floating_static_ips: (( merge ))
@@ -350,7 +356,7 @@ jobs:
     templates:
     - name: acceptance-tests
       release: cf
-    instances: 0
+    instances: 1
     resource_pool: small_errand
     lifecycle: errand
     networks:
@@ -360,7 +366,7 @@ jobs:
     templates:
     - name: smoke-tests
       release: cf
-    instances: 0
+    instances: 1
     resource_pool: small_errand
     lifecycle: errand
     networks:
@@ -532,7 +538,22 @@ properties:
 
   acceptance_tests: (( merge || nil ))
 
-  smoke_tests: (( merge || nil ))
+  smoke_tests:
+    <<: (( merge ))
+    api: (( "api." meta.domain ))
+    apps_domain: (( meta.app_domains ))
+    user: admin
+    password: (( meta.admin_secret ))
+    skip_ssl_validation: true
+    org: (( meta.smoke_tests.org ))
+    space: (( meta.smoke_tests.space ))
+  acceptance_tests:
+    api: (( "api." meta.domain ))
+    apps_domain: (( meta.app_domains ))
+    admin_user: admin
+    admin_password: (( meta.admin_secret ))
+    skip_ssl_validation: true
+    nodes: 1
 
   consul:
     domain: "consul"
