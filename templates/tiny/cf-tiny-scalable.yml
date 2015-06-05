@@ -8,7 +8,8 @@ meta:
     ignored_domains: (( merge || [] ))
 
   release:
-    name: cf
+    cf: cf
+    haproxy: cf-haproxy
 
   domain: (( merge ))
   app_domains: (( merge ))
@@ -21,7 +22,8 @@ meta:
     space: (( merge || "smoke-tests" ))
 
   ha_proxy:
-    ssl_pem: (( merge ))
+    <<:(( merge ))
+    backend_servers; (( jobs.router_z2.networks.cf1.static_ips jobs.router_z2.cf2.static_ips ))
   floating_static_ips: (( merge ))
   networks:
     z1:
@@ -37,94 +39,95 @@ meta:
 
   data_templates:
   - name: postgres
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: debian_nfs_server
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   backbone_templates:
   - name: nats
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: nats_stream_forwarder
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: doppler
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: syslog_drain_binder
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   ha_proxy_templates:
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: haproxy
-    release: (( meta.release.name ))
+    release: (( meta.release.haproxy ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   api_templates:
   - name: routing-api
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: gorouter
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: cloud_controller_ng
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: nfs_mounter
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   services_templates:
   - name: uaa
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: cloud_controller_worker
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: etcd
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: etcd_metrics_server
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: nfs_mounter
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   dea_templates:
   - name: dea_next
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: dea_logging_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   health_templates:
   - name: loggregator_trafficcontroller
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: hm9000
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: cloud_controller_clock
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: collector
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: consul_agent
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
 
   instances:
     backbone_z1:             (( merge || 1 ))
     backbone_z2:             (( merge || 0 ))
-    haproxy_z1:              (( merge || 1 ))
+    public_haproxy_z1:       (( merge || 1 ))
+    private_haproxy_z1:      (( merge || 0 ))
     api_z1:                  (( merge || 1 ))
     api_z2:                  (( merge || 0 ))
     services_z1:             (( merge || 1 ))
@@ -306,10 +309,11 @@ jobs:
         https_proxy: (( meta.proxy.https_server ))
         no_proxy: (( meta.proxy.ignored_domains ))
 
-  - name: haproxy_z1
-    instances: (( meta.instances.haproxy_z1 ))
+  - name: public_haproxy_z1
+    instances: (( meta.instances.public_haproxy_z1 ))
     templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
+    persistent_disk: 0
     networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
@@ -319,8 +323,22 @@ jobs:
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+  - name: private_haproxy_z1
+    instances: (( meta.instances.private_haproxy_z1 ))
+    templates: (( meta.ha_proxy_templates ))
+    resource_pool: small_z1
+    persistent_disk: 0
+    networks:
+      - name: lb1
+        default: [dns, gateway]
+        static_ips: (( static_ips(0, 11, 12, 13, 14, 15) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z1 ))
       ha_proxy:
-        ssl_pem: (( meta.ha_proxy.ssl_pem ))
+        internal_only_domains: []
       metron_agent:
         zone: z1
 
@@ -399,6 +417,8 @@ properties:
   disk_quota_enabled: true
 
   request_timeout_in_seconds: 900
+
+  ha_proxy: (( meta.ha_proxy || {} ))
 
   ccdb:
     address: (( jobs.data.networks.cf1.static_ips.[0] ))
