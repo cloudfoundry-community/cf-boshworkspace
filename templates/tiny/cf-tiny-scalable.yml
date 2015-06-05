@@ -333,7 +333,7 @@ jobs:
     networks:
       - name: lb1
         default: [dns, gateway]
-        static_ips: (( static_ips(0, 11, 12, 13, 14, 15) ))
+        static_ips: (( static_ips(31, 32, 33, 34, 35, 36) ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
