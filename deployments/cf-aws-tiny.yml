@@ -39,7 +39,6 @@ meta:
     z2: CF_SUBNET2_AZ
 
   ha_proxy:
-    <<: (( merge ))
     internal_only_domains:
     - PRIVATE_DOMAIN_PLACEHOLDER
 

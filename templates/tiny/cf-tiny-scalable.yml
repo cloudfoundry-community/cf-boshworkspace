@@ -21,9 +21,7 @@ meta:
     org: (( merge || "smoke-tests" ))
     space: (( merge || "smoke-tests" ))
 
-  ha_proxy:
-    <<:(( merge ))
-    backend_servers; (( jobs.router_z2.networks.cf1.static_ips jobs.router_z2.cf2.static_ips ))
+  ha_proxy: (( merge ))
   floating_static_ips: (( merge ))
   networks:
     z1:
@@ -418,7 +416,9 @@ properties:
 
   request_timeout_in_seconds: 900
 
-  ha_proxy: (( meta.ha_proxy || {} ))
+  ha_proxy:
+    <<: (( merge ))
+    backend_servers: (( jobs.api_z1.networks.cf1.static_ips jobs.api_z2.networks.cf2.static_ips ))
 
   ccdb:
     address: (( jobs.data.networks.cf1.static_ips.[0] ))
