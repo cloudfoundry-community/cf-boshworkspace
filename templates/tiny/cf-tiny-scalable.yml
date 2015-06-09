@@ -85,7 +85,7 @@ meta:
   - name: uaa
     release: (( meta.release.cf ))
   - name: login
-    release: (( meta.release.name ))
+    release: (( meta.release.cf ))
   - name: cloud_controller_worker
     release: (( meta.release.cf ))
   - name: etcd
