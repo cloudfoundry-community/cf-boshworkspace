@@ -6,6 +6,9 @@ releases:
   - name: cf
     version: 210 # DEFAULT_CF_RELEASE_VERSION
     git: https://github.com/cloudfoundry/cf-release.git
+  - name: cf-haproxy
+    version: 1 # DEFAULT_CFHAPROXY_RELEASE_VERSION
+    git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
 
 stemcells:
   - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
@@ -45,6 +48,11 @@ meta:
   zones:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
+
+  ha_proxy:
+    internal_only_domains:
+    - PRIVATE_DOMAIN_PLACEHOLDER
+
   allowed_services_network_range: 192.168.5.0 - 192.168.255.255
   floating_static_ips:
     - CF_ELASTIC_IP
@@ -66,8 +74,11 @@ meta:
       net_id: LB_SUBNET1
   environment: cf-openstack-tiny
   instances:
+    # Load balancers
+    private_haproxy_z1: 1 # MARKER_FOR_PROVISION
+    public_haproxy_z1:  1 # MARKER_FOR_PROVISION
+
     # Primary AZ nodes
-    haproxy_z1:   1 # MARKER_FOR_PROVISION
     backbone_z1:  1 # MARKER_FOR_PROVISION
     api_z1:       1 # MARKER_FOR_PROVISION
     services_z1:  1 # MARKER_FOR_PROVISION
