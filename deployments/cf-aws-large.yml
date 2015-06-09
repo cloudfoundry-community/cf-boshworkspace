@@ -4,7 +4,7 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 210 # DEFAULT_CF_RELEASE_VERSION
+    version: 207 # DEFAULT_CF_RELEASE_VERSION
     git: https://github.com/cloudfoundry/cf-release.git
 
 templates:
