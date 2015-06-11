@@ -7,7 +7,7 @@ releases:
     version: 210 # DEFAULT_CF_RELEASE_VERSION
     git: https://github.com/cloudfoundry/cf-release.git
   - name: cf-haproxy
-    version: 1 # DEFAULT_CFHAPROXY_RELEASE_VERSION
+    version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
 
 stemcells:
@@ -49,10 +49,6 @@ meta:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
 
-  ha_proxy:
-    internal_only_domains:
-    - PRIVATE_DOMAIN_PLACEHOLDER
-
   allowed_services_network_range: 192.168.5.0 - 192.168.255.255
   floating_static_ips:
     - CF_ELASTIC_IP
@@ -92,6 +88,8 @@ meta:
     health_z2:    0 # MARKER_FOR_PROVISION
     runner_z2:    0 # MARKER_FOR_PROVISION
   ha_proxy:
+    internal_only_domains:
+    - PRIVATE_DOMAIN_PLACEHOLDER
     ssl_pem: |
       -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
