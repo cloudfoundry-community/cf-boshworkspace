@@ -44,6 +44,8 @@ meta:
     release: (( meta.release.name ))
   - name: metron_agent
     release: (( meta.release.name ))
+  - name: syslog_drain_binder
+    release: (( meta.release.name ))
 
   ha_proxy_templates:
   - name: metron_agent
