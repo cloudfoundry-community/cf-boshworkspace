@@ -1,14 +1,13 @@
 meta:
-  allowed_services_network_range: (( merge ))
+  additional_security_group_rules: (( merge ))
 
 properties:
   cc:
     <<: (( merge ))
     security_group_definitions:
     - <<: (( merge ))
-    - name: services_network
-      rules:
-      - protocol: all
-        destination: (( meta.allowed_services_network_range ))
+    - name: custom_rules
+      rules: (( meta.additional_security_group_rules ))
 
-    default_running_security_groups: ["public_networks", "dns", "services_network"]
+    default_staging_security_groups: ["public_networks", "dns", "custom_rules"]
+    default_running_security_groups: ["public_networks", "dns", "custom_rules"]
