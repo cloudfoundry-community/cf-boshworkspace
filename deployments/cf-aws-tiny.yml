@@ -42,7 +42,8 @@ meta:
     internal_only_domains:
     - PRIVATE_DOMAIN_PLACEHOLDER
 
-  allowed_services_network_range: 10.10.5.0 - 10.255.255.255
+  additional_security_group_rules: [] # if you have any additional security group rules, add here
+
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
