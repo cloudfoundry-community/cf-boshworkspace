@@ -88,6 +88,9 @@ meta:
     health_z2:    0 # MARKER_FOR_PROVISION
     runner_z2:    0 # MARKER_FOR_PROVISION
   ha_proxy:
+    client_timeout: 120
+    request_timeout: 120
+    server_timeout: 120
     internal_only_domains:
     - PRIVATE_DOMAIN_PLACEHOLDER
     ssl_pem: |
