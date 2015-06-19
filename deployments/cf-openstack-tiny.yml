@@ -49,7 +49,8 @@ meta:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
 
-  allowed_services_network_range: 192.168.5.0 - 192.168.255.255
+  additional_security_group_rules: [] # if you have any additional security group rules, add here
+
   floating_static_ips:
     - CF_ELASTIC_IP
   networks:
