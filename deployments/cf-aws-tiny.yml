@@ -50,8 +50,7 @@ meta:
     security_groups:
     - CF_SG
     ipmask: "IPMASK"
-    dns:
-    - IPMASK.0.2
+    dns: [ "IPMASK.0.2" ] # one-line array so terraform provision script can overwrite if needed
     cf1:
       quad: "3"
       net_id: CF_SUBNET1

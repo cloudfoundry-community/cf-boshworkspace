@@ -57,9 +57,7 @@ meta:
     security_groups:
     - CF_SG
     ipmask: "192.168"
-    dns:
-    - 8.8.8.8
-    - 8.8.4.4
+    dns: [ "8.8.8.8", "8.8.4.4" ] # one-line array so terraform provision script can overwrite if needed
     cf1:
       quad: "2"
       net_id: CF_SUBNET1
