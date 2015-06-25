@@ -121,22 +121,8 @@ meta:
   - name: consul_agent
     release: (( meta.release.cf ))
 
-  instances:
-    backbone_z1:             (( merge || 1 ))
-    backbone_z2:             (( merge || 0 ))
-    public_haproxy_z1:       (( merge || 1 ))
-    private_haproxy_z1:      (( merge || 0 ))
-    api_z1:                  (( merge || 1 ))
-    api_z2:                  (( merge || 0 ))
-    services_z1:             (( merge || 1 ))
-    services_z2:             (( merge || 0 ))
-    health_z1:               (( merge || 1 ))
-    health_z2:               (( merge || 0 ))
-    runner_z1:               (( merge || 1 ))
-    runner_z2:               (( merge || 0 ))
 jobs:
   - name: backbone_z1
-    instances: (( meta.instances.backbone_z1 ))
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
     resource_pool: large_z1
@@ -158,7 +144,6 @@ jobs:
           servers:
             lan: []
   - name: backbone_z2
-    instances: (( meta.instances.backbone_z2 ))
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
     resource_pool: large_z2
@@ -182,7 +167,6 @@ jobs:
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
-    instances: (( meta.instances.runner_z1 ))
     update:
       max_in_flight: 1
     resource_pool: runner_z1
@@ -197,7 +181,6 @@ jobs:
         zone: z1
   - name: runner_z2
     templates: (( meta.dea_templates ))
-    instances: (( meta.instances.runner_z2 ))
     update:
       max_in_flight: 1
     resource_pool: runner_z2
@@ -226,7 +209,6 @@ jobs:
         zone: z1
 
   - name: api_z1
-    instances: (( meta.instances.api_z1 ))
     templates: (( meta.api_templates ))
     resource_pool: medium_z1
     update:
@@ -247,7 +229,6 @@ jobs:
       metron_agent:
         zone: z1
   - name: api_z2
-    instances: (( meta.instances.api_z2 ))
     templates: (( meta.api_templates ))
     resource_pool: medium_z2
     update:
@@ -269,7 +250,6 @@ jobs:
         zone: z2
 
   - name: services_z1
-    instances: (( meta.instances.services_z1 ))
     templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z1
@@ -288,7 +268,6 @@ jobs:
         https_proxy: (( meta.proxy.https_server ))
         no_proxy: (( meta.proxy.ignored_domains ))
   - name: services_z2
-    instances: (( meta.instances.services_z2 ))
     templates: (( meta.services_templates ))
     persistent_disk: 102400
     resource_pool: medium_z2
@@ -308,7 +287,6 @@ jobs:
         no_proxy: (( meta.proxy.ignored_domains ))
 
   - name: public_haproxy_z1
-    instances: (( meta.instances.public_haproxy_z1 ))
     templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
     persistent_disk: 0
@@ -324,7 +302,6 @@ jobs:
       metron_agent:
         zone: z1
   - name: private_haproxy_z1
-    instances: (( meta.instances.private_haproxy_z1 ))
     templates: (( meta.ha_proxy_templates ))
     resource_pool: small_z1
     persistent_disk: 0
@@ -341,7 +318,6 @@ jobs:
         zone: z1
 
   - name: health_z1
-    instances: (( meta.instances.health_z1 ))
     templates: (( meta.health_templates ))
     resource_pool: medium_z1
     networks:
@@ -355,7 +331,6 @@ jobs:
       metron_agent:
         zone: z1
   - name: health_z2
-    instances: (( meta.instances.health_z2 ))
     templates: (( meta.health_templates ))
     resource_pool: medium_z2
     networks:

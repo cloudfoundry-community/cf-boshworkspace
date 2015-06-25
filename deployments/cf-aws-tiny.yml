@@ -12,6 +12,7 @@ releases:
 
 templates:
   - cf/cf-deployment.yml
+  - tiny/cf-deployment-size.yml
   - tiny/cf-tiny-scalable.yml
   - cf-uaa-port.yml
   - cf-allow-services-access.yml

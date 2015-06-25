@@ -1,0 +1,65 @@
+meta:
+  job_pools:
+    backbone:        (( merge || "large_z1" ))
+    data:            (( merge || "large_z1" ))
+    public_haproxy:  (( merge || "small_z1" ))
+    private_haproxy: (( merge || "small_z1" ))
+    api:             (( merge || "medium_z1" ))
+    services:        (( merge || "medium_z1" ))
+    health:          (( merge || "medium_z1" ))
+    runner:          (( merge || "runner_z1" ))
+  instances:
+    backbone_z1:             (( merge || 1 ))
+    backbone_z2:             (( merge || 0 ))
+    public_haproxy_z1:       (( merge || 1 ))
+    private_haproxy_z1:      (( merge || 0 ))
+    api_z1:                  (( merge || 1 ))
+    api_z2:                  (( merge || 0 ))
+    services_z1:             (( merge || 1 ))
+    services_z2:             (( merge || 0 ))
+    health_z1:               (( merge || 1 ))
+    health_z2:               (( merge || 0 ))
+    runner_z1:               (( merge || 1 ))
+    runner_z2:               (( merge || 0 ))
+
+
+jobs:
+- name: backbone_z1
+  instances: (( meta.instances.backbone_z1 ))
+  resource_pool: (( meta.job_pools.backbone ))
+- name: backbone_z2
+  instances: (( meta.instances.backbone_z2 ))
+  resource_pool: (( meta.job_pools.backbone ))
+- name: runner_z1
+  instances: (( meta.instances.runner_z1 ))
+  resource_pool: (( meta.job_pools.runner ))
+- name: runner_z2
+  instances: (( meta.instances.runner_z2 ))
+  resource_pool: (( meta.job_pools.runner ))
+- name: data
+  instances: (( meta.instances.data ))
+  resource_pool: (( meta.job_pools.data ))
+- name: api_z1
+  instances: (( meta.instances.api_z1 ))
+  resource_pool: (( meta.job_pools.api ))
+- name: api_z2
+  instances: (( meta.instances.api_z2 ))
+  resource_pool: (( meta.job_pools.api ))
+- name: services_z1
+  instances: (( meta.instances.services_z1 ))
+  resource_pool: (( meta.job_pools.services ))
+- name: services_z2
+  instances: (( meta.instances.services_z2 ))
+  resource_pool: (( meta.job_pools.services ))
+- name: public_haproxy_z1
+  instances: (( meta.instances.public_haproxy_z1 ))
+  resource_pool: (( meta.job_pools.public_haproxy ))
+- name: private_haproxy_z1
+  instances: (( meta.instances.private_haproxy_z1 ))
+  resource_pool: (( meta.job_pools.private_haproxy ))
+- name: health_z1
+  instances: (( meta.instances.health_z1 ))
+  resource_pool: (( meta.job_pools.health ))
+- name: health_z2
+  instances: (( meta.instances.health_z2 ))
+  resource_pool: (( meta.job_pools.health ))
