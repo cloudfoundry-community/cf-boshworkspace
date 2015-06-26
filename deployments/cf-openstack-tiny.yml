@@ -88,6 +88,18 @@ meta:
     services_z2:  0 # MARKER_FOR_PROVISION
     health_z2:    0 # MARKER_FOR_PROVISION
     runner_z2:    0 # MARKER_FOR_PROVISION
+
+
+  job_pools:
+    backbone:        large  # MARKER_FOR_PROVISION
+    data:            large  # MARKER_FOR_PROVISION
+    public_haproxy:  small  # MARKER_FOR_PROVISION
+    private_haproxy: small  # MARKER_FOR_PROVISION
+    api:             medium # MARKER_FOR_PROVISION
+    services:        medium # MARKER_FOR_PROVISION
+    health:          medium # MARKER_FOR_PROVISION
+    runner:          runner # MARKER_FOR_PROVISION
+
   ha_proxy:
     client_timeout: 120
     request_timeout: 120
