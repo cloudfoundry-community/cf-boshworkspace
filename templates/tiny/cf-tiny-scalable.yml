@@ -134,12 +134,23 @@ meta:
     health_z2:               (( merge || 0 ))
     runner_z1:               (( merge || 1 ))
     runner_z2:               (( merge || 0 ))
+
+  job_pools:
+    backbone:        (( merge || "large" ))
+    data:            (( merge || "large" ))
+    public_haproxy:  (( merge || "small" ))
+    private_haproxy: (( merge || "small" ))
+    api:             (( merge || "medium" ))
+    services:        (( merge || "medium" ))
+    health:          (( merge || "medium" ))
+    runner:          (( merge || "runner" ))
+
 jobs:
   - name: backbone_z1
     instances: (( meta.instances.backbone_z1 ))
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
-    resource_pool: large_z1
+    resource_pool: (( meta.job_pools.backbone "_z1" ))
     update:
       serial: true
     networks:
@@ -161,7 +172,7 @@ jobs:
     instances: (( meta.instances.backbone_z2 ))
     persistent_disk: 102400
     templates: (( meta.backbone_templates ))
-    resource_pool: large_z2
+    resource_pool: (( meta.job_pools.backbone "_z2" ))
     update:
       serial: true
     networks:
@@ -183,9 +194,9 @@ jobs:
   - name: runner_z1
     templates: (( meta.dea_templates ))
     instances: (( meta.instances.runner_z1 ))
+    resource_pool: (( meta.job_pools.runner "_z1" ))
     update:
       max_in_flight: 1
-    resource_pool: runner_z1
     networks:
       - name: cf1
     properties:
@@ -198,9 +209,9 @@ jobs:
   - name: runner_z2
     templates: (( meta.dea_templates ))
     instances: (( meta.instances.runner_z2 ))
+    resource_pool: (( meta.job_pools.runner "_z2" ))
     update:
       max_in_flight: 1
-    resource_pool: runner_z2
     networks:
       - name: cf2
     properties:
@@ -213,9 +224,9 @@ jobs:
 
   - name: data
     instances: 1
+    resource_pool: (( meta.job_pools.data "_z1" ))
     persistent_disk: 102400
     templates: (( meta.data_templates ))
-    resource_pool: large_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(4) ))
@@ -227,8 +238,8 @@ jobs:
 
   - name: api_z1
     instances: (( meta.instances.api_z1 ))
+    resource_pool: (( meta.job_pools.api "_z1" ))
     templates: (( meta.api_templates ))
-    resource_pool: medium_z1
     update:
       serial: true
     networks:
@@ -248,8 +259,8 @@ jobs:
         zone: z1
   - name: api_z2
     instances: (( meta.instances.api_z2 ))
+    resource_pool: (( meta.job_pools.api "_z2" ))
     templates: (( meta.api_templates ))
-    resource_pool: medium_z2
     update:
       serial: true
     networks:
@@ -270,9 +281,9 @@ jobs:
 
   - name: services_z1
     instances: (( meta.instances.services_z1 ))
+    resource_pool: (( meta.job_pools.services "_z1" ))
     templates: (( meta.services_templates ))
     persistent_disk: 102400
-    resource_pool: medium_z1
     update:
       serial: true
     networks:
@@ -289,9 +300,9 @@ jobs:
         no_proxy: (( meta.proxy.ignored_domains ))
   - name: services_z2
     instances: (( meta.instances.services_z2 ))
+    resource_pool: (( meta.job_pools.services "_z2" ))
     templates: (( meta.services_templates ))
     persistent_disk: 102400
-    resource_pool: medium_z2
     update:
       serial: true
     networks:
@@ -309,8 +320,8 @@ jobs:
 
   - name: public_haproxy_z1
     instances: (( meta.instances.public_haproxy_z1 ))
+    resource_pool: (( meta.job_pools.public_haproxy "_z1" ))
     templates: (( meta.ha_proxy_templates ))
-    resource_pool: small_z1
     persistent_disk: 0
     networks:
       - name: floating
@@ -325,8 +336,8 @@ jobs:
         zone: z1
   - name: private_haproxy_z1
     instances: (( meta.instances.private_haproxy_z1 ))
+    resource_pool: (( meta.job_pools.private_haproxy "_z1" ))
     templates: (( meta.ha_proxy_templates ))
-    resource_pool: small_z1
     persistent_disk: 0
     networks:
       - name: lb1
@@ -342,8 +353,8 @@ jobs:
 
   - name: health_z1
     instances: (( meta.instances.health_z1 ))
+    resource_pool: (( meta.job_pools.health "_z1" ))
     templates: (( meta.health_templates ))
-    resource_pool: medium_z1
     networks:
       - name: cf1
         static_ips: (( static_ips(3, 26, 27, 28, 29, 30) ))
@@ -356,8 +367,8 @@ jobs:
         zone: z1
   - name: health_z2
     instances: (( meta.instances.health_z2 ))
+    resource_pool: (( meta.job_pools.health "_z2" ))
     templates: (( meta.health_templates ))
-    resource_pool: medium_z2
     networks:
       - name: cf2
         static_ips: (( static_ips(3, 26, 27, 28, 29, 30) ))
