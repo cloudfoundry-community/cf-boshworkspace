@@ -82,11 +82,11 @@ meta:
     runner_z2:    0 # MARKER_FOR_PROVISION
 
   job_pools:
-    backbone:        large  # MARKER_FOR_PROVISION
-    data:            large  # MARKER_FOR_PROVISION
-    public_haproxy:  small  # MARKER_FOR_PROVISION
-    private_haproxy: small  # MARKER_FOR_PROVISION
-    api:             medium # MARKER_FOR_PROVISION
-    services:        medium # MARKER_FOR_PROVISION
-    health:          medium # MARKER_FOR_PROVISION
-    runner:          runner # MARKER_FOR_PROVISION
+    backbone:        large  # MARKER_FOR_POOL_PROVISION
+    data:            large  # MARKER_FOR_POOL_PROVISION
+    public_haproxy:  small  # MARKER_FOR_POOL_PROVISION
+    private_haproxy: small  # MARKER_FOR_POOL_PROVISION
+    api:             medium # MARKER_FOR_POOL_PROVISION
+    services:        medium # MARKER_FOR_POOL_PROVISION
+    health:          medium # MARKER_FOR_POOL_PROVISION
+    runner:          runner # MARKER_FOR_POOL_PROVISION
