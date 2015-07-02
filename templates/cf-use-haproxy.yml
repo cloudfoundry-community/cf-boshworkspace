@@ -52,6 +52,8 @@ jobs:
     properties:
       networks:
         apps: lb1
+      ha_proxy:
+            ssl_pem: (( meta.ha_proxy_ssl_pem ))
 
 resource_pools:
   - name: router_z1
