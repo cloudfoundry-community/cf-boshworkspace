@@ -1,0 +1,18 @@
+properties:
+  cc:
+  - name: java_buildpack
+    package: buildpack_java_offline
+  - name: ruby_buildpack
+    package: buildpack_ruby
+  - name: nodejs_buildpack
+    package: buildpack_nodejs
+  - name: go_buildpack
+    package: buildpack_go
+  - name: python_buildpack
+    package: buildpack_python
+  - name: php_buildpack
+    package: buildpack_php
+  - name: staticfile_buildpack
+    package: buildpack_staticfile
+  - name: binary_buildpack
+    package: buildpack_binary
