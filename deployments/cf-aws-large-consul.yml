@@ -15,6 +15,7 @@ releases:
 
 templates:
   - cf/cf-deployment.yml
+  - cf-metron-agent.yml
   - cf/cf-jobs.yml
   - cf-uaa-port.yml
   - cf-consul.yml
