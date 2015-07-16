@@ -20,6 +20,7 @@ templates:
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
   - cf/cf-properties.yml
+#  - offline-java-buildpack.yml
   - cf/cf-infrastructure-openstack.yml
   - cf-properties.yml
   - parallel.yml

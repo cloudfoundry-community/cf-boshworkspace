@@ -1,0 +1,8 @@
+meta:
+  environment: ~
+
+properties:
+  <<: (( merge ))
+
+  metron_agent:
+    deployment: (( meta.environment ))
