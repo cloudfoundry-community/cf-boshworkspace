@@ -294,10 +294,6 @@ jobs:
       networks: (( meta.networks.z1 ))
       metron_agent:
         zone: z1
-      env:
-        http_proxy: (( meta.proxy.http_server ))
-        https_proxy: (( meta.proxy.https_server ))
-        no_proxy: (( meta.proxy.ignored_domains ))
   - name: services_z2
     instances: (( meta.instances.services_z2 ))
     resource_pool: (( meta.job_pools.services "_z2" ))
@@ -313,10 +309,6 @@ jobs:
       networks: (( meta.networks.z2 ))
       metron_agent:
         zone: z2
-      env:
-        http_proxy: (( meta.proxy.http_server ))
-        https_proxy: (( meta.proxy.https_server ))
-        no_proxy: (( meta.proxy.ignored_domains ))
 
   - name: public_haproxy_z1
     instances: (( meta.instances.public_haproxy_z1 ))
