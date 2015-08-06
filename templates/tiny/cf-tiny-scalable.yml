@@ -236,6 +236,45 @@ jobs:
       metron_agent:
         zone: z1
 
+  - name: services_z1
+    instances: (( meta.instances.services_z1 ))
+    resource_pool: (( meta.job_pools.services "_z1" ))
+    templates: (( meta.services_templates ))
+    persistent_disk: 102400
+    update:
+      serial: true
+    networks:
+      - name: cf1
+        static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z1 ))
+      metron_agent:
+        zone: z1
+      env:
+        http_proxy: (( meta.proxy.http_server ))
+        https_proxy: (( meta.proxy.https_server ))
+        no_proxy: (( meta.proxy.ignored_domains ))
+  - name: services_z2
+    instances: (( meta.instances.services_z2 ))
+    resource_pool: (( meta.job_pools.services "_z2" ))
+    templates: (( meta.services_templates ))
+    persistent_disk: 102400
+    update:
+      serial: true
+    networks:
+      - name: cf2
+        static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
+    properties:
+      <<: (( merge ))
+      networks: (( meta.networks.z2 ))
+      metron_agent:
+        zone: z2
+      env:
+        http_proxy: (( meta.proxy.http_server ))
+        https_proxy: (( meta.proxy.https_server ))
+        no_proxy: (( meta.proxy.ignored_domains ))
+
   - name: api_z1
     instances: (( meta.instances.api_z1 ))
     resource_pool: (( meta.job_pools.api "_z1" ))
@@ -278,45 +317,6 @@ jobs:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
       metron_agent:
         zone: z2
-
-  - name: services_z1
-    instances: (( meta.instances.services_z1 ))
-    resource_pool: (( meta.job_pools.services "_z1" ))
-    templates: (( meta.services_templates ))
-    persistent_disk: 102400
-    update:
-      serial: true
-    networks:
-      - name: cf1
-        static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
-    properties:
-      <<: (( merge ))
-      networks: (( meta.networks.z1 ))
-      metron_agent:
-        zone: z1
-      env:
-        http_proxy: (( meta.proxy.http_server ))
-        https_proxy: (( meta.proxy.https_server ))
-        no_proxy: (( meta.proxy.ignored_domains ))
-  - name: services_z2
-    instances: (( meta.instances.services_z2 ))
-    resource_pool: (( meta.job_pools.services "_z2" ))
-    templates: (( meta.services_templates ))
-    persistent_disk: 102400
-    update:
-      serial: true
-    networks:
-      - name: cf2
-        static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
-    properties:
-      <<: (( merge ))
-      networks: (( meta.networks.z2 ))
-      metron_agent:
-        zone: z2
-      env:
-        http_proxy: (( meta.proxy.http_server ))
-        https_proxy: (( meta.proxy.https_server ))
-        no_proxy: (( meta.proxy.ignored_domains ))
 
   - name: public_haproxy_z1
     instances: (( meta.instances.public_haproxy_z1 ))
