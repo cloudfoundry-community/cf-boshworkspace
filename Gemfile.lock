@@ -1,16 +1,3 @@
-GIT
-  remote: https://github.com/cloudfoundry-incubator/bosh-workspace
-  revision: 3f842c1910610b91f5edd6fc63b814675e0a773a
-  branch: master
-  specs:
-    bosh-workspace (0.9.0)
-      bosh_cli (>= 1.2905.0)
-      bosh_common (>= 1.2905.0)
-      hashdiff (~> 0.2.1)
-      membrane (~> 1.1.0)
-      rugged (~> 0.23.0b3)
-      semi_semantic (~> 1.1.0)
-
 GEM
   remote: https://rubygems.org/
   specs:
@@ -48,6 +35,13 @@ GEM
       bosh-core (~> 1.2950.0)
       bosh_aws_cpi (~> 1.2950.0)
     bosh-template (1.2950.0)
+      semi_semantic (~> 1.1.0)
+    bosh-workspace (0.9.1)
+      bosh_cli (>= 1.2905.0)
+      bosh_common (>= 1.2905.0)
+      hashdiff (~> 0.2.1)
+      membrane (~> 1.1.0)
+      rugged (~> 0.23.0b3)
       semi_semantic (~> 1.1.0)
     bosh_aws_cpi (1.2950.0)
       aws-sdk (= 1.60.2)
@@ -297,7 +291,7 @@ GEM
       log4r (>= 1.1.9)
       ruby-hmac (>= 0.4.0)
     ruby-hmac (0.4.0)
-    rugged (0.23.0b4)
+    rugged (0.23.0)
     semi_semantic (1.1.0)
     sequel (3.43.0)
     shellany (0.0.1)
@@ -322,7 +316,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bosh-workspace!
+  bosh-workspace (= 0.9.1)
   bosh_cli_plugin_micro
   fog-aws (<= 0.1.1)
   guard-rspec
