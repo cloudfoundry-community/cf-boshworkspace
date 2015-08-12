@@ -36,10 +36,6 @@ meta:
       - (( .networks.cf2.subnets.[0].range || nil ))
 
   data_templates:
-  - name: etcd
-    release: (( meta.release.cf ))
-  - name: etcd_metrics_server
-    release: (( meta.release.cf ))
   - name: postgres
     release: (( meta.release.cf ))
   - name: debian_nfs_server
@@ -50,6 +46,10 @@ meta:
     release: (( meta.release.cf ))
 
   backbone_templates:
+  - name: etcd
+    release: (( meta.release.cf ))
+  - name: etcd_metrics_server
+    release: (( meta.release.cf ))
   - name: nats
     release: (( meta.release.cf ))
   - name: nats_stream_forwarder
@@ -89,10 +89,6 @@ meta:
   - name: uaa
     release: (( meta.release.cf ))
   - name: cloud_controller_worker
-    release: (( meta.release.cf ))
-  - name: etcd
-    release: (( meta.release.cf ))
-  - name: etcd_metrics_server
     release: (( meta.release.cf ))
   - name: metron_agent
     release: (( meta.release.cf ))
@@ -483,7 +479,7 @@ properties:
     prof_port: 0
 
   etcd:
-    machines: (( jobs.services_z1.networks.cf1.static_ips jobs.services_z2.networks.cf2.static_ips jobs.data.networks.cf1.static_ips ))
+    machines: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
 
   etcd_metrics_server:
     nats:
