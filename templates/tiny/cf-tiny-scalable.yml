@@ -475,7 +475,10 @@ properties:
 
   etcd_metrics_server:
     nats:
-      machines: (( .properties.nats.machines ))
+      # until http://git.io/vsUDx is fixed and included in etcd_metrics_server
+      # point to canary node since it will be updated first
+      machines:
+        - (( .properties.nats.machines.[0] ))
       username: (( .properties.nats.user ))
       password: (( .properties.nats.password ))
 
