@@ -1,0 +1,29 @@
+meta:
+  app_domains: (( merge ))
+  domain: (( merge ))
+  login_smtp:
+    host: (( merge ))
+    port: (( merge || 465 ))
+    user: (( merge ))
+    password: (( merge ))
+    senderEmail: (( merge ))
+    senderName: (( merge ))
+properties:
+  login:
+    asset_base_url: /resources/project
+    tiles:
+      - name: Developer console
+        login-link: (( "https://console." meta.app_domains ))
+        image: /resources/project/images/console.png
+        image-hover: /resources/project/images/console.png
+    smtp:
+      host: (( meta.login_smtp.host ))
+      port: (( meta.login_smtp.port ))
+      user: (( meta.login_smtp.user ))
+      password: (( meta.login_smtp.password ))
+      senderEmail: (( meta.login_smtp.senderEmail ))
+      senderName: (( meta.login_smtp.senderName ))
+    links:
+      passwd: (( "https://login." meta.domain "/forgot_password" ))
+    self_service_links_enabled: true
+
