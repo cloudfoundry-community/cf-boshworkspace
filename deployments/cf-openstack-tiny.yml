@@ -9,6 +9,10 @@ releases:
   - name: cf-haproxy
     version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
+  - name: login-intel
+    version: 5
+    ref: 31e3307268 # can be removed when version 6 is release
+    git: https://github.com/trustedanalytics/login-boshrelease.git
 
 stemcells:
   - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
@@ -19,6 +23,7 @@ templates:
   - tiny/cf-tiny-scalable.yml
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
+  - cf-project-login-additional-properties.yml
   - cf/cf-properties.yml
 #  - offline-java-buildpack.yml
   - cf/cf-infrastructure-openstack.yml
@@ -29,6 +34,7 @@ templates:
   - tiny/cf-use-nfs.yml
   - tiny/cf-use-haproxy.yml
   - cf-networking.yml
+  - cf-project-login.yml
 
 meta:
   openstack:
@@ -41,14 +47,21 @@ meta:
     http_server: ~ # HTTP_PROXY
     https_server: ~ # HTTPS_PROXY
     ignored_domains: ~ # NO_PROXY
-  domain: run.CF_DOMAIN
-  app_domains: apps.CF_DOMAIN
+  domain: CF_DOMAIN
+  app_domains: CF_DOMAIN
   security_groups: [ "cf" ]
-  secret: c1oudc0w # Used for all passwords except cf admin
-  admin_secret: c1oudc0wc1oudc0w
+  secret: CF_CLIENT_PASS # Used for all passwords except cf admin
+  admin_secret: CF_ADMIN_PASS
   zones:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
+  login_smtp:
+    host: mail.YOURSMTP.com
+    port: 2525
+    user: YOURUSER
+    password: YOURPASS
+    senderEmail: support@domain.com
+    senderName: Domain
 
   additional_security_group_rules: [] # if you have any additional security group rules, add here
 
@@ -81,7 +94,7 @@ meta:
     api_z1:       1 # MARKER_FOR_PROVISION
     services_z1:  1 # MARKER_FOR_PROVISION
     health_z1:    1 # MARKER_FOR_PROVISION
-    runner_z1:    1 # MARKER_FOR_PROVISION
+    runner_z1:    3 # MARKER_FOR_PROVISION
 
     # Secondary AZ nodes (for HA operations)
     backbone_z2:  0 # MARKER_FOR_PROVISION
