@@ -1,0 +1,11 @@
+properties:
+  login:
+    <<: (( merge ))
+    smtp:
+      host: (( merge ))
+      port: (( merge ))
+      user: (( merge ))
+      password: (( merge ))
+      senderEmail: (( merge ))
+      senderName: (( merge ))
+
