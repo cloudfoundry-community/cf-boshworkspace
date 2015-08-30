@@ -1,3 +1,5 @@
+[![Dependency Status](https://gemnasium.com/trustedanalytics/cf-boshworkspace.svg)](https://gemnasium.com/trustedanalytics/cf-boshworkspace)
+
 cf-boshworkspace
 ================
 
