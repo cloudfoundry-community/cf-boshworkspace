@@ -9,10 +9,9 @@ releases:
   - name: cf-haproxy
     version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
-  - name: login-intel
-    version: 5
-    ref: 31e3307268 # can be removed when version 6 is release
-    git: https://github.com/trustedanalytics/login-boshrelease.git
+  - name: uaa-intel
+    version: 1
+    git: https://github.com/trustedanalytics/uaa-intel-boshrelease.git
 
 stemcells:
   - name: bosh-openstack-kvm-ubuntu-trusty-go_agent
