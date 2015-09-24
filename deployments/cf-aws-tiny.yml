@@ -9,6 +9,9 @@ releases:
   - name: cf-haproxy
     version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
+  - name: iot-haproxy
+    version: 3
+    git: https://github.com/trustedanalytics/iot-haproxy-boshrelease.git
   - name: uaa-intel
     version: 1
     git: https://github.com/trustedanalytics/uaa-intel-boshrelease.git
@@ -39,6 +42,7 @@ meta:
   app_domains: apps.CF_DOMAIN
   secret: CF_CLIENT_PASS  # Used for all passwords except cf admin
   admin_secret: CF_ADMIN_PASS
+  env_name: ENV_NAME
   zones:
     z1: CF_SUBNET1_AZ
     z2: CF_SUBNET2_AZ
@@ -64,7 +68,9 @@ meta:
     - CF_SG
     ipmask: "IPMASK"
     dns:
-    - IPMASK.0.2
+    - 10.10.10.250
+    - 10.10.10.251
+    - 10.10.10.252
     cf1:
       quad: "3"
       net_id: CF_SUBNET1
