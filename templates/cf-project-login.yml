@@ -10,12 +10,12 @@ meta:
     senderName: (( merge ))
 properties:
   login:
-    asset_base_url: /resources/project
+    asset_base_url: /resources/trustedanalytics
     tiles:
       - name: Developer console
         login-link: (( "https://console." meta.app_domains ))
-        image: /resources/project/images/console.png
-        image-hover: /resources/project/images/console.png
+        image: /resources/trustedanalytics/images/console.png
+        image-hover: /resources/trustedanalytics/images/console.png
     smtp:
       host: (( meta.login_smtp.host ))
       port: (( meta.login_smtp.port ))

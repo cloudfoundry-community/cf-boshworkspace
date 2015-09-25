@@ -13,7 +13,7 @@ releases:
     version: 3
     git: https://github.com/trustedanalytics/iot-haproxy-boshrelease.git
   - name: uaa-intel
-    version: 1
+    version: 4
     git: https://github.com/trustedanalytics/uaa-intel-boshrelease.git
 
 templates:
