@@ -58,7 +58,7 @@ meta:
   ha_proxy:
     internal_only_domains:
     - PRIVATE_DOMAIN_PLACEHOLDER
-    server_timeout: 9000
+    server_timeout: 900
 
   additional_security_group_rules: [] # if you have any additional security group rules, add here
 
