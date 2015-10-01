@@ -20,8 +20,8 @@ properties:
   dea_next:
     memory_overcommit_factor: 1
     disk_overcommit_factor: 1
-    disk_mb: 78000
-    memory_mb: 30000
+    disk_mb: 860000
+    memory_mb: 7500
   login:
     protocol: http
 
