@@ -91,7 +91,7 @@ meta:
     api_z1:       1 # MARKER_FOR_PROVISION
     services_z1:  1 # MARKER_FOR_PROVISION
     health_z1:    1 # MARKER_FOR_PROVISION
-    runner_z1:    3 # MARKER_FOR_PROVISION
+    runner_z1:    1 # MARKER_FOR_PROVISION
 
     # Secondary AZ nodes (for HA operations)
     backbone_z2:  0 # MARKER_FOR_PROVISION
