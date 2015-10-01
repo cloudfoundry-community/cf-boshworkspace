@@ -10,14 +10,12 @@ meta:
   release:
     cf: cf
     haproxy: cf-haproxy
-    iot-haproxy: iot-haproxy
 
   domain: (( merge ))
   app_domains: (( merge ))
 
   admin_secret: (( merge ))
   secrets: (( merge ))
-  env_name: (( merge || "envname" ))
 
   smoke_tests:
     org: (( merge || "smoke-tests" ))
@@ -72,10 +70,6 @@ meta:
     release: (( meta.release.haproxy ))
   - name: consul_agent
     release: (( meta.release.cf ))
-  - name: iot-haproxy
-    release: (( meta.release.iot-haproxy ))
-  - name: consul-template
-    release: (( meta.release.iot-haproxy ))
 
   api_templates:
   - name: routing-api
@@ -181,6 +175,11 @@ jobs:
         zone: z1
       doppler:
         zone: z1
+      consul:
+        agent:
+          mode: server
+          servers:
+            lan: []
   - name: backbone_z2
     instances: (( meta.instances.backbone_z2 ))
     persistent_disk: 102400
@@ -196,6 +195,11 @@ jobs:
         zone: z2
       doppler:
         zone: z2
+      consul:
+        agent:
+          mode: server
+          servers:
+            lan: []
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
@@ -568,10 +572,7 @@ properties:
     nodes: 1
 
   consul:
+    domain: "consul"
     agent:
-      datacenter: (( meta.env_name ))
       servers:
-        lan:
-          - 10.10.10.250
-          - 10.10.10.251
-          - 10.10.10.252
+        lan: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
