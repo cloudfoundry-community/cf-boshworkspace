@@ -15,7 +15,7 @@ meta:
 
   instance_types:
     large_z1: (( merge || "m3.large" ))
-    runner_z1: (( merge || "r3.xlarge" ))
+    runner_z1: (( merge || "m3.large" ))
     router_z1: (( merge || "m3.medium" ))
 
 resource_pools:
