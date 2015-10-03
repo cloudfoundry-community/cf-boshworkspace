@@ -1,0 +1,87 @@
+meta:
+  release:
+    cf: cf
+    haproxy: cf-haproxy
+
+  data_templates:
+    - name: postgres
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  backbone_templates:
+    - name: etcd
+      release: (( meta.release.cf ))
+    - name: etcd_metrics_server
+      release: (( meta.release.cf ))
+    - name: nats
+      release: (( meta.release.cf ))
+    - name: nats_stream_forwarder
+      release: (( meta.release.cf ))
+    - name: doppler
+      release: (( meta.release.cf ))
+    - name: syslog_drain_binder
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  ha_proxy_templates:
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: haproxy
+      release: (( meta.release.haproxy ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  api_templates:
+    - name: routing-api
+      release: (( meta.release.cf ))
+    - name: gorouter
+      release: (( meta.release.cf ))
+    - name: cloud_controller_ng
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  services_templates:
+    - name: uaa
+      release: (( meta.release.cf ))
+    - name: cloud_controller_worker
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  dea_templates:
+    - name: dea_next
+      release: (( meta.release.cf ))
+    - name: dea_logging_agent
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+  health_templates:
+    - name: loggregator_trafficcontroller
+      release: (( meta.release.cf ))
+    - name: hm9000
+      release: (( meta.release.cf ))
+    - name: cloud_controller_clock
+      release: (( meta.release.cf ))
+    - name: metron_agent
+      release: (( meta.release.cf ))
+    - name: collector
+      release: (( meta.release.cf ))
+    - name: consul_agent
+      release: (( meta.release.cf ))
+
+
+
