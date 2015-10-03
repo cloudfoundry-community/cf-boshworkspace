@@ -30,86 +30,19 @@ meta:
       apps: cf2
 
   nfs_server:
-    address: (( jobs.data.networks.cf1.static_ips.[0] ))
+    address: (( merge || jobs.data.networks.cf1.static_ips.[0] ))
     allow_from_entries:
       - (( .networks.cf1.subnets.[0].range || nil ))
       - (( .networks.cf2.subnets.[0].range || nil ))
 
-  data_templates:
-  - name: postgres
-    release: (( meta.release.cf ))
-  - name: debian_nfs_server
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-
-  backbone_templates:
-  - name: etcd
-    release: (( meta.release.cf ))
-  - name: etcd_metrics_server
-    release: (( meta.release.cf ))
-  - name: nats
-    release: (( meta.release.cf ))
-  - name: nats_stream_forwarder
-    release: (( meta.release.cf ))
-  - name: doppler
-    release: (( meta.release.cf ))
-  - name: syslog_drain_binder
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: consul_agent
-    release: (( meta.release.cf ))
-
-  ha_proxy_templates:
-  - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: haproxy
-    release: (( meta.release.haproxy ))
-  - name: consul_agent
-    release: (( meta.release.cf ))
-
-  api_templates:
-  - name: routing-api
-    release: (( meta.release.cf ))
-  - name: gorouter
-    release: (( meta.release.cf ))
-  - name: cloud_controller_ng
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: nfs_mounter
-    release: (( meta.release.cf ))
-
-  services_templates:
-  - name: uaa-intel
-    release: uaa-intel
-  - name: cloud_controller_worker
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: nfs_mounter
-    release: (( meta.release.cf ))
-
-  dea_templates:
-  - name: dea_next
-    release: (( meta.release.cf ))
-  - name: dea_logging_agent
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-
-  health_templates:
-  - name: loggregator_trafficcontroller
-    release: (( meta.release.cf ))
-  - name: hm9000
-    release: (( meta.release.cf ))
-  - name: cloud_controller_clock
-    release: (( meta.release.cf ))
-  - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: collector
-    release: (( meta.release.cf ))
+  api_templates: (( merge ))
+  backbone_templates: (( merge ))
+  data_templates: (( merge ))
+  dea_templates: (( merge ))
+  ha_proxy_templates: (( merge ))
+  health_templates: (( merge ))
+  release: (( merge ))
+  services_templates: (( merge ))
 
   instances:
     backbone_z1:             (( merge || 1 ))
@@ -226,12 +159,13 @@ jobs:
     instances: (( meta.instances.public_haproxy_z1 ))
     resource_pool: (( meta.job_pools.public_haproxy "_z1" ))
     templates: (( meta.ha_proxy_templates ))
-    networks:
+    default_networks:
       - name: floating
         static_ips: (( meta.floating_static_ips ))
       - name: lb1
         default: [dns, gateway]
         static_ips: (( static_ips(0, 11, 12, 13, 14, 15) ))
+    networks: (( merge || default_networks ))
     properties:
       <<: (( merge ))
       networks: (( meta.networks.z1 ))
