@@ -23,6 +23,9 @@ templates:
 #  - offline-java-buildpack.yml
   - cf/cf-infrastructure-openstack.yml
   - cf-properties.yml
+  - tiny/cf-jobs-nfs.yml
+  - tiny/cf-jobs-login.yml
+  - tiny/cf-jobs-base.yml
   - parallel.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
