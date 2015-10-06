@@ -22,6 +22,9 @@ templates:
   - cf/cf-properties.yml
   - cf/cf-infrastructure-aws.yml
   - cf-properties.yml
+  - tiny/cf-jobs-nfs.yml
+  - tiny/cf-jobs-login.yml
+  - tiny/cf-jobs-base.yml
   - parallel.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
