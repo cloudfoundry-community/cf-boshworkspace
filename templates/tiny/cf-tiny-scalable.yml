@@ -499,6 +499,7 @@ properties:
     nodes: 1
 
   consul:
+    <<: (( merge ))
     domain: "consul"
     agent:
       servers:
