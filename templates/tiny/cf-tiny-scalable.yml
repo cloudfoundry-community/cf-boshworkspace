@@ -138,8 +138,6 @@ jobs:
       consul:
         agent:
           mode: server
-          servers:
-            lan: []
   - name: backbone_z2
     instances: (( meta.instances.backbone_z2 ))
     persistent_disk: 102400
@@ -158,8 +156,6 @@ jobs:
       consul:
         agent:
           mode: server
-          servers:
-            lan: []
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
@@ -241,7 +237,8 @@ jobs:
       consul:
         agent:
           services:
-            - cloud_controller_ng
+            cloud_controller_ng: {}
+            routing-api: {}
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -264,7 +261,8 @@ jobs:
       consul:
         agent:
           services:
-            - cloud_controller_ng
+            cloud_controller_ng: {}
+            routing-api: {}
       networks: (( meta.networks.z2 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
