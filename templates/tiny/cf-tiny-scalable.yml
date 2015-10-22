@@ -315,6 +315,8 @@ jobs:
       route_registrar:
         routes: (( merge || meta.uaa_routes ))
       networks: (( meta.networks.z1 ))
+      router:
+        servers: (( .properties.router.servers.z1 .properties.router.servers.z2 ))
       metron_agent:
         zone: z1
   - name: services_z2
@@ -330,6 +332,8 @@ jobs:
       route_registrar:
         routes: (( merge || meta.uaa_routes ))
       networks: (( meta.networks.z2 ))
+      router:
+        servers: (( .properties.router.servers.z1 .properties.router.servers.z2 ))
       metron_agent:
         zone: z2
 
