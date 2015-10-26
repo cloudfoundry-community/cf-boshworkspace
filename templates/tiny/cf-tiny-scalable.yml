@@ -446,6 +446,8 @@ properties:
     prof_port: 0
 
   etcd:
+    peer_require_ssl: false
+    require_ssl: false
     machines: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
 
   etcd_metrics_server:
@@ -498,6 +500,8 @@ properties:
     incoming_port: 3458
     dropsonde_incoming_port: 3459
     outgoing_dropsonde_port: 8081
+    etcd:
+      machines: (( .properties.etcd.machines ))
 
   doppler:
     maxRetainedLogMessages: 100

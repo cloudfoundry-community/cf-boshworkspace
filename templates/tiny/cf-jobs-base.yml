@@ -2,6 +2,8 @@ meta:
   release:
     cf: cf
     haproxy: cf-haproxy
+    etcd: etcd
+    consul: cf #consul
 
   data_templates:
     - name: postgres
@@ -9,13 +11,13 @@ meta:
     - name: metron_agent
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
 
   backbone_templates:
     - name: etcd
-      release: (( meta.release.cf ))
+      release: (( meta.release.etcd ))
     - name: etcd_metrics_server
-      release: (( meta.release.cf ))
+      release: (( meta.release.etcd ))
     - name: nats
       release: (( meta.release.cf ))
     - name: nats_stream_forwarder
@@ -27,7 +29,7 @@ meta:
     - name: metron_agent
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
 
   ha_proxy_templates:
     - name: metron_agent
@@ -35,7 +37,7 @@ meta:
     - name: haproxy
       release: (( meta.release.haproxy ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
 
   api_templates:
     - name: routing-api
@@ -47,7 +49,7 @@ meta:
     - name: metron_agent
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
 
@@ -59,7 +61,7 @@ meta:
     - name: metron_agent
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
 
@@ -71,7 +73,7 @@ meta:
     - name: metron_agent
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
 
   health_templates:
     - name: loggregator_trafficcontroller
@@ -85,7 +87,7 @@ meta:
     - name: collector
       release: (( meta.release.cf ))
     - name: consul_agent
-      release: (( meta.release.cf ))
+      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
       
