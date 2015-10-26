@@ -1,0 +1,21 @@
+meta:
+  data_templates:
+    - <<: (( merge ))
+    - name: debian_nfs_server
+      release: (( meta.release.cf ))
+
+  api_templates:
+    - <<: (( merge ))
+    - name: nfs_mounter
+      release: (( meta.release.cf ))
+
+  services:
+    - <<: (( merge ))
+    - name: nfs_mounter
+      release: (( meta.release.cf ))
+  
+  release:
+    cf: cf
+    haproxy: cf-haproxy
+
+

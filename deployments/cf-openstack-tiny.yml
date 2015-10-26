@@ -4,8 +4,11 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 210 # DEFAULT_CF_RELEASE_VERSION
+    version: 222 # DEFAULT_CF_RELEASE_VERSION
     git: https://github.com/cloudfoundry/cf-release.git
+  - name: etcd
+    version: 16
+    git: https://github.com/cloudfoundry-incubator/etcd-release.git    
   - name: cf-haproxy
     version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
@@ -19,6 +22,7 @@ stemcells:
 
 templates:
   - cf/cf-deployment.yml
+  - cf/cf-resource-pools.yml    
   - tiny/cf-tiny-scalable.yml
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
@@ -27,6 +31,8 @@ templates:
 #  - offline-java-buildpack.yml
   - cf/cf-infrastructure-openstack.yml
   - cf-properties.yml
+  - tiny/cf-jobs-nfs.yml
+  - tiny/cf-jobs-base.yml
   - parallel.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
