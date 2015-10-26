@@ -44,6 +44,43 @@ meta:
   release: (( merge ))
   services_templates: (( merge ))
 
+  api_routes:
+    - name: api
+      tags:
+        component: CloudController
+      port: (( .properties.cc.external_port ))
+      uris:
+        - (( "api." .properties.domain ))
+          
+  hm9000_routes:
+    - name: hm9000
+      port: 5155
+      tags:
+        component: HM9K
+      uris:
+        - (( "hm9000." .properties.domain ))
+    
+  uaa_routes:
+    - name: uaa
+      port: (( .properties.uaa.port ))
+      tags:
+        component: uaa
+      uris:
+        - (( "uaa." .properties.domain ))
+        - (( "*.uaa." .properties.domain ))
+        - (( "login." .properties.domain ))
+        - (( "*.login." .properties.domain ))
+
+  loggregator_routes:
+    - name: doppler
+      port: (( .properties.loggregator.outgoing_dropsonde_port ))
+      uris:
+        - (( "doppler." .properties.domain ))
+    - name: loggregator
+      port: (( .properties.traffic_controller.outgoing_port ))
+      uris:
+        - (( "loggregator." .properties.domain ))
+        
   instances:
     backbone_z1:             (( merge || 1 ))
     backbone_z2:             (( merge || 0 ))
@@ -101,8 +138,6 @@ jobs:
       consul:
         agent:
           mode: server
-          servers:
-            lan: []
   - name: backbone_z2
     instances: (( meta.instances.backbone_z2 ))
     persistent_disk: 102400
@@ -121,8 +156,6 @@ jobs:
       consul:
         agent:
           mode: server
-          servers:
-            lan: []
 
   - name: runner_z1
     templates: (( meta.dea_templates ))
@@ -199,10 +232,13 @@ jobs:
         static_ips: (( static_ips(1, 16, 17, 18, 19, 20) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.api_routes ))
       consul:
         agent:
           services:
-            - cloud_controller_ng
+            cloud_controller_ng: {}
+            routing-api: {}
       networks: (( meta.networks.z1 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -220,10 +256,13 @@ jobs:
         static_ips: (( static_ips(1, 16, 17, 18, 19, 20) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.api_routes ))
       consul:
         agent:
           services:
-            - cloud_controller_ng
+            cloud_controller_ng: {}
+            routing-api: {}
       networks: (( meta.networks.z2 ))
       ha_proxy:
         ssl_pem: (( meta.ha_proxy.ssl_pem ))
@@ -239,6 +278,8 @@ jobs:
         static_ips: (( static_ips(3, 26, 27, 28, 29, 30) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.hm9000_routes meta.loggregator_routes ))
       networks: (( meta.networks.z1 ))
       traffic_controller:
         zone: z1
@@ -253,6 +294,8 @@ jobs:
         static_ips: (( static_ips(3, 26, 27, 28, 29, 30) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.hm9000_routes meta.loggregator_routes ))        
       networks: (( meta.networks.z2 ))
       traffic_controller:
         zone: z2
@@ -269,7 +312,11 @@ jobs:
         static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.uaa_routes ))
       networks: (( meta.networks.z1 ))
+      router:
+        servers: (( .properties.router.servers.z1 .properties.router.servers.z2 ))
       metron_agent:
         zone: z1
   - name: services_z2
@@ -282,7 +329,11 @@ jobs:
         static_ips: (( static_ips(2, 21, 22, 23, 24, 25) ))
     properties:
       <<: (( merge ))
+      route_registrar:
+        routes: (( merge || meta.uaa_routes ))
       networks: (( meta.networks.z2 ))
+      router:
+        servers: (( .properties.router.servers.z1 .properties.router.servers.z2 ))
       metron_agent:
         zone: z2
 
@@ -395,6 +446,8 @@ properties:
     prof_port: 0
 
   etcd:
+    peer_require_ssl: false
+    require_ssl: false
     machines: (( jobs.backbone_z1.networks.cf1.static_ips jobs.backbone_z2.networks.cf2.static_ips ))
 
   etcd_metrics_server:
@@ -446,6 +499,9 @@ properties:
     blacklisted_syslog_ranges: ~
     incoming_port: 3458
     dropsonde_incoming_port: 3459
+    outgoing_dropsonde_port: 8081
+    etcd:
+      machines: (( .properties.etcd.machines ))
 
   doppler:
     maxRetainedLogMessages: 100
@@ -453,6 +509,9 @@ properties:
     blacklisted_syslog_ranges: ~
     incoming_port: 3458
     dropsonde_incoming_port: 3459
+
+  traffic_controller:
+    outgoing_port: 8080
 
   cc: (( merge ))
 
@@ -499,6 +558,7 @@ properties:
     nodes: 1
 
   consul:
+    <<: (( merge ))
     domain: "consul"
     agent:
       servers:

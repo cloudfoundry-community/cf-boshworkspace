@@ -5,3 +5,6 @@ properties:
     no_ssl: true
   login:
     protocol: http
+  consul:
+    require_ssl: false
+
