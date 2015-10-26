@@ -25,6 +25,7 @@ templates:
 - cf/cf-infrastructure-warden.yml
 - cf-properties.yml
 - tiny/cf-infrastructure-warden.yml
+- tiny/cf-jobs-uaa.yml
 - tiny/cf-jobs-base.yml
 - parallel.yml
 - cf-no-ssl.yml

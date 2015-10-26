@@ -54,8 +54,6 @@ meta:
       release: (( meta.release.cf ))
 
   services_templates:
-    - name: uaa
-      release: (( meta.release.cf ))
     - name: cloud_controller_worker
       release: (( meta.release.cf ))
     - name: metron_agent
