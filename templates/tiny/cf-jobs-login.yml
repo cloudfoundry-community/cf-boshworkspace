@@ -1,9 +1,0 @@
-meta:
-  release:
-    cf: cf
-    
-  services_templates:
-    - <<: (( merge ))
-    - name: login
-      release: (( meta.release.cf ))
-

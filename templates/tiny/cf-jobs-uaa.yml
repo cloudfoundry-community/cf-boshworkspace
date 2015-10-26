@@ -1,0 +1,10 @@
+meta:
+  uaa_job_name: (( merge || "uaa" ))
+  release:
+    uaa: (( merge || "cf" ))
+    
+  services_templates:
+    - <<: (( merge ))
+    - name: (( meta.uaa_job_name ))
+      release: (( meta.release.uaa ))
+
