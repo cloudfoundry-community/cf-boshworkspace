@@ -10,6 +10,9 @@ releases:
 - name: cf-haproxy
   version: 2
   git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
+- name: uaa-intel
+  version: 4
+  git: https://github.com/trustedanalytics/uaa-intel-boshrelease.git
 
 stemcells:
 - name: bosh-warden-boshlite-ubuntu-trusty-go_agent
@@ -33,3 +36,8 @@ templates:
 
 meta:
   admin_secret: admin
+
+  uaa_job_name: uaa-intel
+  release:
+    uaa: uaa-intel
+  
