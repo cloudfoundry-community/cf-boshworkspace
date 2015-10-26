@@ -80,6 +80,11 @@ meta:
       quad: "2"
       net_id: LB_SUBNET1
   environment: cf-aws-tiny
+
+  uaa_job_name: uaa-intel
+  release:
+    uaa: uaa-intel
+  
   instances:
     # Load balancers
     private_haproxy_z1: 1 # MARKER_FOR_PROVISION

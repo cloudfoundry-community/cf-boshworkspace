@@ -87,6 +87,11 @@ meta:
       quad: "0"
       net_id: LB_SUBNET1
   environment: cf-openstack-tiny
+
+  uaa_job_name: uaa-intel
+  release:
+    uaa: uaa-intel
+  
   instances:
     # Load balancers
     private_haproxy_z1: 1 # MARKER_FOR_PROVISION
