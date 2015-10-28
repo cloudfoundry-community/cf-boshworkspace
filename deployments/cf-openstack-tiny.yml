@@ -34,6 +34,7 @@ templates:
   - tiny/cf-use-haproxy.yml
   - cf-networking.yml
   - cf-project-login.yml
+  - tiny/cf-runners-openstack-tiny.yml
 
 meta:
   openstack:
