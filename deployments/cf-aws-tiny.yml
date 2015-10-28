@@ -29,6 +29,7 @@ templates:
   - tiny/cf-use-haproxy.yml
   - cf-networking.yml
   - cf-project-login.yml
+  - tiny/cf-runners-aws-tiny.yml
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
