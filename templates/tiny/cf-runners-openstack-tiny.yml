@@ -1,0 +1,12 @@
+resource_pools:
+  - name: runner_z1
+    cloud_properties:
+      instance_type: m1.xlarge
+
+  - name: runner_z2
+    cloud_properties:
+      instance_type: m1.xlarge
+
+properties:
+  dea_next:
+    memory_mb: 16384
