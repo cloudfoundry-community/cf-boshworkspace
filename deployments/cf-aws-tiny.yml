@@ -8,14 +8,14 @@ releases:
     git: https://github.com/cloudfoundry/cf-release.git
   - name: etcd
     version: 16
-    git: https://github.com/cloudfoundry-incubator/etcd-release.git    
+    git: https://github.com/cloudfoundry-incubator/etcd-release.git
   - name: cf-haproxy
     version: 2 # DEFAULT_CFHAPROXY_RELEASE_VERSION
     git: https://github.com/cloudfoundry-community/cf-haproxy-boshrelease.git
 
 templates:
   - cf/cf-deployment.yml
-  - cf/cf-resource-pools.yml  
+  - cf/cf-resource-pools.yml
   - tiny/cf-tiny-scalable.yml
   - cf-uaa-port.yml
   - cf-allow-services-access.yml
@@ -23,7 +23,7 @@ templates:
   - cf/cf-infrastructure-aws.yml
   - cf-properties.yml
   - tiny/cf-jobs-nfs.yml
-  - tiny/cf-jobs-uaa.yml  
+  - tiny/cf-jobs-uaa.yml
   - tiny/cf-jobs-base.yml
   - parallel.yml
   - cf-no-ssl.yml
@@ -33,8 +33,8 @@ templates:
   - cf-networking.yml
 
 stemcells:
-  - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+  - name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 
 meta:
   domain: run.CF_DOMAIN
