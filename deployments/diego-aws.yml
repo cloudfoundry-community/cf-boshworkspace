@@ -9,8 +9,8 @@ releases:
   git: https://github.com/cloudfoundry/cf-release.git
 
 stemcells:
-- name: bosh-aws-xen-ubuntu-trusty-go_agent
-  version: 2905
+  - name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 
 templates:
 - diego/misc-templates/bosh.yml
