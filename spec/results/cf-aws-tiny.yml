@@ -1281,7 +1281,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: bar_zone
     ephemeral_disk:
@@ -1295,7 +1295,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     ephemeral_disk:
@@ -1309,7 +1309,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: bar_zone
     ephemeral_disk:
@@ -1323,7 +1323,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     ephemeral_disk:
@@ -1337,7 +1337,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: bar_zone
     ephemeral_disk:
@@ -1351,7 +1351,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     ephemeral_disk:
@@ -1365,7 +1365,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: bar_zone
     ephemeral_disk:
@@ -1379,7 +1379,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     elbs: null
@@ -1394,7 +1394,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: bar_zone
     elbs: null
@@ -1409,7 +1409,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     ephemeral_disk:
@@ -1423,7 +1423,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     availability_zone: foo_zone
     instance_type: c3.xlarge
@@ -1434,7 +1434,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 update:
   canaries: 1
   canary_watch_time: 30000-600000

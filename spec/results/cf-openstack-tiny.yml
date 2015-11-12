@@ -1220,7 +1220,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.small
   env:
@@ -1230,7 +1230,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.medium
   env:
@@ -1240,7 +1240,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.medium
   env:
@@ -1250,7 +1250,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.large
   env:
@@ -1260,7 +1260,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.large
   env:
@@ -1270,7 +1270,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.large
   env:
@@ -1280,7 +1280,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.large
   env:
@@ -1290,7 +1290,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     elbs: null
   env:
@@ -1300,7 +1300,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     elbs: null
   env:
@@ -1310,7 +1310,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.small
   env:
@@ -1320,7 +1320,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 - cloud_properties:
     instance_type: m1.large
   env:
@@ -1330,7 +1330,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 update:
   canaries: 1
   canary_watch_time: 30000-600000
