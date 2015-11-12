@@ -4,8 +4,11 @@ director_uuid: DIRECTOR_UUID
 
 releases:
   - name: cf
-    version: 207
+    version: 222
     git: https://github.com/cloudfoundry/cf-release.git
+  - name: etcd
+    version: 16
+    git: https://github.com/cloudfoundry-incubator/etcd-release.git    
   - name: consul
     version: 11
     git: https://github.com/cloudfoundry-community/consul-boshrelease.git
@@ -24,6 +27,9 @@ templates:
   - cf/cf-infrastructure-aws.yml
   - cf-test-errands.yml
   - cf-properties.yml
+  - tiny/cf-jobs-nfs.yml
+  - tiny/cf-jobs-uaa.yml  
+  - tiny/cf-jobs-base.yml
   - parallel.yml
   - cf-no-ssl.yml
   - cf-secrets.yml
@@ -33,7 +39,7 @@ templates:
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 
 meta:
   domain: run.CF_DOMAIN

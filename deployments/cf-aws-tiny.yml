@@ -40,7 +40,7 @@ templates:
 
 stemcells:
   - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2941
+    version: 3104
 
 meta:
   domain: run.CF_DOMAIN
