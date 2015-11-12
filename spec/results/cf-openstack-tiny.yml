@@ -24,8 +24,6 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
   - name: debian_nfs_server
     release: cf
 - instances: 2
@@ -62,8 +60,6 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
 - instances: 2
   name: backbone_z2
   networks:
@@ -98,8 +94,6 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
 - instances: 5
   name: runner_z1
   networks:
@@ -118,8 +112,6 @@ jobs:
   - name: dea_logging_agent
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
     release: cf
   update:
     max_in_flight: 1
@@ -141,8 +133,6 @@ jobs:
   - name: dea_logging_agent
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
     release: cf
   update:
     max_in_flight: 1
@@ -249,8 +239,6 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
   - name: route_registrar
     release: cf
   - name: nfs_mounter
@@ -294,8 +282,6 @@ jobs:
   - name: cloud_controller_ng
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
     release: cf
   - name: route_registrar
     release: cf
@@ -346,8 +332,6 @@ jobs:
     release: cf
   - name: collector
     release: cf
-  - name: consul_agent
-    release: cf
   - name: route_registrar
     release: cf
 - instances: 3
@@ -393,8 +377,6 @@ jobs:
     release: cf
   - name: collector
     release: cf
-  - name: consul_agent
-    release: cf
   - name: route_registrar
     release: cf
 - instances: 2
@@ -431,8 +413,6 @@ jobs:
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
     release: cf
   - name: route_registrar
     release: cf
@@ -474,8 +454,6 @@ jobs:
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
     release: cf
   - name: route_registrar
     release: cf

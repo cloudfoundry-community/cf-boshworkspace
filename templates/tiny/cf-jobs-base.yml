@@ -10,8 +10,6 @@ meta:
       release: (( meta.release.cf ))
     - name: metron_agent
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
 
   backbone_templates:
     - name: etcd
@@ -28,8 +26,6 @@ meta:
       release: (( meta.release.cf ))
     - name: metron_agent
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
 
   ha_proxy_templates:
     - name: metron_agent
@@ -48,8 +44,6 @@ meta:
       release: (( meta.release.cf ))
     - name: metron_agent
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
 
@@ -58,8 +52,6 @@ meta:
       release: (( meta.release.cf ))
     - name: metron_agent
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
 
@@ -70,8 +62,6 @@ meta:
       release: (( meta.release.cf ))
     - name: metron_agent
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
 
   health_templates:
     - name: loggregator_trafficcontroller
@@ -84,8 +74,6 @@ meta:
       release: (( meta.release.cf ))
     - name: collector
       release: (( meta.release.cf ))
-    - name: consul_agent
-      release: (( meta.release.consul ))
     - name: route_registrar
       release: (( meta.release.cf ))
       
