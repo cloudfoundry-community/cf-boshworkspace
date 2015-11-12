@@ -1308,7 +1308,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1318,7 +1318,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1328,7 +1328,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1338,7 +1338,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1348,7 +1348,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1358,7 +1358,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1368,7 +1368,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1378,7 +1378,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1388,7 +1388,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1398,7 +1398,7 @@ resource_pools:
   network: cf2
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1408,7 +1408,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 - cloud_properties:
     name: random
   env:
@@ -1418,7 +1418,7 @@ resource_pools:
   network: cf1
   stemcell:
     name: bosh-warden-boshlite-ubuntu-trusty-go_agent
-    version: 389
+    version: 2776
 update:
   canaries: 1
   canary_watch_time: 1000-180000

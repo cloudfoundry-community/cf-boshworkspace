@@ -560,120 +560,120 @@ resource_pools:
   name: brain_z1
   network: diego1
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: brain_z2
   network: diego2
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: brain_z3
   network: diego3
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: DIEGO_AZ1
     instance_type: m3.medium
   name: cc_bridge_z1
   network: diego1
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: cc_bridge_z2
   network: diego2
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: cc_bridge_z3
   network: diego3
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: DIEGO_AZ1
     instance_type: m3.medium
   name: cell_z1
   network: diego1
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: cell_z2
   network: diego2
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: cell_z3
   network: diego3
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: DIEGO_AZ1
     instance_type: m3.medium
   name: etcd_z1
   network: diego1
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: etcd_z2
   network: diego2
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: etcd_z3
   network: diego3
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: DIEGO_AZ1
     instance_type: m3.medium
   name: route_emitter_z1
   network: diego1
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: route_emitter_z2
   network: diego2
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 - cloud_properties:
     availability_zone: null
     instance_type: m3.medium
   name: route_emitter_z3
   network: diego3
   stemcell:
-    name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 2905
+    name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 update:
   canaries: 1
   canary_watch_time: 5000-120000
