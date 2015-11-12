@@ -38,8 +38,8 @@ templates:
   - cf-networking.yml
 
 stemcells:
-  - name: bosh-aws-xen-ubuntu-trusty-go_agent
-    version: 3104
+  - name: bosh-aws-xen-hvm-ubuntu-trusty-go_agent
+    version: 3126
 
 meta:
   domain: run.CF_DOMAIN
