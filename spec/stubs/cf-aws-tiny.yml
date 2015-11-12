@@ -1,0 +1,57 @@
+# values used below are just for testing the property popegation
+meta:
+  domain: run.example.com
+  app_domains: apps.example.com
+  secret: foobar
+  admin_secret: barfoo
+  zones:
+    z1: foo_zone
+    z2: bar_zone
+
+  ha_proxy:
+    internal_only_domains:
+    - private.example.com
+
+  additional_security_group_rules: [ foo ]
+
+  floating_static_ips:
+    - 80.90.100.110
+  networks:
+    security_groups:
+    - foo_security
+    ipmask: "10.5"
+    dns:
+    - 10.5.0.2
+    cf1:
+      quad: "3"
+      net_id: foo_net_id
+    cf2:
+      quad: "4"
+      net_id: bar_net_id
+    lb1:
+      quad: "2"
+      net_id: barfoo_net_id
+  environment: foo-aws-tiny
+  instances:
+    private_haproxy_z1: 2
+    public_haproxy_z1:  3
+    backbone_z1:  2
+    api_z1:       3
+    services_z1:  2
+    health_z1:    3
+    runner_z1:    5
+    backbone_z2:  2
+    api_z2:       3
+    services_z2:  2
+    health_z2:    3
+    runner_z2:    5
+
+  job_pools:
+    backbone:        small
+    data:            small
+    public_haproxy:  medium
+    private_haproxy: medium
+    api:             small
+    services:        small
+    health:          small
+    runner:          large
