@@ -436,8 +436,8 @@ jobs:
     release: cf
   - name: route_registrar
     release: cf
-  - name: uaa
-    release: cf
+  - name: uaa-intel
+    release: uaa-intel
   - name: nfs_mounter
     release: cf
 - instances: 2
@@ -479,8 +479,8 @@ jobs:
     release: cf
   - name: route_registrar
     release: cf
-  - name: uaa
-    release: cf
+  - name: uaa-intel
+    release: uaa-intel
   - name: nfs_mounter
     release: cf
 - instances: 1
@@ -814,14 +814,14 @@ properties:
     default_health_check_timeout: 60
     deny_networks: null
     directory_server_protocol: https
-    disk_mb: 23552
+    disk_mb: 860000
     disk_overcommit_factor: 1
     evacuation_bail_out_time_in_seconds: 600
     heartbeat_interval_in_seconds: 10
     instance_disk_inode_limit: 200000
     kernel_network_tuning_enabled: true
     logging_level: debug
-    memory_mb: 7500
+    memory_mb: 16384
     memory_overcommit_factor: 1
     rlimit_core: 0
     staging_disk_inode_limit: 200000
@@ -888,13 +888,13 @@ properties:
     analytics:
       code: null
       domain: null
-    asset_base_url: null
+    asset_base_url: /resources/trustedanalytics
     brand: oss
     catalina_opts: null
     enabled: true
     invitations_enabled: null
     links:
-      passwd: https://console.example.com/password_resets/new
+      passwd: https://login.example.com/forgot_password
       signup: https://console.example.com/register
     logout: null
     messages: null
@@ -903,15 +903,21 @@ properties:
     protocol: http
     restricted_ips_regex: null
     saml: null
-    self_service_links_enabled: null
+    self_service_links_enabled: true
     signups_enabled: null
     smtp:
-      host: null
-      password: null
-      port: null
-      user: null
+      host: mail.YOURSMTP.com
+      password: YOURPASS
+      port: 2525
+      senderEmail: support@domain.com
+      senderName: Domain
+      user: YOURUSER
     spring_profiles: null
-    tiles: null
+    tiles:
+    - image: /resources/trustedanalytics/images/console.png
+      image-hover: /resources/trustedanalytics/images/console.png
+      login-link: https://console.apps.example.com
+      name: Developer console
     uaa_base: null
     url: null
   metron_agent:
@@ -1008,6 +1014,14 @@ properties:
         authorized-grant-types: client_credentials
         secret: foo_secret
       developer_console:
+        access-token-validity: 1209600
+        authorities: scim.write,scim.read,cloud_controller.read,cloud_controller.write,password.write,uaa.admin,uaa.resource,cloud_controller.admin,billing.admin
+        authorized-grant-types: authorization_code,password,implicit,client_credentials,refresh_token
+        autoapprove: true
+        override: true
+        redirect-uri: http://console.example.com/oauth/callback,https://console.example.com/oauth/callback
+        refresh-token-validity: 1209600
+        scope: cloud_controller.admin,cloud_controller.read,cloud_controller.write,console.admin,doppler.firehose,openid,password.write,scim.read,scim.userids,scim.write
         secret: foo_secret
       doppler:
         authorities: uaa.resource
@@ -1098,6 +1112,8 @@ releases:
   version: 16
 - name: cf-haproxy
   version: 2
+- name: uaa-intel
+  version: 4
 resource_pools:
 - cloud_properties:
     instance_type: m1.small
@@ -1160,7 +1176,7 @@ resource_pools:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
     version: 3104
 - cloud_properties:
-    instance_type: m1.large
+    instance_type: m1.xlarge
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1170,7 +1186,7 @@ resource_pools:
     name: bosh-openstack-kvm-ubuntu-trusty-go_agent
     version: 3104
 - cloud_properties:
-    instance_type: m1.large
+    instance_type: m1.xlarge
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0

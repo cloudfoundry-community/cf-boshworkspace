@@ -1187,7 +1187,7 @@ properties:
     - 169.254.0.0/16
     - 10.10.0.0/16
     directory_server_protocol: https
-    disk_mb: 23552
+    disk_mb: 860000
     disk_overcommit_factor: 1
     evacuation_bail_out_time_in_seconds: 600
     heartbeat_interval_in_seconds: 10
@@ -1397,6 +1397,14 @@ properties:
         authorized-grant-types: client_credentials
         secret: foobar
       developer_console:
+        access-token-validity: 1209600
+        authorities: scim.write,scim.read,cloud_controller.read,cloud_controller.write,password.write,uaa.admin,uaa.resource,cloud_controller.admin,billing.admin
+        authorized-grant-types: authorization_code,password,implicit,client_credentials,refresh_token
+        autoapprove: true
+        override: true
+        redirect-uri: http://console.run.example.com/oauth/callback,https://console.run.example.com/oauth/callback
+        refresh-token-validity: 1209600
+        scope: cloud_controller.admin,cloud_controller.read,cloud_controller.write,console.admin,doppler.firehose,openid,password.write,scim.read,scim.userids,scim.write
         secret: foobar
       doppler:
         authorities: uaa.resource
