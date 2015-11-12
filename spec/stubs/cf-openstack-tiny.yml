@@ -1,0 +1,62 @@
+meta:
+  proxy:
+    http_server: http_proxy.example.com
+    https_server: https_proxy.example.com
+    ignored_domains: localhost
+  domain: example.com
+  app_domains: apps.example.com
+  security_groups: [ foo ]
+  secret: foo_secret
+  admin_secret: foobar_secret
+  zones:
+    z1: foo_zone
+    z2: bar_zone
+  additional_security_group_rules: [ foo ] 
+  floating_static_ips:
+    - 80.90.100.110
+  networks:
+    security_groups:
+    - foo
+    ipmask: "192.168"
+    dns:
+    - 4.4.8.8
+    - 8.8.5.4
+    cf1:
+      quad: "9"
+      net_id: foo_net_id
+    cf2:
+      quad: "10"
+      net_id: bar_net_id
+    lb1:
+      quad: "2"
+      net_id: foobar_net_id
+  environment: foo-openstack-tiny
+  instances:
+    private_haproxy_z1: 2
+    public_haproxy_z1:  2
+    backbone_z1:  2
+    api_z1:       3
+    services_z1:  2
+    health_z1:    3
+    runner_z1:    5
+    backbone_z2:  2
+    api_z2:       3
+    services_z2:  2
+    health_z2:    3
+    runner_z2:    2
+  job_pools:
+    backbone:        small
+    data:            small
+    public_haproxy:  large
+    private_haproxy: large
+    api:             small
+    services:        small
+    health:          small
+    runner:          large
+  ha_proxy:
+    client_timeout: 200
+    request_timeout: 200
+    server_timeout: 200
+    internal_only_domains:
+    - private.example.com
+    ssl_pem: foo_cert
