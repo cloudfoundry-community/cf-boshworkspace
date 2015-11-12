@@ -23,11 +23,9 @@ jobs:
   templates:
   - name: postgres
     release: cf
-  - name: metron_agent
-    release: cf
-  - name: consul_agent
-    release: cf
   - name: debian_nfs_server
+    release: cf
+  - name: metron_agent
     release: cf
 - instances: 2
   name: backbone_z1
@@ -41,6 +39,8 @@ jobs:
     consul:
       agent:
         mode: server
+        servers:
+          lan: []
     doppler:
       zone: z1
     metron_agent:
@@ -50,9 +50,9 @@ jobs:
   resource_pool: small_z1
   templates:
   - name: etcd
-    release: etcd
+    release: cf
   - name: etcd_metrics_server
-    release: etcd
+    release: cf
   - name: nats
     release: cf
   - name: nats_stream_forwarder
@@ -77,6 +77,8 @@ jobs:
     consul:
       agent:
         mode: server
+        servers:
+          lan: []
     doppler:
       zone: z2
     metron_agent:
@@ -86,9 +88,9 @@ jobs:
   resource_pool: small_z2
   templates:
   - name: etcd
-    release: etcd
+    release: cf
   - name: etcd_metrics_server
-    release: etcd
+    release: cf
   - name: nats
     release: cf
   - name: nats_stream_forwarder
@@ -120,8 +122,6 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
   update:
     max_in_flight: 1
 - instances: 5
@@ -143,23 +143,9 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
   update:
     max_in_flight: 1
-- default_networks:
-  - name: floating
-    static_ips:
-    - 80.90.100.110
-  - default:
-    - dns
-    - gateway
-    name: lb1
-    static_ips:
-    - 10.5.2.6
-    - 10.5.2.17
-    - 10.5.2.18
-  instances: 3
+- instances: 3
   name: public_haproxy_z1
   networks:
   - name: floating
@@ -226,8 +212,7 @@ jobs:
     consul:
       agent:
         services:
-          cloud_controller_ng: {}
-          routing-api: {}
+        - cloud_controller_ng
     ha_proxy:
       ssl_pem: |+
         -----BEGIN RSA PRIVATE KEY-----
@@ -285,14 +270,6 @@ jobs:
       zone: z1
     networks:
       apps: cf1
-    route_registrar:
-      routes:
-      - name: api
-        port: 9022
-        tags:
-          component: CloudController
-        uris:
-        - api.run.example.com
   resource_pool: small_z1
   templates:
   - name: routing-api
@@ -302,10 +279,6 @@ jobs:
   - name: cloud_controller_ng
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
     release: cf
   - name: nfs_mounter
     release: cf
@@ -326,8 +299,7 @@ jobs:
     consul:
       agent:
         services:
-          cloud_controller_ng: {}
-          routing-api: {}
+        - cloud_controller_ng
     ha_proxy:
       ssl_pem: |+
         -----BEGIN RSA PRIVATE KEY-----
@@ -385,14 +357,6 @@ jobs:
       zone: z2
     networks:
       apps: cf2
-    route_registrar:
-      routes:
-      - name: api
-        port: 9022
-        tags:
-          component: CloudController
-        uris:
-        - api.run.example.com
   resource_pool: small_z2
   templates:
   - name: routing-api
@@ -402,10 +366,6 @@ jobs:
   - name: cloud_controller_ng
     release: cf
   - name: metron_agent
-    release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
     release: cf
   - name: nfs_mounter
     release: cf
@@ -424,22 +384,6 @@ jobs:
       zone: z1
     networks:
       apps: cf1
-    route_registrar:
-      routes:
-      - name: hm9000
-        port: 5155
-        tags:
-          component: HM9K
-        uris:
-        - hm9000.run.example.com
-      - name: doppler
-        port: 8081
-        uris:
-        - doppler.run.example.com
-      - name: loggregator
-        port: 8080
-        uris:
-        - loggregator.run.example.com
     traffic_controller:
       zone: z1
   resource_pool: small_z1
@@ -453,10 +397,6 @@ jobs:
   - name: metron_agent
     release: cf
   - name: collector
-    release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
     release: cf
 - instances: 3
   name: health_z2
@@ -471,22 +411,6 @@ jobs:
       zone: z2
     networks:
       apps: cf2
-    route_registrar:
-      routes:
-      - name: hm9000
-        port: 5155
-        tags:
-          component: HM9K
-        uris:
-        - hm9000.run.example.com
-      - name: doppler
-        port: 8081
-        uris:
-        - doppler.run.example.com
-      - name: loggregator
-        port: 8080
-        uris:
-        - loggregator.run.example.com
     traffic_controller:
       zone: z2
   resource_pool: small_z2
@@ -501,10 +425,6 @@ jobs:
     release: cf
   - name: collector
     release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
-    release: cf
 - instances: 2
   name: services_z1
   networks:
@@ -518,36 +438,15 @@ jobs:
       zone: z1
     networks:
       apps: cf1
-    route_registrar:
-      routes:
-      - name: uaa
-        port: 8080
-        tags:
-          component: uaa
-        uris:
-        - uaa.run.example.com
-        - '*.uaa.run.example.com'
-        - login.run.example.com
-        - '*.login.run.example.com'
-    router:
-      servers:
-      - 10.5.3.7
-      - 10.5.3.22
-      - 10.5.3.23
-      - 10.5.4.7
-      - 10.5.4.22
-      - 10.5.4.23
   resource_pool: small_z1
   templates:
+  - name: uaa-intel
+    release: uaa-intel
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
-    release: cf
-  - name: uaa
+  - name: nfs_mounter
     release: cf
 - instances: 2
   name: services_z2
@@ -562,36 +461,15 @@ jobs:
       zone: z2
     networks:
       apps: cf2
-    route_registrar:
-      routes:
-      - name: uaa
-        port: 8080
-        tags:
-          component: uaa
-        uris:
-        - uaa.run.example.com
-        - '*.uaa.run.example.com'
-        - login.run.example.com
-        - '*.login.run.example.com'
-    router:
-      servers:
-      - 10.5.3.7
-      - 10.5.3.22
-      - 10.5.3.23
-      - 10.5.4.7
-      - 10.5.4.22
-      - 10.5.4.23
   resource_pool: small_z2
   templates:
+  - name: uaa-intel
+    release: uaa-intel
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
-  - name: consul_agent
-    release: cf
-  - name: route_registrar
-    release: cf
-  - name: uaa
+  - name: nfs_mounter
     release: cf
 - instances: 1
   lifecycle: errand
@@ -615,10 +493,16 @@ jobs:
   - name: smoke-tests
     release: cf
 meta:
+  default_env:
+    bosh:
+      password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
   environment: foo-aws-tiny
   releases:
   - name: cf
     version: latest
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2941
 name: cf-aws-tiny
 networks:
 - name: cf1
@@ -696,22 +580,21 @@ properties:
       cutoff_age_in_days: 31
     audit_events:
       cutoff_age_in_days: 31
-    broker_client_default_async_poll_interval_seconds: null
-    broker_client_max_async_poll_duration_minutes: null
+    billing_event_writing_enabled: false
+    broker_client_default_async_poll_interval_seconds: 60
+    broker_client_max_async_poll_duration_minutes: 10080
     broker_client_timeout_seconds: 600
     buildpacks:
       buildpack_directory_key: run.example.com-cc-buildpacks
       cdn: null
       fog_connection: null
     bulk_api_password: foobar
-    client_max_body_size: 15M
+    client_max_body_size: 1536M
     db_encryption_key: foobar
     db_logging_level: debug2
     default_app_disk_in_mb: 1024
     default_app_memory: 1024
     default_buildpacks:
-    - name: staticfile_buildpack
-      package: buildpack_staticfile
     - name: java_buildpack
       package: buildpack_java
     - name: ruby_buildpack
@@ -724,6 +607,8 @@ properties:
       package: buildpack_python
     - name: php_buildpack
       package: buildpack_php
+    - name: staticfile_buildpack
+      package: buildpack_staticfile
     - name: binary_buildpack
       package: buildpack_binary
     default_health_check_timeout: 60
@@ -738,19 +623,16 @@ properties:
     - custom_rules
     default_to_diego_backend: false
     development_mode: false
+    diego_docker: false
     directories: null
     disable_custom_buildpacks: false
     droplets:
       cdn: null
       droplet_directory_key: run.example.com-cc-droplets
       fog_connection: null
-      max_staged_droplets_stored: null
     external_host: api
-    external_port: 9022
-    external_protocol: null
+    external_protocol: http
     install_buildpacks:
-    - name: staticfile_buildpack
-      package: buildpack_staticfile
     - name: java_buildpack
       package: buildpack_java
     - name: ruby_buildpack
@@ -763,6 +645,8 @@ properties:
       package: buildpack_python
     - name: php_buildpack
       package: buildpack_php
+    - name: staticfile_buildpack
+      package: buildpack_staticfile
     - name: binary_buildpack
       package: buildpack_binary
     internal_api_password: foobar
@@ -807,7 +691,6 @@ properties:
       cdn: null
       fog_connection: null
       max_package_size: 4294967296
-      max_valid_packages_stored: null
     quota_definitions:
       default:
         memory_limit: 10240
@@ -847,8 +730,6 @@ properties:
     staging_upload_password: foobar
     staging_upload_user: staging
     system_buildpacks:
-    - name: staticfile_buildpack
-      package: buildpack_staticfile
     - name: java_buildpack
       package: buildpack_java
     - name: ruby_buildpack
@@ -861,6 +742,8 @@ properties:
       package: buildpack_python
     - name: php_buildpack
       package: buildpack_php
+    - name: staticfile_buildpack
+      package: buildpack_staticfile
     - name: binary_buildpack
       package: buildpack_binary
     thresholds:
@@ -896,7 +779,6 @@ properties:
         - 10.5.4.11
         - 10.5.4.12
     domain: consul
-    require_ssl: false
   databases:
     address: 10.5.3.10
     databases:
@@ -924,14 +806,14 @@ properties:
     - 169.254.0.0/16
     - 10.10.0.0/16
     directory_server_protocol: https
-    disk_mb: 23552
+    disk_mb: 860000
     disk_overcommit_factor: 1
     evacuation_bail_out_time_in_seconds: 600
     heartbeat_interval_in_seconds: 10
     instance_disk_inode_limit: 200000
     kernel_network_tuning_enabled: true
     logging_level: debug
-    memory_mb: 7500
+    memory_mb: 15360
     memory_overcommit_factor: 1
     rlimit_core: 0
     staging_disk_inode_limit: 200000
@@ -956,12 +838,13 @@ properties:
     - 10.5.3.12
     - 10.5.4.11
     - 10.5.4.12
-    peer_require_ssl: false
-    require_ssl: false
   etcd_metrics_server:
     nats:
       machines:
       - 10.5.3.11
+      - 10.5.3.12
+      - 10.5.4.11
+      - 10.5.4.12
       password: foobar
       username: nats
   ha_proxy:
@@ -976,7 +859,7 @@ properties:
     internal_only_domains:
     - private.example.com
     request_timeout: 120
-    server_timeout: 120
+    server_timeout: 900
     ssl_pem: |+
       -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
@@ -1039,46 +922,100 @@ properties:
       start: 10.10.0.0
     debug: false
     dropsonde_incoming_port: 3459
-    etcd:
-      machines:
-      - 10.5.3.11
-      - 10.5.3.12
-      - 10.5.4.11
-      - 10.5.4.12
     incoming_port: 3458
     maxRetainedLogMessages: 100
-    outgoing_dropsonde_port: 8081
   loggregator_endpoint:
     shared_secret: foobar
   login:
     analytics:
       code: null
       domain: null
-    asset_base_url: null
+    asset_base_url: /resources/trustedanalytics
     brand: oss
-    catalina_opts: null
+    catalina_opts: -Xmx768m -XX:MaxPermSize=256m
     enabled: true
     invitations_enabled: null
     links:
-      passwd: https://console.run.example.com/password_resets/new
+      home: https://console.run.example.com
+      network: null
+      passwd: https://login.run.example.com/forgot_password
       signup: https://console.run.example.com/register
+      signup-network: null
     logout: null
     messages: null
     notifications:
       url: null
     protocol: http
-    restricted_ips_regex: null
+    restricted_ips_regex: 10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|169\.254\.\d{1,3}\.\d{1,3}|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.1[6-9]{1}\.\d{1,3}\.\d{1,3}|172\.2[0-9]{1}\.\d{1,3}\.\d{1,3}|172\.3[0-1]{1}\.\d{1,3}\.\d{1,3}
     saml: null
-    self_service_links_enabled: null
+    self_service_links_enabled: true
     signups_enabled: null
     smtp:
-      host: null
-      password: null
-      port: null
-      user: null
+      host: mail.YOURSMTP.com
+      password: YOURPASS
+      port: 25
+      senderEmail: support@domain.com
+      senderName: Domain
+      user: YOURUSER
     spring_profiles: null
-    tiles: null
+    tiles:
+    - image: /resources/trustedanalytics/images/console.png
+      image-hover: /resources/trustedanalytics/images/console.png
+      login-link: https://console.apps.example.com
+      name: Developer console
     uaa_base: null
+    uaa_certificate: |+
+      -----BEGIN RSA PRIVATE KEY-----
+      MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
+      fyQVmtoZ4XXKl1Cl2PcpuKvKLdfHtGpQc+cGKkRMWxU13iarAlmT6JzHrdjVoCCX
+      cRtL+9kWN+GyStYlFtY59EIM5Zqc2j8A70w/W6gB/ho216oaaHyrXRMqmNnvJr0O
+      cCYh46Fdy60Moy8f8fiZ00sYtTErjGVM+qrBt3qhmFtAHxBcVaLEZaaFwxqCQmpC
+      zReKmoV7ntuRTFeEd21lqn22Xsv4qIoagUTCxRzRcFQu7SeompP1Rsamvt9bw5uC
+      5P9Nn4gTRa9UIjTH/930KU0tkyJUqZaxujju1QIDAQABAoIBAHQW9U9lmmzSz8Xo
+      bBAUiQwwD6e3r0HRA1baj2aQwvASw32Ys+LsbMsZzbk507Y9SFhKSyQSNjrdTcVr
+      oTtkD98mHpUVq46NweBBb1sVTBXhrYw/oa3TTxT9WSPY25JweYBBRh/jqZsnEQ7z
+      dMklQd9C+AYJzBQZEmdmhwxFHEBjyTlLtz6D7T85szXL0OeozndGNv7tk71+4dZE
+      UZEc3YmwS5ARQBClJgFDBbOEdl0mqy5u45vGm8bttdNYFpJ2Ai6o3GnpJ5bekSrz
+      96rSUREckCONqgm3B9aIsZEDBq66/OP55ZVyQPznO91pSu41vpaoOI+G5Cmq+Syj
+      ASkteQECgYEA33y6b7eHoFWfIh0xrxTv6sYuw4N+bJF1LWq9kadfZCMPqxjwc4Zr
+      7yp2Vwu9fv849IalMS0kzwAo6g0ET9/rUymxLwHG+LZ2loNtCY6ihMbF6OeM3VaE
+      1dxRSo/i1YaYdUtcPQl+VeCY1CllHVbxhvlQFS3KW8uyULOtZ5hVL0ECgYEAwCjI
+      alZ/eS1hAmLPYxznnpymCCiQ9E42UK7cIbAcpxkBSHd57Q8awaHc07roBEcvkOB/
+      tpoJe64tVI0YHkV9DKZA9RewdhKNjAq/LnnW1WhjCYVO6nQf3uvMUka9TNgEAKNp
+      pkKB7jeDcnNC23BUctkqvTk1rpTtxzzynCc27pUCgYBgBliY7dOhiYiBgOe7IZTg
+      XFz1dsdYYLtnU0i2j6LGBOaTjniqOqSfs6/7QLkgGwtezYem9I2vP5NU1Vj39O9I
+      4U4XM31JmiSkET5Fb/rWcA3TP8Jfy+/xb+Oh1OcS9e0F4OZ192FIBuPDrTGcBKJs
+      ay0EnJMpFAG++STVsTdQwQKBgQC2RDjNfJxPAXcZv0W9WkZskWN/K5NK2AD3CNUu
+      cxDKgpJP/Vu+OuyDLBf9ETVQEYGRpxAc0QEbunuuzmJJHFpfrDbDA6RSaoiug+cR
+      m2nmZKxD9JmFE37DgN/+TrDx+ZfaTyZAGKeLoEZjQebxpBvGEC1U7LX5kbP0nt/0
+      s9GL/QKBgCZkiYG8tJdisPGt+DskU3D3vjgL/hmMruuXlHFVAdSWbWXTzqMRrVVp
+      xzZly+katcQDcdcwQt3gF60k+yB5qsQ33y+1roy2N0Ie//FHdTbqpa+20r9QG8z+
+      WDh49CKvfDv+uVQwAS6QLuLwq/nEmSq56qX9tCU/MWt4fUnH/KVd
+      -----END RSA PRIVATE KEY-----
+      -----BEGIN CERTIFICATE-----
+      MIIEFTCCAv2gAwIBAgIJAKfds0/ie5qAMA0GCSqGSIb3DQEBBQUAMGQxCzAJBgNV
+      BAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNp
+      c2NvMRAwDgYDVQQKEwdQaXZvdGFsMRYwFAYDVQQLEw1DbG91ZCBGb3VuZHJ5MB4X
+      DTE1MDEyNjE5NDUzMloXDTI1MDEyMzE5NDUzMlowZDELMAkGA1UEBhMCVVMxEzAR
+      BgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBGcmFuY2lzY28xEDAOBgNV
+      BAoTB1Bpdm90YWwxFjAUBgNVBAsTDUNsb3VkIEZvdW5kcnkwggEiMA0GCSqGSIb3
+      DQEBAQUAA4IBDwAwggEKAoIBAQCnwSZHMeoOYM71QmieutToUNo98LKDfLC4f8i7
+      /S+pgvgsRwR/JBWa2hnhdcqXUKXY9ym4q8ot18e0alBz5wYqRExbFTXeJqsCWZPo
+      nMet2NWgIJdxG0v72RY34bJK1iUW1jn0QgzlmpzaPwDvTD9bqAH+GjbXqhpofKtd
+      EyqY2e8mvQ5wJiHjoV3LrQyjLx/x+JnTSxi1MSuMZUz6qsG3eqGYW0AfEFxVosRl
+      poXDGoJCakLNF4qahXue25FMV4R3bWWqfbZey/ioihqBRMLFHNFwVC7tJ6iak/VG
+      xqa+31vDm4Lk/02fiBNFr1QiNMf/3fQpTS2TIlSplrG6OO7VAgMBAAGjgckwgcYw
+      HQYDVR0OBBYEFB3qfwbNa57S5vlPoC0BSoEtts1uMIGWBgNVHSMEgY4wgYuAFB3q
+      fwbNa57S5vlPoC0BSoEtts1uoWikZjBkMQswCQYDVQQGEwJVUzETMBEGA1UECBMK
+      Q2FsaWZvcm5pYTEWMBQGA1UEBxMNU2FuIEZyYW5jaXNjbzEQMA4GA1UEChMHUGl2
+      b3RhbDEWMBQGA1UECxMNQ2xvdWQgRm91bmRyeYIJAKfds0/ie5qAMAwGA1UdEwQF
+      MAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAH3qQS1Azxod86bmW7cUFHCk2dfg9D3F
+      4vM+4yWs6GSHA38W4xk0pJJ87nbIB7A0r/jLmYirqy0lg2zlXsLQJO2b88QLj56S
+      CGJymrvMYKuNUG0Z8LK+6YgZEzodVx/sRrJEIyhe34xgb/7I7ziESDUZ51CPt23Q
+      rxz8SmSejz5mYKApl0OyiFBBaMdg22wowN3AXuVZVar6dmm3YeQ3jEOzs9gOFv3C
+      EumGrpsUbXDKl4mMRR6AsSeFx035E10V6NvNhPOzBAUUxFrpVX82EWCw4NNQZSfj
+      3Kh0H0rsFqWDTSXJdrqacQELFqqVHvpvhJKSKFayvvTbDFqT1Pz/WE4=
+      -----END CERTIFICATE-----
     url: null
   metron_agent:
     deployment: foo-aws-tiny
@@ -1136,8 +1073,6 @@ properties:
     aws:
       access_key_id: null
       secret_access_key: null
-  traffic_controller:
-    outgoing_port: 8080
   uaa:
     admin:
       client_secret: foobar
@@ -1146,6 +1081,9 @@ properties:
         countFailuresWithinSeconds: null
         lockoutAfterFailures: null
         lockoutPeriodSeconds: null
+    batch:
+      password: foobar
+      username: batch
     catalina_opts: -Xmx768m -XX:MaxPermSize=256m
     cc:
       client_secret: foobar
@@ -1168,22 +1106,26 @@ properties:
         refresh-token-validity: 1209600
         scope: openid,cloud_controller_service_permissions.read
         secret: foobar
-      cc_routing:
-        authorities: routing.router_groups.read
-        authorized-grant-types: client_credentials
-        secret: foobar
       cloud_controller_username_lookup:
         authorities: scim.userids
         authorized-grant-types: client_credentials
         secret: foobar
       developer_console:
+        access-token-validity: 1209600
+        authorities: scim.write,scim.read,cloud_controller.read,cloud_controller.write,password.write,uaa.admin,uaa.resource,cloud_controller.admin,billing.admin
+        authorized-grant-types: authorization_code,password,implicit,client_credentials,refresh_token
+        autoapprove: true
+        override: true
+        redirect-uri: http://console.run.example.com/oauth/callback,https://console.run.example.com/oauth/callback
+        refresh-token-validity: 1209600
+        scope: cloud_controller.admin,cloud_controller.read,cloud_controller.write,console.admin,doppler.firehose,openid,password.write,scim.read,scim.userids,scim.write
         secret: foobar
       doppler:
         authorities: uaa.resource
         override: true
         secret: foobar
       gorouter:
-        authorities: clients.read,clients.write,clients.admin,routing.routes.write,routing.routes.read
+        authorities: clients.read,clients.write,clients.admin,route.admin,route.advertise
         authorized-grant-types: client_credentials,refresh_token
         scope: openid,cloud_controller_service_permissions.read
         secret: foobar
@@ -1191,7 +1133,7 @@ properties:
         authorities: oauth.login,scim.write,clients.read,notifications.write,critical_notifications.write,emails.write,scim.userids,password.write
         authorized-grant-types: authorization_code,client_credentials,refresh_token
         override: true
-        redirect-uri: https://login.run.example.com
+        redirect-uri: http://login.run.example.com
         scope: openid,oauth.approvals
         secret: foobar
       notifications:
@@ -1236,8 +1178,7 @@ properties:
     login: null
     newrelic: null
     no_ssl: true
-    port: 8080
-    require_https: null
+    port: 8082
     restricted_ips_regex: 10\.\d{1,3}\.\d{1,3}\.\d{1,3}|192\.168\.\d{1,3}\.\d{1,3}|169\.254\.\d{1,3}\.\d{1,3}|127\.\d{1,3}\.\d{1,3}\.\d{1,3}|172\.1[6-9]{1}\.\d{1,3}\.\d{1,3}|172\.2[0-9]{1}\.\d{1,3}\.\d{1,3}|172\.3[0-1]{1}\.\d{1,3}\.\d{1,3}
     scim:
       external_groups: null
@@ -1262,18 +1203,18 @@ properties:
       tag: admin
 releases:
 - name: cf
-  version: 222
-- name: etcd
-  version: 16
+  version: 210
 - name: cf-haproxy
   version: 2
+- name: uaa-intel
+  version: 4
 resource_pools:
 - cloud_properties:
     availability_zone: foo_zone
     ephemeral_disk:
       size: 10240
       type: gp2
-    instance_type: m3.medium
+    instance_type: c3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1287,7 +1228,7 @@ resource_pools:
     ephemeral_disk:
       size: 10240
       type: gp2
-    instance_type: m3.medium
+    instance_type: c3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1301,7 +1242,7 @@ resource_pools:
     ephemeral_disk:
       size: 10240
       type: gp2
-    instance_type: m3.medium
+    instance_type: c3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1315,7 +1256,7 @@ resource_pools:
     ephemeral_disk:
       size: 10240
       type: gp2
-    instance_type: m3.medium
+    instance_type: c3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1329,7 +1270,7 @@ resource_pools:
     ephemeral_disk:
       size: 65536
       type: gp2
-    instance_type: m3.medium
+    instance_type: m3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1343,7 +1284,7 @@ resource_pools:
     ephemeral_disk:
       size: 65536
       type: gp2
-    instance_type: m3.medium
+    instance_type: m3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1357,7 +1298,7 @@ resource_pools:
     ephemeral_disk:
       size: 102400
       type: gp2
-    instance_type: m3.large
+    instance_type: m3.xlarge
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1371,7 +1312,7 @@ resource_pools:
     ephemeral_disk:
       size: 102400
       type: gp2
-    instance_type: m3.large
+    instance_type: m3.xlarge
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
@@ -1415,7 +1356,7 @@ resource_pools:
     ephemeral_disk:
       size: 10240
       type: gp2
-    instance_type: m3.medium
+    instance_type: c3.large
   env:
     bosh:
       password: $6$4gDD3aV0rdqlrKC$2axHCxGKIObs6tAmMTqYCspcdvQXh3JJcvWOY2WGb4SrdXtnCyNaWlrf3WEqvYR2MYizEGp3kMmbpwBC6jsHt0
