@@ -341,7 +341,9 @@ jobs:
     release: cf
   - name: nfs_mounter
     release: cf
-- instances: 2
+  - name: nfs_mounter
+    release: cf
+- instances: 0
   name: services_z2
   networks:
   - name: cf2
@@ -361,6 +363,8 @@ jobs:
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
+    release: cf
+  - name: nfs_mounter
     release: cf
   - name: nfs_mounter
     release: cf
