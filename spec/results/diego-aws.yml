@@ -1,0 +1,683 @@
+compilation:
+  cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  network: diego1
+  reuse_compilation_vms: true
+  workers: 6
+director_uuid: 00000000-0000-0000-0000-000000000000
+jobs:
+- instances: 1
+  name: etcd_z1
+  networks:
+  - name: diego1
+    static_ips:
+    - <nil>
+  persistent_disk: 1024
+  resource_pool: etcd_z1
+  templates:
+  - name: etcd
+    release: diego
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 1
+  name: brain_z1
+  networks:
+  - name: diego1
+  properties:
+    metron_agent:
+      zone: z1
+  resource_pool: brain_z1
+  templates:
+  - name: consul_agent
+    release: cf
+  - name: auctioneer
+    release: diego
+  - name: converger
+    release: diego
+  - name: runtime_metrics_server
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 1
+  name: cell_z1
+  networks:
+  - name: diego1
+  properties:
+    consul:
+      agent:
+        services:
+        - receptor
+    diego:
+      rep:
+        zone: z1
+    metron_agent:
+      zone: z1
+  resource_pool: cell_z1
+  templates:
+  - name: rep
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: executor
+    release: diego
+  - name: garden-linux
+    release: diego
+  - name: receptor
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 1
+  name: cc_bridge_z1
+  networks:
+  - name: diego1
+  properties:
+    consul:
+      agent:
+        services:
+        - file_server
+        - nsync
+        - stager
+        - tps
+    metron_agent:
+      zone: z1
+  resource_pool: cc_bridge_z1
+  templates:
+  - name: stager
+    release: diego
+  - name: nsync
+    release: diego
+  - name: tps
+    release: diego
+  - name: file_server
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 1
+  name: route_emitter_z1
+  networks:
+  - name: diego1
+  properties:
+    metron_agent:
+      zone: z1
+  resource_pool: route_emitter_z1
+  templates:
+  - name: route_emitter
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: etcd_z2
+  networks:
+  - name: diego2
+    static_ips: []
+  persistent_disk: 1024
+  resource_pool: etcd_z2
+  templates:
+  - name: etcd
+    release: diego
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 0
+  name: brain_z2
+  networks:
+  - name: diego2
+  properties:
+    metron_agent:
+      zone: z2
+  resource_pool: brain_z2
+  templates:
+  - name: consul_agent
+    release: cf
+  - name: auctioneer
+    release: diego
+  - name: converger
+    release: diego
+  - name: runtime_metrics_server
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 0
+  name: cell_z2
+  networks:
+  - name: diego2
+  properties:
+    consul:
+      agent:
+        services:
+        - receptor
+    diego:
+      rep:
+        zone: z2
+    metron_agent:
+      zone: z2
+  resource_pool: cell_z2
+  templates:
+  - name: rep
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: executor
+    release: diego
+  - name: garden-linux
+    release: diego
+  - name: receptor
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: cc_bridge_z2
+  networks:
+  - name: diego2
+  properties:
+    consul:
+      agent:
+        services:
+        - file_server
+        - nsync
+        - stager
+        - tps
+    metron_agent:
+      zone: z2
+  resource_pool: cc_bridge_z2
+  templates:
+  - name: stager
+    release: diego
+  - name: nsync
+    release: diego
+  - name: tps
+    release: diego
+  - name: file_server
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: route_emitter_z2
+  networks:
+  - name: diego2
+  properties:
+    metron_agent:
+      zone: z2
+  resource_pool: route_emitter_z2
+  templates:
+  - name: route_emitter
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: etcd_z3
+  networks:
+  - name: diego3
+    static_ips: []
+  persistent_disk: 1024
+  resource_pool: etcd_z3
+  templates:
+  - name: etcd
+    release: diego
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 0
+  name: brain_z3
+  networks:
+  - name: diego3
+  properties:
+    metron_agent:
+      zone: z3
+  resource_pool: brain_z3
+  templates:
+  - name: consul_agent
+    release: cf
+  - name: auctioneer
+    release: diego
+  - name: converger
+    release: diego
+  - name: runtime_metrics_server
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: true
+- instances: 0
+  name: cell_z3
+  networks:
+  - name: diego3
+  properties:
+    consul:
+      agent:
+        services:
+        - receptor
+    diego:
+      rep:
+        zone: z3
+    metron_agent:
+      zone: z3
+  resource_pool: cell_z3
+  templates:
+  - name: rep
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: executor
+    release: diego
+  - name: garden-linux
+    release: diego
+  - name: receptor
+    release: diego
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: cc_bridge_z3
+  networks:
+  - name: diego3
+  properties:
+    consul:
+      agent:
+        services:
+        - file_server
+        - nsync
+        - stager
+        - tps
+    metron_agent:
+      zone: z3
+  resource_pool: cc_bridge_z3
+  templates:
+  - name: stager
+    release: diego
+  - name: nsync
+    release: diego
+  - name: tps
+    release: diego
+  - name: file_server
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+- instances: 0
+  name: route_emitter_z3
+  networks:
+  - name: diego3
+  properties:
+    metron_agent:
+      zone: z3
+  resource_pool: route_emitter_z3
+  templates:
+  - name: route_emitter
+    release: diego
+  - name: consul_agent
+    release: cf
+  - name: metron_agent
+    release: cf
+  update:
+    max_in_flight: 1
+    serial: false
+name: diego-aws
+networks:
+- name: diego1
+  subnets:
+  - cloud_properties:
+      availability_zone: DIEGO_AZ1
+      net_id: DIEGO_SUBNET1
+      security_groups:
+      - CF_SG
+      subnet: DIEGO_SUBNET1
+    dns:
+    - IPMASK.0.2
+    gateway: IPMASK.6.1
+    name: diego1
+    range: IPMASK.6.0/24
+    reserved:
+    - IPMASK.6.2 - IPMASK.6.5
+    static:
+    - IPMASK.6.6 - IPMASK.6.50
+  type: manual
+- name: diego2
+  subnets:
+  - cloud_properties:
+      availability_zone: null
+      net_id: null
+      security_groups:
+      - CF_SG
+      subnet: null
+    dns:
+    - IPMASK.0.2
+    gateway: IPMASK.6.1
+    name: diego1
+    range: IPMASK.6.0/24
+    reserved:
+    - IPMASK.6.2 - IPMASK.6.5
+    static:
+    - IPMASK.6.6 - IPMASK.6.50
+  type: manual
+- name: diego3
+  subnets:
+  - cloud_properties:
+      availability_zone: null
+      net_id: null
+      security_groups:
+      - CF_SG
+      subnet: null
+    dns:
+    - IPMASK.0.2
+    gateway: IPMASK.6.1
+    name: diego1
+    range: IPMASK.6.0/24
+    reserved:
+    - IPMASK.6.2 - IPMASK.6.5
+    static:
+    - IPMASK.6.6 - IPMASK.6.50
+  type: manual
+properties:
+  consul:
+    agent:
+      servers:
+        lan:
+        - IPMASK.3.9
+  diego:
+    auctioneer:
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      receptor_task_handler_url: http://receptor.service.consul:1169
+    converger:
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      receptor_task_handler_url: http://receptor.service.consul:1169
+    etcd:
+      machines:
+      - <nil>
+    executor:
+      allow_privileged: null
+      drain_timeout_in_seconds: null
+      garden:
+        address: null
+        network: null
+      log_level: null
+    file_server:
+      cc:
+        base_url: https://api.run.CF_DOMAIN
+        basic_auth_password: c1oudc0w
+        external_port: "9022"
+        staging_upload_password: c1oudc0w
+        staging_upload_user: staging
+      log_level: null
+    garden-linux:
+      allow_networks: null
+      disk_quota_enabled: null
+      insecure_docker_registry_list: null
+      kernel_network_tuning_enabled: null
+      listen_address: null
+      listen_network: null
+    nsync:
+      cc:
+        base_url: https://api.run.CF_DOMAIN
+        basic_auth_password: c1oudc0w
+        external_port: "9022"
+        staging_upload_password: c1oudc0w
+        staging_upload_user: staging
+      diego_api_url: http://:@receptor.service.consul:8888
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      nsync_url: http://nsync.service.consul:8787
+    receptor:
+      cors_enabled: null
+      domain_names: null
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      nats:
+        machines:
+        - IPMASK.3.10
+        password: c1oudc0w
+        port: "4222"
+        username: nats
+      password: ""
+      register_with_router: null
+      task_handler_url: http://receptor.service.consul:1169
+      username: ""
+    rep:
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      receptor_task_handler_url: http://receptor.service.consul:1169
+    route_emitter:
+      diego_api_url: http://:@receptor.service.consul:8888
+      log_level: null
+      nats:
+        machines:
+        - IPMASK.3.10
+        password: c1oudc0w
+        port: "4222"
+        username: nats
+    runtime_metrics_server:
+      etcd:
+        machines:
+        - <nil>
+      log_level: null
+      nats:
+        machines:
+        - IPMASK.3.10
+        password: c1oudc0w
+        port: "4222"
+        username: nats
+    ssl:
+      skip_cert_verify: null
+    stager:
+      cc:
+        base_url: https://api.run.CF_DOMAIN
+        basic_auth_password: c1oudc0w
+        external_port: "9022"
+        internal_service_hostname: cloud_controller_ng.service.consul
+        staging_upload_password: c1oudc0w
+        staging_upload_user: staging
+      diego_api_url: http://:@receptor.service.consul:8888
+      docker_registry_url: null
+      log_level: null
+      stager_url: http://stager.service.consul:8888
+    tps:
+      cc:
+        base_url: https://api.run.CF_DOMAIN
+        basic_auth_password: c1oudc0w
+        external_port: "9022"
+        internal_service_hostname: cloud_controller_ng.service.consul
+        staging_upload_password: c1oudc0w
+        staging_upload_user: staging
+      diego_api_url: http://:@receptor.service.consul:8888
+      log_level: null
+  etcd:
+    machines:
+    - IPMASK.3.10
+    - IPMASK.3.8
+  loggregator_endpoint:
+    shared_secret: c1oudc0w
+  nats:
+    machines:
+    - IPMASK.3.10
+    password: c1oudc0w
+    port: "4222"
+    user: nats
+  syslog_daemon_config:
+    address: null
+    port: null
+releases:
+- name: diego
+  version: 0.1072.0
+- name: cf
+  version: 205
+resource_pools:
+- cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  name: brain_z1
+  network: diego1
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: brain_z2
+  network: diego2
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: brain_z3
+  network: diego3
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  name: cc_bridge_z1
+  network: diego1
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: cc_bridge_z2
+  network: diego2
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: cc_bridge_z3
+  network: diego3
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  name: cell_z1
+  network: diego1
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: cell_z2
+  network: diego2
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: cell_z3
+  network: diego3
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  name: etcd_z1
+  network: diego1
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: etcd_z2
+  network: diego2
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: etcd_z3
+  network: diego3
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: DIEGO_AZ1
+    instance_type: m3.medium
+  name: route_emitter_z1
+  network: diego1
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: route_emitter_z2
+  network: diego2
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+- cloud_properties:
+    availability_zone: null
+    instance_type: m3.medium
+  name: route_emitter_z3
+  network: diego3
+  stemcell:
+    name: bosh-aws-xen-ubuntu-trusty-go_agent
+    version: 2905
+update:
+  canaries: 1
+  canary_watch_time: 5000-120000
+  max_in_flight: 1
+  serial: false
+  update_watch_time: 5000-120000
+
