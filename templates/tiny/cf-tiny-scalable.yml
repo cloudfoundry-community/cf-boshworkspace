@@ -386,9 +386,12 @@ properties:
 
   ha_proxy:
     <<: (( merge ))
-    client_timeout: 120
-    server_timeout: 120
-    request_timeout: 120
+    client_timeout: (( meta.ha_proxy.client_timeout || nil ))
+    server_timeout: (( meta.ha_proxy.server_timeout || nil ))
+    websocket_timeout: (( meta.ha_proxy.websocket_timeout || nil ))
+    keepalive_timeout: (( meta.ha_proxy.keepalive_timeout || nil ))
+    request_timeout: (( meta.ha_proxy.request_timeout || nil ))
+    queue_timeout: (( meta.ha_proxy.queue_timeout || nil ))
     backend_servers: (( jobs.api_z1.networks.cf1.static_ips jobs.api_z2.networks.cf2.static_ips ))
 
   ccdb:

@@ -28,6 +28,13 @@ meta:
       quad: "2"
       net_id: barfoo_net_id
   environment: foo-aws-tiny
+  ha_proxy:
+    client_timeout: client_timeout
+    server_timeout: server_timeout
+    websocket_timeout: websocket_timeout
+    keepalive_timeout: keepalive_timeout
+    request_timeout: request_timeout
+    queue_timeout: queue_timeout
   consul:
     cluster:
       join_hosts:

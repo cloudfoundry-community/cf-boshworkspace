@@ -9,6 +9,12 @@ meta:
     z2: bar_zone
 
   ha_proxy:
+    client_timeout: client_timeout
+    server_timeout: server_timeout
+    websocket_timeout: websocket_timeout
+    keepalive_timeout: keepalive_timeout
+    request_timeout: request_timeout
+    queue_timeout: queue_timeout
     internal_only_domains:
     - private.example.com
 

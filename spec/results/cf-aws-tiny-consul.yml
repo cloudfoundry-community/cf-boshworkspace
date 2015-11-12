@@ -1064,9 +1064,11 @@ properties:
     - 10.5.4.7
     - 10.5.4.22
     - 10.5.4.23
-    client_timeout: 120
-    request_timeout: 120
-    server_timeout: 120
+    client_timeout: client_timeout
+    keepalive_timeout: keepalive_timeout
+    queue_timeout: queue_timeout
+    request_timeout: request_timeout
+    server_timeout: server_timeout
     ssl_pem: |+
       -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
@@ -1119,6 +1121,7 @@ properties:
       EumGrpsUbXDKl4mMRR6AsSeFx035E10V6NvNhPOzBAUUxFrpVX82EWCw4NNQZSfj
       3Kh0H0rsFqWDTSXJdrqacQELFqqVHvpvhJKSKFayvvTbDFqT1Pz/WE4=
       -----END CERTIFICATE-----
+    websocket_timeout: websocket_timeout
   hm9000:
     url: https://hm9000.run.example.com
   logger_endpoint:

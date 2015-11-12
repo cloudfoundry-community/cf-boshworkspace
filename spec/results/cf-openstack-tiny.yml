@@ -859,12 +859,15 @@ properties:
     - 192.168.9.7
     - 192.168.9.22
     - 192.168.9.23
-    client_timeout: 200
+    client_timeout: client_timeout
     internal_only_domains:
     - private.example.com
-    request_timeout: 200
-    server_timeout: 200
+    keepalive_timeout: keepalive_timeout
+    queue_timeout: queue_timeout
+    request_timeout: request_timeout
+    server_timeout: server_timeout
     ssl_pem: foo_cert
+    websocket_timeout: websocket_timeout
   hm9000:
     url: https://hm9000.example.com
   logger_endpoint:
