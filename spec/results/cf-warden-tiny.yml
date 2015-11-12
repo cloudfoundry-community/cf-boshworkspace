@@ -1025,9 +1025,11 @@ properties:
   ha_proxy:
     backend_servers:
     - 10.244.3.3
-    client_timeout: 120
-    request_timeout: 120
-    server_timeout: 120
+    client_timeout: null
+    keepalive_timeout: null
+    queue_timeout: null
+    request_timeout: null
+    server_timeout: null
     ssl_pem: |+
       -----BEGIN RSA PRIVATE KEY-----
       MIIEowIBAAKCAQEAp8EmRzHqDmDO9UJonrrU6FDaPfCyg3ywuH/Iu/0vqYL4LEcE
@@ -1080,6 +1082,7 @@ properties:
       EumGrpsUbXDKl4mMRR6AsSeFx035E10V6NvNhPOzBAUUxFrpVX82EWCw4NNQZSfj
       3Kh0H0rsFqWDTSXJdrqacQELFqqVHvpvhJKSKFayvvTbDFqT1Pz/WE4=
       -----END CERTIFICATE-----
+    websocket_timeout: null
   hm9000:
     url: https://hm9000.10.244.4.2.xip.io
   logger_endpoint: null
