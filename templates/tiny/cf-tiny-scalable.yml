@@ -42,8 +42,6 @@ meta:
     release: (( meta.release.cf ))
   - name: metron_agent
     release: (( meta.release.cf ))
-  - name: consul_agent
-    release: (( meta.release.cf ))
 
   backbone_templates:
   - name: etcd
@@ -59,8 +57,6 @@ meta:
   - name: syslog_drain_binder
     release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: consul_agent
     release: (( meta.release.cf ))
 
   ha_proxy_templates:
@@ -82,8 +78,6 @@ meta:
     release: (( meta.release.cf ))
   - name: nfs_mounter
     release: (( meta.release.cf ))
-  - name: consul_agent
-    release: (( meta.release.cf ))
 
   services_templates:
   - name: uaa-intel
@@ -94,8 +88,6 @@ meta:
     release: (( meta.release.cf ))
   - name: nfs_mounter
     release: (( meta.release.cf ))
-  - name: consul_agent
-    release: (( meta.release.cf ))
 
   dea_templates:
   - name: dea_next
@@ -103,8 +95,6 @@ meta:
   - name: dea_logging_agent
     release: (( meta.release.cf ))
   - name: metron_agent
-    release: (( meta.release.cf ))
-  - name: consul_agent
     release: (( meta.release.cf ))
 
   health_templates:
@@ -117,8 +107,6 @@ meta:
   - name: metron_agent
     release: (( meta.release.cf ))
   - name: collector
-    release: (( meta.release.cf ))
-  - name: consul_agent
     release: (( meta.release.cf ))
 
   instances:
