@@ -549,6 +549,8 @@ jobs:
     release: cf
   - name: uaa
     release: cf
+  - name: nfs_mounter
+    release: cf
 - instances: 2
   name: services_z2
   networks:
@@ -592,6 +594,8 @@ jobs:
   - name: route_registrar
     release: cf
   - name: uaa
+    release: cf
+  - name: nfs_mounter
     release: cf
 - instances: 1
   lifecycle: errand

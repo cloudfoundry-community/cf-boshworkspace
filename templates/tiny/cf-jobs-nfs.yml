@@ -9,7 +9,7 @@ meta:
     - name: nfs_mounter
       release: (( meta.release.cf ))
 
-  services:
+  services_templates:
     - <<: (( merge ))
     - name: nfs_mounter
       release: (( meta.release.cf ))
