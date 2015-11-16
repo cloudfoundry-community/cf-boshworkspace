@@ -23,9 +23,9 @@ jobs:
   templates:
   - name: postgres
     release: cf
-  - name: debian_nfs_server
-    release: cf
   - name: metron_agent
+    release: cf
+  - name: debian_nfs_server
     release: cf
 - instances: 2
   name: backbone_z1
@@ -145,7 +145,19 @@ jobs:
     release: cf
   update:
     max_in_flight: 1
-- instances: 3
+- default_networks:
+  - name: floating
+    static_ips:
+    - 80.90.100.110
+  - default:
+    - dns
+    - gateway
+    name: lb1
+    static_ips:
+    - 10.5.2.6
+    - 10.5.2.17
+    - 10.5.2.18
+  instances: 3
   name: public_haproxy_z1
   networks:
   - name: floating
@@ -440,14 +452,12 @@ jobs:
       apps: cf1
   resource_pool: small_z1
   templates:
-  - name: uaa-intel
-    release: uaa-intel
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
-  - name: nfs_mounter
-    release: cf
+  - name: uaa-intel
+    release: uaa-intel
   - name: nfs_mounter
     release: cf
 - instances: 2
@@ -465,14 +475,12 @@ jobs:
       apps: cf2
   resource_pool: small_z2
   templates:
-  - name: uaa-intel
-    release: uaa-intel
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
-  - name: nfs_mounter
-    release: cf
+  - name: uaa-intel
+    release: uaa-intel
   - name: nfs_mounter
     release: cf
 - instances: 1

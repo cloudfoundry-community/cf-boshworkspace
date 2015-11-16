@@ -7,3 +7,4 @@ my*
 .bundle
 vendor/
 *~
+/tmp/

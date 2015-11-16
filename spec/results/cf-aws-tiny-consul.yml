@@ -179,9 +179,27 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
+  - name: dea-next-consul
+    release: cf-consul
+  - name: dea-logging-agent-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
   update:
     max_in_flight: 1
-- instances: 1
+- default_networks:
+  - name: floating
+    static_ips:
+    - 80.90.100.110
+  - default:
+    - dns
+    - gateway
+    name: lb1
+    static_ips:
+    - 10.5.2.6
+  instances: 1
   name: public_haproxy_z1
   networks:
   - name: floating
@@ -203,9 +221,13 @@ jobs:
   - name: metron_agent
     release: cf
   - name: haproxy
-    release: cf
-  - name: consul_agent
-    release: cf
+    release: cf-haproxy
+  - name: haproxy-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 0
   name: private_haproxy_z1
   networks:
@@ -226,9 +248,13 @@ jobs:
   - name: metron_agent
     release: cf
   - name: haproxy
-    release: cf
-  - name: consul_agent
-    release: cf
+    release: cf-haproxy
+  - name: haproxy-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 3
   name: api_z1
   networks:
@@ -304,8 +330,6 @@ jobs:
       apps: cf1
   resource_pool: medium_z1
   templates:
-  - name: routing-api
-    release: cf
   - name: gorouter
     release: cf
   - name: cloud_controller_ng
@@ -314,6 +338,16 @@ jobs:
     release: cf
   - name: nfs_mounter
     release: cf
+  - name: gorouter-consul
+    release: cf-consul
+  - name: cloud-controller-ng-consul
+    release: cf-consul
+  - name: nfs-mounter-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
   update:
     serial: true
 - instances: 3
@@ -391,8 +425,6 @@ jobs:
       apps: cf2
   resource_pool: medium_z2
   templates:
-  - name: routing-api
-    release: cf
   - name: gorouter
     release: cf
   - name: cloud_controller_ng
@@ -401,6 +433,16 @@ jobs:
     release: cf
   - name: nfs_mounter
     release: cf
+  - name: gorouter-consul
+    release: cf-consul
+  - name: cloud-controller-ng-consul
+    release: cf-consul
+  - name: nfs-mounter-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
   update:
     serial: true
 - instances: 3
@@ -430,6 +472,16 @@ jobs:
     release: cf
   - name: collector
     release: cf
+  - name: loggregator-trafficcontroller-consul
+    release: cf-consul
+  - name: hm9000-consul
+    release: cf-consul
+  - name: cloud-controller-clock-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 3
   name: health_z2
   networks:
@@ -457,6 +509,16 @@ jobs:
     release: cf
   - name: collector
     release: cf
+  - name: loggregator-trafficcontroller-consul
+    release: cf-consul
+  - name: hm9000-consul
+    release: cf-consul
+  - name: cloud-controller-clock-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 2
   name: services_z1
   networks:
@@ -472,14 +534,32 @@ jobs:
       apps: cf1
   resource_pool: medium_z1
   templates:
-  - name: uaa-intel
-    release: uaa-intel
+  - name: uaa
+    release: cf
+  - name: login
+    release: cf
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
+  - name: etcd
+    release: cf
   - name: nfs_mounter
     release: cf
+  - name: uaa-consul
+    release: cf-consul
+  - name: login-consul
+    release: cf-consul
+  - name: cloud-controller-worker-consul
+    release: cf-consul
+  - name: etcd-consul
+    release: cf-consul
+  - name: nfs-mounter-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 2
   name: services_z2
   networks:
@@ -495,14 +575,32 @@ jobs:
       apps: cf2
   resource_pool: medium_z2
   templates:
-  - name: uaa-intel
-    release: uaa-intel
+  - name: uaa
+    release: cf
+  - name: login
+    release: cf
   - name: cloud_controller_worker
     release: cf
   - name: metron_agent
     release: cf
+  - name: etcd
+    release: cf
   - name: nfs_mounter
     release: cf
+  - name: uaa-consul
+    release: cf-consul
+  - name: login-consul
+    release: cf-consul
+  - name: cloud-controller-worker-consul
+    release: cf-consul
+  - name: etcd-consul
+    release: cf-consul
+  - name: nfs-mounter-consul
+    release: cf-consul
+  - name: consul
+    release: consul
+  - name: vm-consul
+    release: consul
 - instances: 1
   lifecycle: errand
   name: acceptance_tests_runner
