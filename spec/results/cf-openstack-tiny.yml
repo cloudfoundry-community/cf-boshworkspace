@@ -60,6 +60,8 @@ jobs:
     release: cf
   - name: metron_agent
     release: cf
+  - name: consul_agent
+    release: cf
 - instances: 2
   name: backbone_z2
   networks:
@@ -93,6 +95,8 @@ jobs:
   - name: syslog_drain_binder
     release: cf
   - name: metron_agent
+    release: cf
+  - name: consul_agent
     release: cf
 - instances: 5
   name: runner_z1
