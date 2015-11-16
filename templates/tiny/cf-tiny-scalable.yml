@@ -58,6 +58,8 @@ meta:
     release: (( meta.release.cf ))
   - name: metron_agent
     release: (( meta.release.cf ))
+  - name: consul_agent
+    release: (( meta.release.cf ))
 
   ha_proxy_templates:
   - name: metron_agent
