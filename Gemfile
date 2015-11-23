@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'bosh-workspace', '0.9.5'
+gem 'bosh-workspace', '0.9.6'
 
 group :test do
   gem 'rake'
